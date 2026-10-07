@@ -1,5 +1,5 @@
--- ══════════════════════════════════════════════════════════════════════
---  Migration — admin panel
+-- ======================================================================
+--  Migration ? admin panel
 --
 --  1. Marks logins as admins
 --  2. Adds request status tracking to enquiries
@@ -9,13 +9,13 @@
 --  Run this once in the Media House project's SQL editor.
 --  Safe to re-run.
 --
---  LAST STEP: promote yourself to admin — see the bottom of this file.
--- ══════════════════════════════════════════════════════════════════════
+--  LAST STEP: promote yourself to admin ? see the bottom of this file.
+-- ======================================================================
 
--- ─── 1. admin flag on profiles ───────────────────────────────────────
+-- --- 1. admin flag on profiles ---------------------------------------
 alter table public.profiles add column if not exists is_admin boolean not null default false;
 
--- ─── 2. request status on enquiries ──────────────────────────────────
+-- --- 2. request status on enquiries ----------------------------------
 alter table public.enquiries add column if not exists status      text not null default 'new';
 alter table public.enquiries add column if not exists admin_note  text;
 alter table public.enquiries add column if not exists handled_at   timestamptz;
@@ -55,7 +55,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- ─── 3. is_admin() helper ────────────────────────────────────────────
+-- --- 3. is_admin() helper --------------------------------------------
 -- security definer so the check cannot be spoofed by the caller
 create or replace function public.is_admin()
 returns boolean
@@ -72,9 +72,9 @@ $$;
 
 grant execute on function public.is_admin() to anon, authenticated;
 
--- ─── 3b. SECURITY: stop a client promoting themselves ───────────────
+-- --- 3b. SECURITY: stop a client promoting themselves ---------------
 -- "profiles_own_row" is FOR ALL, so on its own it lets a signed-in client
--- UPDATE every column of their own row — including is_admin. Without this,
+-- UPDATE every column of their own row ? including is_admin. Without this,
 -- anyone who registers can make themselves an admin.
 revoke update on public.profiles from authenticated;
 
@@ -89,7 +89,7 @@ grant update (
   referral
 ) on public.profiles to authenticated;
 
--- ─── 4. admin policies ───────────────────────────────────────────────
+-- --- 4. admin policies -----------------------------------------------
 -- Every table gets: "owner can see their own" (already in place) plus
 -- "an admin can see and manage everything".
 
@@ -156,15 +156,15 @@ drop policy if exists "admin manage enquiries" on public.enquiries;
 create policy "admin manage enquiries" on public.enquiries
   for all using (public.is_admin()) with check (public.is_admin());
 
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 --  Promote yourself (and only yourself) to admin
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 -- Replace the email below with your own, then run this separately:
 --
 --   update public.profiles
 --      set is_admin = true
 --    where email = 'jtsaofficial@gmail.com';
 --
--- Promote as many people as need it — keep it to staff only, since an
+-- Promote as many people as need it ? keep it to staff only, since an
 -- admin can read every client's details and invoices.
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================

@@ -1,12 +1,12 @@
--- ══════════════════════════════════════════════════════════════════════
---  JTSA Media House — client project tracking
+-- ======================================================================
+--  JTSA Media House ? client project tracking
 --
 --  For a DEDICATED Supabase project (its own project ref, its own
 --  database, its own logins). Nothing to do with the Olympiad site.
 --
 --  Run this once in the Media House project's SQL editor.
 --  Safe to re-run.
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 
 create extension if not exists "pgcrypto";
 
@@ -15,7 +15,7 @@ create extension if not exists "pgcrypto";
 -- survives and breaks PostgREST's schema cache for the whole project (503s).
 -- A dedicated project already exposes `public`, so nothing needs changing.
 
--- ─── Enums ────────────────────────────────────────────────────────────
+-- --- Enums ------------------------------------------------------------
 do $$ begin
   create type project_status as enum ('enquiry','active','review','delivered','closed');
 exception when duplicate_object then null; end $$;
@@ -32,7 +32,7 @@ do $$ begin
   create type client_type as enum ('school','business','other');
 exception when duplicate_object then null; end $$;
 
--- ─── profiles ─────────────────────────────────────────────────────────
+-- --- profiles ---------------------------------------------------------
 -- A login row for whoever uses the client portal.
 create table if not exists public.profiles (
   id               uuid primary key references auth.users(id) on delete cascade,
@@ -52,7 +52,7 @@ create table if not exists public.profiles (
 );
 
 -- Auto-create a portal profile whenever a login is created. Anything the
--- register form passes as user metadata is carried straight through — this
+-- register form passes as user metadata is carried straight through ? this
 -- works even when email confirmation means there is no session yet.
 create or replace function public.handle_new_user()
 returns trigger
@@ -87,7 +87,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- ─── services catalogue ───────────────────────────────────────────────
+-- --- services catalogue -----------------------------------------------
 create table if not exists public.services (
   id          uuid primary key default gen_random_uuid(),
   slug        text unique not null,
@@ -99,7 +99,7 @@ create table if not exists public.services (
   sort_order  int
 );
 
--- ─── projects ─────────────────────────────────────────────────────────
+-- --- projects ---------------------------------------------------------
 create table if not exists public.projects (
   id             uuid primary key default gen_random_uuid(),
   client_id      uuid not null references public.profiles(id) on delete cascade,
@@ -119,7 +119,7 @@ create table if not exists public.projects (
 
 create index if not exists projects_client_id_idx on public.projects(client_id);
 
--- ─── milestones ───────────────────────────────────────────────────────
+-- --- milestones -------------------------------------------------------
 create table if not exists public.project_milestones (
   id             uuid primary key default gen_random_uuid(),
   project_id     uuid not null references public.projects(id) on delete cascade,
@@ -134,7 +134,7 @@ create table if not exists public.project_milestones (
 
 create index if not exists milestones_project_idx on public.project_milestones(project_id);
 
--- ─── deliverables ─────────────────────────────────────────────────────
+-- --- deliverables -----------------------------------------------------
 create table if not exists public.deliverables (
   id           uuid primary key default gen_random_uuid(),
   project_id   uuid not null references public.projects(id) on delete cascade,
@@ -148,7 +148,7 @@ create table if not exists public.deliverables (
 
 create index if not exists deliverables_project_idx on public.deliverables(project_id);
 
--- ─── invoices ─────────────────────────────────────────────────────────
+-- --- invoices ---------------------------------------------------------
 create table if not exists public.invoices (
   id             uuid primary key default gen_random_uuid(),
   project_id     uuid not null references public.projects(id) on delete cascade,
@@ -162,7 +162,7 @@ create table if not exists public.invoices (
   unique (project_id, invoice_number)
 );
 
--- ─── progress updates ─────────────────────────────────────────────────
+-- --- progress updates -------------------------------------------------
 create table if not exists public.project_updates (
   id          uuid primary key default gen_random_uuid(),
   project_id  uuid not null references public.projects(id) on delete cascade,
@@ -174,7 +174,7 @@ create table if not exists public.project_updates (
 
 create index if not exists updates_project_idx on public.project_updates(project_id);
 
--- ─── enquiries from the website ───────────────────────────────────────
+-- --- enquiries from the website ---------------------------------------
 create table if not exists public.enquiries (
   id          uuid primary key default gen_random_uuid(),
   name        text not null,
@@ -188,7 +188,7 @@ create table if not exists public.enquiries (
   created_at  timestamptz not null default now()
 );
 
--- ─── grants ───────────────────────────────────────────────────────────
+-- --- grants -----------------------------------------------------------
 grant select on all tables in schema public to anon, authenticated;
 grant insert on public.enquiries to anon, authenticated;
 grant update on
@@ -197,7 +197,7 @@ grant update on
   public.project_updates
   to authenticated;
 
--- ── Row level security ────────────────────────────────────────────────
+-- -- Row level security ------------------------------------------------
 -- Every table is owner-scoped. A client can only ever reach their own rows.
 alter table public.profiles           enable row level security;
 alter table public.projects           enable row level security;
@@ -232,7 +232,7 @@ create policy "profiles_own_row" on public.profiles
   for all using (auth.uid() = id) with check (auth.uid() = id);
 
 -- SECURITY: the policy above is FOR ALL, which would let a client UPDATE
--- every column of their own row — including is_admin, so they could promote
+-- every column of their own row ? including is_admin, so they could promote
 -- themselves. Restrict UPDATE to the columns a client should control.
 revoke update on public.profiles from authenticated;
 grant update (
@@ -282,9 +282,9 @@ drop policy if exists "enquiries_public_insert" on public.enquiries;
 create policy "enquiries_public_insert" on public.enquiries
   for insert with check (true);
 
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 --  Seed data
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 
 insert into public.services (slug, title, blurb, base_price, price_unit, turnaround, sort_order) values
   ('posters-banners',   'Posters & Banners',      'Admission posters, result-day banners, flex and standees. Hindi or English, print-ready.', 299,  'per design', '48 hours', 1),
@@ -322,7 +322,7 @@ begin
     (client_id, service_id, title, reference, status, summary,
      start_date, due_date, agreed_amount, paid_amount, cover_image)
   values
-    (demo_client, demo_service, 'Admission Season 2026 — Social Campaign', 'JMH-2026-001', 'active',
+    (demo_client, demo_service, U&'Admission Season 2026 \2014 Social Campaign', 'JMH-2026-001', 'active',
      'Full social campaign for the 2026 admission season: 12 posts, 4 reels, boost management and a monthly report.',
      current_date - 14, current_date + 16, 9999, 4999, '/images/real-exam.jpg')
   returning id into demo_project;
@@ -337,11 +337,11 @@ begin
     (demo_project, 'Monthly report handover',      'Reach, saves, enquiries and next-month recommendations.',              'pending',     current_date + 16, null,               6);
 
   insert into public.project_updates (project_id, title, body, author_name) values
-    (demo_project, 'Brief approved',          'Thanks — everything in the brief is locked. Creative work starts today.',          'JTSA Media House'),
+    (demo_project, 'Brief approved',          U&'Thanks \2014 everything in the brief is locked. Creative work starts today.',          'JTSA Media House'),
     (demo_project, 'Print files with printer','Flex artwork is at the printer. Print-ready PDFs are in Deliverables.',          'JTSA Media House');
 
   insert into public.invoices
     (project_id, invoice_number, description, amount, status, due_date, paid_at) values
-    (demo_project, 'INV-2026-001', '50% advance — Social Campaign, Admission Season 2026', 4999.50, 'paid',    current_date - 12, current_date - 12),
+    (demo_project, 'INV-2026-001', U&'50% advance \2014 Social Campaign, Admission Season 2026', 4999.50, 'paid',    current_date - 12, current_date - 12),
     (demo_project, 'INV-2026-002', 'Balance on delivery',                                4999.50, 'issued', current_date + 16, null);
 end $$;

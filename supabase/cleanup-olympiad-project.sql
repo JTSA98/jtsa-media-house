@@ -1,12 +1,12 @@
--- ══════════════════════════════════════════════════════════════════════
---  CLEANUP — remove everything Media House added to the Olympiad project
+-- ======================================================================
+--  CLEANUP ? remove everything Media House added to the Olympiad project
 --
 --  Run this in the JTSA Olympiad project's SQL editor to put it back
 --  exactly as it was. Only touches the `media_house` schema, which is
 --  entirely self-contained.
 --
---  ⚠ If Media House moves to its own Supabase project, do this.
--- ══════════════════════════════════════════════════════════════════════
+--  ! If Media House moves to its own Supabase project, do this.
+-- ======================================================================
 
 begin;
 
@@ -32,18 +32,18 @@ commit;
 -- Ask PostgREST to re-read its configuration.
 notify pgrst, 'reload config';
 
--- ── Verify the override is gone (expect 0 rows) ─────────────────────
+-- -- Verify the override is gone (expect 0 rows) ---------------------
 -- select rolname, setconfig
 -- from pg_db_role_setting s
 -- join pg_roles r on r.oid = s.setrole
 -- where rolname = 'authenticator';
 
--- ── Then, by hand in the dashboard ──────────────────────────────────
+-- -- Then, by hand in the dashboard ----------------------------------
 -- Project Settings -> Data API -> Settings
 -- In "Extra search path", remove the  media_house  chip so only
 -- `public` and `extensions` remain.
 --
--- ── Verify nothing Olympiad-related was touched ─────────────────────
+-- -- Verify nothing Olympiad-related was touched ---------------------
 -- select table_schema, count(*)
 -- from information_schema.tables
 -- where table_schema in ('public','auth')

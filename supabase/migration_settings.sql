@@ -1,12 +1,12 @@
--- ══════════════════════════════════════════════════════════════════════
---  Migration — site settings
+-- ======================================================================
+--  Migration ? site settings
 --
 --  A key/value table so the whole site can be edited from /admin/settings
 --  without touching code. Same pattern as the Olympiad site's site_settings.
 --
 --  Run this once in the Media House project's SQL editor.
---  Safe to re-run — existing keys are updated, not duplicated.
--- ══════════════════════════════════════════════════════════════════════
+--  Safe to re-run ? existing keys are updated, not duplicated.
+-- ======================================================================
 
 create table if not exists public.site_settings (
   key        text primary key,
@@ -30,7 +30,7 @@ drop policy if exists "settings admin write" on public.site_settings;
 create policy "settings admin write" on public.site_settings
   for all using (public.is_admin()) with check (public.is_admin());
 
--- ─── seed defaults ───────────────────────────────────────────────────
+-- --- seed defaults ---------------------------------------------------
 -- Anything already set keeps its value; these only fill in the blanks.
 insert into public.site_settings (key, value, group_name, label, hint, sort_order) values
   -- contact ------------------------------------------------------------
@@ -74,39 +74,39 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('enquiry.sample_offer', 'Get a Free Design Sample', 'enquiry', 'Sample offer text', 'The main call to action.', 4),
 
   -- one-time pricing --------------------------------------------------
-  ('price.flex',    '₹35 / sq.ft', 'prices', 'Flex printing', 'Design included.', 1),
+  ('price.flex',    U&'\20B935 / sq.ft', 'prices', 'Flex printing', 'Design included.', 1),
   ('price.flex_note',    'Flex printing, design included', 'prices', '', '', 2),
-  ('price.standee', '₹1,799',       'prices', 'Roll-up standee', 'With design.', 3),
+  ('price.standee', U&'\20B91,799',       'prices', 'Roll-up standee', 'With design.', 3),
   ('price.standee_note', 'Roll-up standee with design', 'prices', '', '', 4),
-  ('price.poster',  '₹499',         'prices', 'Poster design + print', '', 5),
-  ('price.poster_note', 'Poster — design + print', 'prices', '', '', 6),
-  ('price.shoot',   '₹14,999',      'prices', 'Half-day event shoot', '', 7),
+  ('price.poster',  U&'\20B9499',         'prices', 'Poster design + print', '', 5),
+  ('price.poster_note', U&'Poster \2014 design + print', 'prices', '', '', 6),
+  ('price.shoot',   U&'\20B914,999',      'prices', 'Half-day event shoot', '', 7),
   ('price.shoot_note', 'Half-day event shoot', 'prices', '', '', 8),
 
   -- retainer plans ----------------------------------------------------
-  ('plan.starter.name',  'Starter',  'plans', 'Starter — name',  '', 1),
-  ('plan.starter.price', '4,999',    'plans', 'Starter — price', 'Digits only.', 2),
+  ('plan.starter.name',  'Starter',  'plans', U&'Starter \2014 name',  '', 1),
+  ('plan.starter.price', '4,999',    'plans', U&'Starter \2014 price', 'Digits only.', 2),
   ('plan.starter.features', '8 social posts|2 reels|1 poster design|Monthly report', 'plans', '', 'One feature per line.', 3),
-  ('plan.growth.name',    'Growth',   'plans', 'Growth — name',   '', 4),
-  ('plan.growth.price',   '9,999',    'plans', 'Growth — price',  'Digits only.', 5),
-  ('plan.growth.badge',   'Most Chosen', 'plans', 'Growth — badge', 'Leave blank for none.', 6),
+  ('plan.growth.name',    'Growth',   'plans', U&'Growth \2014 name',   '', 4),
+  ('plan.growth.price',   '9,999',    'plans', U&'Growth \2014 price',  'Digits only.', 5),
+  ('plan.growth.badge',   'Most Chosen', 'plans', U&'Growth \2014 badge', 'Leave blank for none.', 6),
   ('plan.growth.features', '12 posts + 4 reels|Boost management|2 poster designs|Website listing|Priority support', 'plans', '', 'One feature per line.', 7),
-  ('plan.premium.name',    'Premium', 'plans', 'Premium — name',  '', 8),
-  ('plan.premium.price',   '19,999',  'plans', 'Premium — price', 'Digits only.', 9),
+  ('plan.premium.name',    'Premium', 'plans', U&'Premium \2014 name',  '', 8),
+  ('plan.premium.price',   '19,999',  'plans', U&'Premium \2014 price', 'Digits only.', 9),
   ('plan.premium.features', '20 posts + 8 reels|Full campaign strategy|Event shoot coverage|Everything in Growth', 'plans', '', 'One feature per line.', 10),
 
   -- services ----------------------------------------------------------
-  ('service.posters-banners.price',     '₹299',   'services', 'Posters & Banners — from', '', 1),
+  ('service.posters-banners.price',     U&'\20B9299',   'services', U&'Posters & Banners \2014 from', '', 1),
   ('service.posters-banners.price_note','from, per design', 'services', '', '', 2),
-  ('service.social-campaigns.price',    '₹4,999', 'services', 'Social Campaigns — per month', '', 3),
+  ('service.social-campaigns.price',    U&'\20B94,999', 'services', U&'Social Campaigns \2014 per month', '', 3),
   ('service.social-campaigns.price_note','per month', 'services', '', '', 4),
-  ('service.video-reels.price',         '₹4,999', 'services', 'Video & Reels — per reel', '', 5),
+  ('service.video-reels.price',         U&'\20B94,999', 'services', U&'Video & Reels \2014 per reel', '', 5),
   ('service.video-reels.price_note',    'per reel', 'services', '', '', 6),
-  ('service.website-listing.price',     '₹999',   'services', 'Website Listing — per month', '', 7),
+  ('service.website-listing.price',     U&'\20B9999',   'services', U&'Website Listing \2014 per month', '', 7),
   ('service.website-listing.price_note','per month', 'services', '', '', 8)
 on conflict (key) do nothing;
 
--- ─── track when a setting last changed ───────────────────────────────
+-- --- track when a setting last changed -------------------------------
 create or replace function public.touch_settings_updated_at()
 returns trigger language plpgsql as $$
 begin

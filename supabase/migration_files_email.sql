@@ -1,5 +1,5 @@
--- ══════════════════════════════════════════════════════════════════════
---  Migration — file delivery, email log, project creation
+-- ======================================================================
+--  Migration ? file delivery, email log, project creation
 --
 --  1. Storage bucket for deliverable files (posters, PDFs, reels)
 --  2. An email_log table so nothing silently disappears
@@ -7,9 +7,9 @@
 --
 --  Run this once in the Media House project's SQL editor.
 --  Safe to re-run.
--- ══════════════════════════════════════════════════════════════════════
+-- ======================================================================
 
--- ─── 1. storage bucket ───────────────────────────────────────────────
+-- --- 1. storage bucket -----------------------------------------------
 -- Public read: clients follow a link and see the file. Admin upload is
 -- gated by the policies below, so a signed-out visitor cannot write.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -57,7 +57,7 @@ create policy "files admin delete" on storage.objects
     bucket_id = 'media-house-files' and public.is_admin()
   );
 
--- ─── 2. email log ────────────────────────────────────────────────────
+-- --- 2. email log ----------------------------------------------------
 -- Every notification attempt is recorded. If Brevo is down or misconfigured,
 -- this is how you see what never went out.
 create table if not exists public.email_log (
@@ -83,12 +83,12 @@ drop policy if exists "email_log admin write" on public.email_log;
 create policy "email_log admin write" on public.email_log
   for insert with check (public.is_admin());
 
--- ─── 3. project creation support ─────────────────────────────────────
+-- --- 3. project creation support -------------------------------------
 -- Where an enquiry turned into a project, and who set it up.
 alter table public.projects add column if not exists source_request_id uuid references public.enquiries(id) on delete set null;
 alter table public.projects add column if not exists created_by     text;
 
--- ─── 4. admin mail settings ──────────────────────────────────────────
+-- --- 4. admin mail settings ------------------------------------------
 insert into public.site_settings (key, value, group_name, label, hint, sort_order) values
   ('notify.new_enquiry',        'true',  'notifications', 'Email me on a new enquiry',    '', 1),
   ('notify.milestone_approved', 'true',  'notifications', 'Email me when a client approves', '', 2),
