@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════
+   JTSA Media House — "paper collage" design system
+   Deliberately unlike the main Olympiad site: printed paper, washi
+   tape, marker highlights and hard offset shadows instead of soft
+   claymorphism.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@theme {
+  --color-kraft: #efe6d6;
+  --color-kraft-2: #e5d9c3;
+  --color-kraft-3: #dccfb6;
+  --color-ink: #2b2620;
+  --color-ink-2: #4a423a;
+  --color-ink-3: #7a7168;
+  --color-green: #1b7a45;
+  --color-green-2: #2e9c5b;
+  --color-red: #c4452f;
+  --color-yellow: #e8b93b;
+  --color-sticky: #fff9c9;
+
+  --font-karla: var(--font-karla), "Segoe UI", sans-serif;
+  --font-caveat: var(--font-caveat), "Comic Sans MS", cursive;
+  --font-hand: var(--font-hand), "Segoe Print", cursive;
+
+  --shadow-print: 5px 5px 0 rgba(43, 38, 32, 0.92);
+  --shadow-print-sm: 3px 3px 0 rgba(43, 38, 32, 0.92);
+  --shadow-print-green: 7px 7px 0 var(--color-green);
+}
+
+@layer base {
+  * {
+    border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-kraft);
+    color: var(--color-ink);
+    font-family: var(--font-karla);
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-yellow);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-green);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* ── Shell ─────────────────────────────────────────────────────── */
+  .wrap {
+    width: 100%;
+    max-width: 1220px;
+    margin-inline: auto;
+    padding-inline: 5vw;
+  }
+
+  /* ── Paper grain overlay ───────────────────────────────────────── */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4'/%3E%3C/rect width='260' height='260' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  }
+
+  /* ── Washi tape ────────────────────────────────────────────────── */
+  .tape {
+    position: absolute;
+    width: 112px;
+    height: 27px;
+    background: rgba(255, 238, 190, 0.62);
+    border-left: 2px dashed rgba(0, 0, 0, 0.09);
+    border-right: 2px dashed rgba(0, 0, 0, 0.09);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.09);
+    z-index: 6;
+  }
+
+  /* ── Marker highlight behind a word ────────────────────────────── */
+  .marker {
+    position: relative;
+    display: inline-block;
+    padding-inline: 0.04em;
+  }
+  .marker::after {
+    content: "";
+    position: absolute;
+    left: -3%;
+    right: -3%;
+    bottom: 9%;
+    height: 17px;
+    background: var(--color-yellow);
+    z-index: -1;
+    transform: rotate(-1.4deg);
+  }
+
+  /* ── Handwriting ───────────────────────────────────────────────── */
+  .hand {
+    font-family: var(--font-caveat);
+    line-height: 1.24;
+  }
+  .hand-note {
+    font-family: var(--font-caveat);
+    line-height: 1.24;
+    background: var(--color-sticky);
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    padding: 15px 18px;
+    box-shadow: 0 9px 22px rgba(0, 0, 0, 0.17);
+  }
+
+  /* ── Buttons: hard printed edges, no blur ──────────────────────── */
+  .btn {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 15px 28px;
+    border: 2.5px solid var(--color-ink);
+    box-shadow: var(--shadow-print-sm);
+    transition: transform 0.14s, box-shadow 0.14s, background-color 0.14s,
+      color 0.14s;
+    text-align: center;
+    cursor: pointer;
+  }
+  .btn:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--color-ink);
+  }
+  .btn-green {
+    background: var(--color-green);
+    color: #fff;
+  }
+  .btn-yellow {
+    background: var(--color-yellow);
+    color: var(--color-ink);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  /* ── Cards ─────────────────────────────────────────────────────── */
+  .card-paper {
+    background: var(--color-kraft-2);
+    border: 2.5px solid var(--color-ink);
+    box-shadow: var(--shadow-print);
+  }
+  .card-white {
+    background: #fff;
+    border: 2.5px solid var(--color-ink);
+    box-shadow: var(--shadow-print);
+  }
+
+  /* ── Form fields ───────────────────────────────────────────────── */
+  .field {
+    width: 100%;
+    background: var(--color-kraft);
+    border: 2.5px solid var(--color-ink);
+    padding: 14px 16px;
+    font-family: var(--font-karla);
+    font-size: 14.5px;
+    color: var(--color-ink);
+    outline: none;
+    box-shadow: var(--shadow-print-sm);
+    transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+  }
+  .field:focus {
+    background: var(--color-sticky);
+    box-shadow: 4px 4px 0 var(--color-green);
+    transform: translate(-1px, -1px);
+  }
+  .field::placeholder {
+    color: var(--color-ink-3);
+  }
+
+  /* ── Dashed rules ──────────────────────────────────────────────── */
+  .rule-dash {
+    border-bottom: 2px dashed rgba(43, 38, 32, 0.28);
+  }
+}
+
+@layer utilities {
+  .rotate-neg {
+    transform: rotate(-0.7deg);
+  }
+  .rotate-pos {
+    transform: rotate(0.6deg);
+  }
+  .shadow-print {
+    box-shadow: var(--shadow-print);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ── Motion ──────────────────────────────────────────────────────── */
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+/* ── Scroll reveal (progressive enhancement) ────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Paper grid used inside the portal ──────────────────────────── */
+.grid-paper {
+  background-image:
+    linear-gradient(rgba(43, 38, 32, 0.055) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(43, 38, 32, 0.055) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
