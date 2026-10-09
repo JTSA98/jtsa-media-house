@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { services, work } from "@/lib/site-config";
 import type { SiteView } from "@/lib/settings";
 import { setting } from "@/lib/settings";
@@ -49,6 +50,7 @@ export function Services({ site }: { site: SiteView }) {
             <article
               key={s.slug}
               data-reveal
+              style={{ "--d": `${i * 80}ms` } as CSSProperties}
               className="card-paper relative rounded-sm p-8 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-green/35 hover:shadow-[0_24px_60px_rgba(0,245,212,0.1)]"
             >
               <p className="text-[11px] font-bold tracking-[0.24em] text-green">
@@ -86,14 +88,18 @@ export function Services({ site }: { site: SiteView }) {
 
 export function StatsBand({ site }: { site: SiteView }) {
   return (
-<div className="grid grid-cols-2 border-y border-white/10 bg-black/25 md:grid-cols-4">
+    <div className="grid grid-cols-2 border-y border-white/10 bg-black/25 md:grid-cols-4">
       {site.stats.map((s, i) => (
         <div
           key={s.label}
-          className={`px-5 py-9 text-center ${
-            i !== site.stats.length - 1 ? "border-r border-white/10" : ""
-          } ${i < 2 ? "border-b border-white/10 md:border-b-0" : ""} ${
-            i % 2 === 1 ? "md:border-r-0" : ""
+          /* mobile 2-col: even cells carry the vertical divider, top row
+             carries the horizontal one. desktop 4-col: every cell but the
+             last carries the vertical divider. Before, the md override sat
+             on the wrong cell and the 2nd–3rd divider never painted. */
+          className={`border-white/10 px-5 py-9 text-center ${
+            i % 2 === 0 ? "border-r" : ""
+          } ${i < 2 ? "border-b md:border-b-0" : ""} ${
+            i < site.stats.length - 1 ? "md:border-r" : "md:border-r-0"
           }`}
         >
           <b className="block text-[clamp(32px,4vw,46px)] leading-none font-bold tracking-[-0.02em] text-green">
@@ -122,7 +128,6 @@ export function Audiences({ site: _site }: { site: SiteView }) {
         <div className="grid gap-6 md:grid-cols-2">
           {[
             {
-              tilt: "md:-rotate-[0.6deg]",
               heading: "For",
               highlight: "Schools",
               intro:
@@ -136,7 +141,6 @@ export function Audiences({ site: _site }: { site: SiteView }) {
               ],
             },
             {
-              tilt: "md:rotate-[0.5deg]",
               heading: "For",
               highlight: "Local Business",
               intro:
@@ -195,6 +199,7 @@ export function Work({ site: _site }: { site: SiteView }) {
 <figure
               key={w.src + i}
               data-reveal
+              style={{ "--d": `${(i % 3) * 80}ms` } as CSSProperties}
               className="group relative rounded-sm border border-white/12 bg-kraft-2 p-2.5 pb-9 shadow-[0_18px_44px_rgba(2,6,12,0.55)] transition duration-300 hover:z-20 hover:border-green/35 hover:scale-[1.03]"
             >
               <div className="relative h-[212px] w-full overflow-hidden rounded-sm">
@@ -230,10 +235,12 @@ export function MarqueeBand({ site: _site }: { site: SiteView }) {
   ];
 
   return (
-<div className="my-6 overflow-hidden border-y border-white/10 bg-black/35 py-4 whitespace-nowrap">
+<div className="marquee-band my-6 overflow-hidden border-y border-white/10 bg-black/35 py-4 whitespace-nowrap">
       <div className="animate-marquee inline-block">
         {[0, 1].map((dup) => (
-          <span key={dup}>
+          /* second copy is loop filler — hidden from screen readers so
+             the ticker isn't announced twice */
+          <span key={dup} aria-hidden={dup === 1}>
             {items.map((label) => (
               <span
                 key={label}

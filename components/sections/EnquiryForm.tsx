@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Loader2, Send } from "lucide-react";
+import { Check, Copy, Loader2, Send } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -160,6 +160,38 @@ export function EnquiryForm() {
         </p>
       ) : null}
     </form>
+  );
+}
+
+/** One-tap copy for the UPI ID — faster than retyping it into a payments app. */
+export function CopyUpi({ upiId }: { upiId: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(upiId);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = upiId;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-live="polite"
+      className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-sm border border-green/40 bg-green/10 px-3 py-2 text-[11px] font-bold tracking-[0.12em] text-green uppercase transition hover:bg-green/20"
+    >
+      {copied ? <Check size={14} /> : <Copy size={14} />}
+      {copied ? "Copied" : "Copy ID"}
+    </button>
   );
 }
 

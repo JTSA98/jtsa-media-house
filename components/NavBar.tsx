@@ -19,14 +19,21 @@ export function NavBar({ site }: { site: SiteView }) {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   return (
     <>
-      <div className="border-b border-white/10 bg-black/40 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase">
+      {/* hidden on phones: two wrapping micro-lines ate 3 rows at 390px */}
+      <div className="hidden border-b border-white/10 bg-black/40 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase sm:block">
         <div className="mx-auto flex max-w-[1220px] flex-wrap justify-between gap-4">
           <p>
             Admission season <b className="font-bold text-yellow">2026</b> slots are
@@ -88,10 +95,13 @@ export function NavBar({ site }: { site: SiteView }) {
         </div>
       </nav>
 
-      {/* full-screen drawer */}
+      {/* full-screen drawer.
+          `invisible` when closed matters: an off-canvas panel is still in
+          the tab order, so keyboard users could focus links they cannot
+          see. Visibility removes them from sequential focus. */}
       <div
-        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-transform duration-400 lg:hidden ${
-          open ? "translate-y-0" : "-translate-y-full"
+        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] lg:hidden ${
+          open ? "visible translate-y-0" : "invisible -translate-y-full"
         }`}
         aria-hidden={!open}
       >

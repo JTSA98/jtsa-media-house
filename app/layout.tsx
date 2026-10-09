@@ -1,33 +1,33 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
 import { AmbientBackdrop } from "@/components/AmbientBackdrop";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 /* Brand & Design Kit type stack:
-   Montserrat — headings, uppercase, wide tracking
+   Montserrat 700/800 — headings, uppercase, wide tracking
    Inter — body and UI
    The CSS variable names are deliberately kept as --font-karla /
-   --font-caveat / --font-hand so existing class names keep resolving. */
+   --font-hand so existing class names keep resolving. A second,
+   full-weight Montserrat load was dropped: nothing used it. */
 const karla = Inter({
   subsets: ["latin"],
   variable: "--font-karla",
   display: "swap",
 });
 
-const caveat = Montserrat({
+const display = Montserrat({
   subsets: ["latin"],
-  variable: "--font-caveat",
-  display: "swap",
-});
-
-const patrickHand = Montserrat({
-  subsets: ["latin"],
-  weight: "700",
+  weight: ["700", "800"],
   variable: "--font-hand",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0B192C",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.mainSite),
@@ -51,8 +51,22 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.tagline}`,
     description:
       "Posters, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
-    images: ["/images/real-win.jpg"],
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — Posters, Reels & Campaigns in Dhanbad`,
+      },
+    ],
     locale: "en_IN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description:
+      "Posters, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
+    images: ["/og.jpg"],
   },
   robots: { index: true, follow: true },
 };
@@ -63,10 +77,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${karla.variable} ${caveat.variable} ${patrickHand.variable}`}
+      className={`${karla.variable} ${display.variable}`}
     >
       <body>
         <AmbientBackdrop />
+        {/* Mounted once here — not per page — so [data-reveal] blocks on
+            EVERY route (portal cards included) resolve instead of hiding. */}
+        <RevealOnScroll />
         {children}
       </body>
     </html>

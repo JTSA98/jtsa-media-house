@@ -55,15 +55,30 @@ export function SiteFooter({ site }: { site: SiteView }) {
               Social
             </p>
             <div className="flex flex-col gap-2.5">
-              {site.socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  className="w-fit text-[13.5px] font-semibold transition hover:translate-x-1.5 hover:text-yellow"
-                >
-                  {s.label}
-                </a>
-              ))}
+              {/* Only wired-up profiles are links. The "#" placeholders
+                  used to jump back to the top of the page — worse than
+                  no link at all. Real URLs go live in admin settings. */}
+              {site.socials.map((s) =>
+                s.href && s.href !== "#" ? (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="w-fit text-[13.5px] font-semibold transition hover:translate-x-1.5 hover:text-yellow"
+                  >
+                    {s.label}
+                  </a>
+                ) : (
+                  <span
+                    key={s.label}
+                    className="w-fit text-[13.5px] font-semibold text-ink-3/60"
+                    title="Coming soon"
+                  >
+                    {s.label}
+                  </span>
+                ),
+              )}
             </div>
           </div>
 
@@ -117,9 +132,6 @@ export function SiteFooter({ site }: { site: SiteView }) {
             <Link href="/portal" className="transition hover:text-yellow">
               Client Portal
             </Link>
-            <a href="#" className="transition hover:text-yellow">
-              Privacy
-            </a>
           </div>
         </div>
       </div>

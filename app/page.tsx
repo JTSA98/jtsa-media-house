@@ -1,5 +1,4 @@
 import { NavBar } from "@/components/NavBar";
-import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Hero } from "@/components/sections/Hero";
 import {
@@ -18,7 +17,12 @@ import {
   Voices,
 } from "@/components/sections/Content";
 import { getSiteView, setting, settingList } from "@/lib/settings";
-import { oneTimeWork, plans as defaultPlans } from "@/lib/site-config";
+import {
+  faqs,
+  oneTimeWork,
+  plans as defaultPlans,
+  site as siteDefaults,
+} from "@/lib/site-config";
 
 // always read fresh — settings change without a deploy
 export const dynamic = "force-dynamic";
@@ -47,9 +51,38 @@ export default async function HomePage() {
     };
   });
 
+  /* Structured data for search: what we are + the questions we answer.
+     No invented ratings, reviews or phone numbers — only claims already
+     on the page. */
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        name: site.name,
+        description:
+          "Posters, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
+        areaServed: `${site.city}, ${site.state}`,
+        url: siteDefaults.mainSite,
+        priceRange: "₹₹",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  };
+
   return (
     <>
-      <RevealOnScroll />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <NavBar site={site} />
       <main>
         <Hero site={site} />

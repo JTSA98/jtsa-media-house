@@ -113,7 +113,7 @@ function ProjectCard({
   return (
     <article
       data-reveal
-      className="card-white relative overflow-hidden md:rotate-[0.35deg] md:hover:rotate-0"
+      className="card-white relative overflow-hidden"
     >
       <div className="flex flex-col md:flex-row">
         {/* cover */}

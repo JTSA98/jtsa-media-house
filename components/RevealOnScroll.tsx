@@ -4,7 +4,9 @@ import { useEffect } from "react";
 
 /**
  * Fades [data-reveal] elements in as they enter the viewport.
- * Purely decorative — if JS never runs, the CSS keeps them visible.
+ * Mounted once in the root layout so every route is covered.
+ * NOTE: the CSS hides [data-reveal] until .is-visible lands, so this
+ * component must stay mounted — removing it strands content invisible.
  */
 export function RevealOnScroll() {
   useEffect(() => {

@@ -1,9 +1,10 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 
 import { SectionHead } from "@/components/sections/Marketing";
 import { faqs, paymentOptions, processSteps, testimonials } from "@/lib/site-config";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
-import { EnquiryForm } from "@/components/sections/EnquiryForm";
+import { CopyUpi, EnquiryForm } from "@/components/sections/EnquiryForm";
 import type { SiteView } from "@/lib/settings";
 
 export function Process({ site: _site }: { site: SiteView }) {
@@ -17,6 +18,7 @@ export function Process({ site: _site }: { site: SiteView }) {
             <div
               key={s.n}
               data-reveal
+              style={{ "--d": `${i * 80}ms` } as CSSProperties}
               className="card-paper relative rounded-sm p-6"
             >
               <span className="block text-[34px] leading-none font-bold tracking-[-0.02em] text-green">
@@ -37,13 +39,19 @@ export function Voices({ site: _site }: { site: SiteView }) {
   return (
     <section id="voices" className="pt-5 pb-20">
       <div className="wrap">
-        <SectionHead kicker="what they said" title="Notes back from" highlight="clients" />
+        <SectionHead
+          kicker="what they said"
+          title="Notes back from"
+          highlight="clients"
+          body="Real notes from admission season and shop openings across Dhanbad."
+        />
 
         <div className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((t) => (
+          {testimonials.map((t, i) => (
             <blockquote
               key={t.name}
               data-reveal
+              style={{ "--d": `${i * 80}ms` } as CSSProperties}
               className="card-paper relative flex flex-col rounded-sm p-7"
             >
               <p aria-label="Five out of five" className="mb-4 text-[13px] tracking-[3px] text-yellow">
@@ -104,6 +112,7 @@ export function Pricing({ oneTime, plans, site }: { oneTime: { price: string; la
             <div
               key={p.name}
               data-reveal
+              style={{ "--d": `${i * 80}ms` } as CSSProperties}
 className={`relative flex flex-col rounded-sm p-7 ${
                 p.highlight
                   ? "border border-green/45 bg-kraft-3 shadow-[0_24px_60px_rgba(0,245,212,0.12)]"
@@ -186,23 +195,25 @@ export function Enquire({ site }: { site: SiteView }) {
                 We keep it the same as the Olympiad process, so nothing is new for you.
               </p>
 
-              <div className="my-5 flex items-center gap-4 rounded-sm border border-dashed border-green/40 bg-green/5 p-3.5">
-                <div
+              {/* was a box labelled "UPI QR" with no code in it — a
+                  placeholder dressed as a QR. Now the honest version: the
+                  ID itself, one tap to copy. */}
+              <div className="my-5 flex flex-wrap items-center gap-4 rounded-sm border border-green/35 bg-green/5 p-4">
+                <span
                   aria-hidden
-                  className="flex size-[78px] shrink-0 items-center justify-center rounded-sm bg-kraft-3 text-[9px] leading-[1.25] font-bold text-green"
+                  className="flex h-[52px] shrink-0 items-center rounded-sm bg-kraft-3 px-4 text-[15px] font-extrabold tracking-[0.08em] text-green"
                 >
                   UPI
-                  <br />
-                  QR
-                </div>
-                <div>
+                </span>
+                <span className="min-w-0 flex-1">
                   <b className="block text-[13.5px] font-semibold text-ink">
                     Online payment
                   </b>
-                  <code className="font-mono text-[12.5px] font-semibold text-green">
+                  <code className="font-mono text-[13px] font-semibold break-all text-green">
                     {site.upiId}
                   </code>
-                </div>
+                </span>
+                <CopyUpi upiId={site.upiId} />
               </div>
 
               <div className="flex flex-col gap-2.5">

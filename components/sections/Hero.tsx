@@ -9,9 +9,13 @@ export function Hero({ site }: { site: SiteView }) {
       <div className="wrap grid items-center gap-14 lg:grid-cols-[1.06fr_0.94fr]">
         {/* ── copy ── */}
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/8 px-[15px] py-[7px] text-[11px] font-semibold tracking-[0.18em] text-green uppercase">
-            <span className="size-1.5 rounded-full bg-green" />
-            Ad Agency · Dhanbad · A Sub-Venture of JTSA
+          <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-green/30 bg-green/8 px-[15px] py-[7px] text-[11px] font-semibold tracking-[0.18em] text-green uppercase">
+            <span className="size-1.5 shrink-0 rounded-full bg-green" />
+            {/* the full line overflows 390px viewports — short form on phones */}
+            <span className="sm:hidden">Ad Agency · Dhanbad</span>
+            <span className="hidden sm:inline">
+              Ad Agency · Dhanbad · A Sub-Venture of JTSA
+            </span>
           </span>
 
           <p className="mt-7 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
@@ -23,7 +27,10 @@ export function Hero({ site }: { site: SiteView }) {
             <br />
             notice board
             <br />
-            worth <span className="text-green">stopping</span>
+            {/* "worth stopping" is 14 characters — at the 40px floor it
+                overflows 390px viewports, so phones stack the accent */}
+            worth <br className="sm:hidden" />
+            <span className="text-green">stopping</span>
             <br />
             at.
           </h1>
@@ -75,10 +82,12 @@ export function Hero({ site }: { site: SiteView }) {
         {/* ── work stack ── */}
         <div className="relative mx-auto h-[440px] w-full max-w-[480px] sm:h-[520px]">
           {heroPolaroids.map((p, i) => {
+            /* straight collage, no scrapbook tilt — the overlap gives the
+               depth now, not rotation */
             const pos = [
-              "left-0 top-0 w-[63%] -rotate-6 z-30",
-              "right-0 top-[96px] w-[57%] rotate-[6.5deg] z-20",
-              "bottom-[6px] left-[14%] w-[54%] -rotate-[1.6deg] z-40",
+              "left-0 top-0 w-[63%] z-30",
+              "right-0 top-[96px] w-[57%] z-20",
+              "bottom-[6px] left-[14%] w-[54%] z-40",
             ][i];
 
             return (
@@ -92,6 +101,7 @@ export function Hero({ site }: { site: SiteView }) {
                     alt={p.alt}
                     fill
                     sizes="(max-width: 1024px) 60vw, 340px"
+                    priority={i === 0}
                     className="object-cover"
                   />
                 </div>
