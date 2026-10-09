@@ -280,7 +280,7 @@ export default async function ProjectPage({
                         href={f.file_url ?? "#"}
                         target={f.file_url ? "_blank" : undefined}
                         rel="noreferrer"
-                        className="flex items-center gap-2.5 border-2 border-ink bg-white px-3 py-2.5 text-[13px] font-bold transition hover:bg-sticky hover:shadow-[3px_3px_0_var(--color-ink)]"
+                        className="flex items-center gap-2.5 border-2 border-ink bg-white px-3 py-2.5 text-[13px] font-bold transition hover:bg-sticky hover:shadow-[0_8px_22px_rgba(2,6,12,0.5)]"
                       >
                         <Download size={14} className="shrink-0 text-green" />
                         <span className="min-w-0 flex-1 truncate">{f.label}</span>

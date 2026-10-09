@@ -105,7 +105,7 @@ export function FileUploader({
           >
             {busy ? (
               <>
-                <Loader2 size={14} className="mr-1.5 animate-spin" /> Uploading…
+                <Loader2 size={14} className="mr-1.5 animate-spin" /> Uploading‚
               </>
             ) : (
               <>
@@ -127,7 +127,7 @@ export function FileUploader({
           <ul className="mt-2 flex flex-col gap-1 text-[12.5px] text-ink-2">
             {files.map((f, i) => (
               <li key={`${f.name}-${i}`} className="flex items-center gap-2">
-                <span aria-hidden>·</span>
+                <span aria-hidden>Â·</span>
                 <span className="truncate">{f.name}</span>
                 <span className="text-ink-3">({(f.size / 1024 / 1024).toFixed(1)} MB)</span>
                 <button
@@ -144,14 +144,14 @@ export function FileUploader({
       ) : null}
 
       {error ? (
-        <p className="mt-2.5 flex items-start gap-2 border-2 border-red bg-[#FBE7E2] px-3 py-2 text-[12.5px] text-ink">
+        <p className="mt-2.5 flex items-start gap-2 border-2 border-red bg-red/10 px-3 py-2 text-[12.5px] text-ink">
           <AlertCircle size={14} className="mt-0.5 shrink-0 text-red" />
           {error}
         </p>
       ) : null}
 
       {done.length ? (
-        <p className="mt-2.5 flex items-start gap-2 border-2 border-green bg-[#DFF0E2] px-3 py-2 text-[12.5px] text-ink">
+        <p className="mt-2.5 flex items-start gap-2 border-2 border-green bg-green/10 px-3 py-2 text-[12.5px] text-ink">
           <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-green" />
           Uploaded {done.length} file{done.length > 1 ? "s" : ""}. The client can see{" "}
           {done.length > 1 ? "them" : "it"} in their portal now.
@@ -159,7 +159,7 @@ export function FileUploader({
       ) : null}
 
       <p className="mt-2 text-[11.5px] text-ink-3">
-        PDF, images, video or zip · up to 25 MB each
+        PDF, images, video or zip Â· up to 25 MB each
       </p>
     </div>
   );

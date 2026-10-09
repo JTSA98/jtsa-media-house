@@ -1,4 +1,3 @@
-import { Tape } from "@/components/ui/paper";
 import { services, work } from "@/lib/site-config";
 import type { SiteView } from "@/lib/settings";
 import { setting } from "@/lib/settings";
@@ -16,12 +15,11 @@ function SectionHead({
   body?: string;
 }) {
   return (
-    <div className="shead relative mb-13 text-center" data-reveal>
-      <Tape className="-top-[26px] left-1/2 -translate-x-1/2" />
-      <p className="hand -rotate-[1.6deg] text-[29px] leading-none text-red">
+<div className="relative mb-13 text-center" data-reveal>
+      <p className="text-[11px] font-semibold tracking-[0.3em] text-green uppercase">
         {kicker}
       </p>
-      <h2 className="mt-2.5 text-[clamp(30px,5.2vw,56px)] leading-none font-extrabold tracking-[-0.032em] uppercase">
+      <h2 className="display mt-4 text-[clamp(28px,4.6vw,52px)]">
         {title}
         {highlight ? (
           <>
@@ -51,16 +49,12 @@ export function Services({ site }: { site: SiteView }) {
             <article
               key={s.slug}
               data-reveal
-              className={`card-paper relative p-8 transition-[transform,box-shadow,background-color] duration-200 hover:translate-x-1 hover:-translate-y-1 hover:bg-sticky hover:shadow-[10px_10px_0_rgba(43,38,32,0.92)] md:hover:rotate-0 ${
-                i % 2 === 0 ? "md:-rotate-[0.7deg]" : "md:rotate-[0.6deg]"
-              }`}
+              className="card-paper relative rounded-sm p-8 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-green/35 hover:shadow-[0_24px_60px_rgba(0,245,212,0.1)]"
             >
-              <Tape className="-top-[13px] left-1/2 w-[112px] -translate-x-1/2" rotate={-2.5} />
-
-              <p className="text-[12px] font-extrabold tracking-[0.22em] text-green">
+              <p className="text-[11px] font-bold tracking-[0.24em] text-green">
                 {s.num}
               </p>
-              <h3 className="mt-2.5 text-[clamp(21px,2.5vw,29px)] leading-[1.1] font-extrabold tracking-[-0.022em] uppercase">
+              <h3 className="display mt-3 text-[clamp(19px,2.1vw,24px)]">
                 {s.title}
               </h3>
               <p className="mb-5 text-[14.5px] leading-[1.72] text-ink-2">{s.body}</p>
@@ -69,7 +63,7 @@ export function Services({ site }: { site: SiteView }) {
                 {s.tags.map((t) => (
                   <span
                     key={t}
-                    className="border-2 border-ink bg-white px-2 py-[3px] text-[11px] font-bold"
+                    className="rounded-full border border-white/14 bg-white/6 px-2.5 py-[3px] text-[10.5px] font-semibold tracking-[0.06em] text-ink-2"
                   >
                     {t}
                   </span>
@@ -92,20 +86,20 @@ export function Services({ site }: { site: SiteView }) {
 
 export function StatsBand({ site }: { site: SiteView }) {
   return (
-    <div className="grid grid-cols-2 border-y-[2.5px] border-ink bg-kraft-2 md:grid-cols-4">
+<div className="grid grid-cols-2 border-y border-white/10 bg-black/25 md:grid-cols-4">
       {site.stats.map((s, i) => (
         <div
           key={s.label}
-          className={`px-5 py-8 text-center ${
-            i !== site.stats.length - 1 ? "border-r-2 border-dashed border-ink/25" : ""
-          } ${i < 2 ? "border-b-2 border-dashed border-ink/25 md:border-b-0" : ""} ${
+          className={`px-5 py-9 text-center ${
+            i !== site.stats.length - 1 ? "border-r border-white/10" : ""
+          } ${i < 2 ? "border-b border-white/10 md:border-b-0" : ""} ${
             i % 2 === 1 ? "md:border-r-0" : ""
           }`}
         >
-          <b className="block text-[clamp(34px,4.4vw,52px)] leading-none font-extrabold tracking-[-0.035em] text-green">
+          <b className="block text-[clamp(32px,4vw,46px)] leading-none font-bold tracking-[-0.02em] text-green">
             {s.value}
           </b>
-          <span className="mt-2 block text-[10.5px] font-bold tracking-[0.18em] text-ink-2 uppercase">
+          <span className="mt-3 block text-[10px] font-semibold tracking-[0.2em] text-ink-3 uppercase">
             {s.label}
           </span>
         </div>
@@ -155,27 +149,23 @@ export function Audiences({ site: _site }: { site: SiteView }) {
                 ["Pay how you like", "UPI online, or cash at a partner school."],
               ],
             },
-          ].map((a, i) => (
-            <div
-              key={a.highlight}
-              data-reveal
-              className={`card-white p-8 ${a.tilt}`}
-            >
-              <h3 className="text-[clamp(24px,3vw,34px)] leading-[1.05] font-extrabold tracking-[-0.025em] uppercase">
+].map((a) => (
+            <div key={a.highlight} data-reveal className="card-paper rounded-sm p-8">
+              <h3 className="display text-[clamp(21px,2.4vw,28px)]">
                 {a.heading} <span className="text-green">{a.highlight}</span>
               </h3>
-              <p className="my-4 text-[14.5px] text-ink-2">{a.intro}</p>
+              <p className="my-5 text-[14.5px] text-ink-2">{a.intro}</p>
               <ul className="flex flex-col">
                 {a.points.map(([title, body]) => (
                   <li
                     key={title}
-                    className="flex items-start gap-3 border-b-[1.5px] border-dashed border-ink/20 py-3 text-[14.5px] text-ink-2 last:border-b-0"
+                    className="flex items-start gap-3 border-b border-white/8 py-3.5 text-[14.5px] text-ink-2 last:border-b-0"
                   >
-                    <span aria-hidden className="shrink-0 font-extrabold text-green">
+                    <span aria-hidden className="shrink-0 font-bold text-green">
                       ✓
                     </span>
                     <span>
-                      <b className="mb-px block font-bold text-ink">{title}</b>
+                      <b className="mb-px block font-semibold text-ink">{title}</b>
                       {body}
                     </span>
                   </li>
@@ -202,15 +192,12 @@ export function Work({ site: _site }: { site: SiteView }) {
 
         <div className="grid gap-6 px-2.5 py-3 sm:grid-cols-2 lg:grid-cols-3">
           {work.map((w, i) => (
-            <figure
+<figure
               key={w.src + i}
               data-reveal
-              className={`group relative bg-white pt-3 pr-3 pb-[42px] pl-3 shadow-[0_13px_30px_rgba(43,38,32,0.25)] transition duration-200 hover:z-20 hover:rotate-0 hover:scale-[1.06] hover:shadow-[0_22px_46px_rgba(43,38,32,0.36)] ${
-                ["-rotate-[2.6deg]", "rotate-[1.7deg]", "-rotate-[1.1deg]", "rotate-[2.7deg]", "-rotate-[1.8deg]", "rotate-[1.2deg]"][i]
-              }`}
+              className="group relative rounded-sm border border-white/12 bg-kraft-2 p-2.5 pb-9 shadow-[0_18px_44px_rgba(2,6,12,0.55)] transition duration-300 hover:z-20 hover:border-green/35 hover:scale-[1.03]"
             >
-              <Tape className="-top-3 left-1/2 h-[23px] w-[92px] -translate-x-1/2" rotate={-4} />
-              <div className="relative h-[212px] w-full overflow-hidden">
+              <div className="relative h-[212px] w-full overflow-hidden rounded-sm">
                 <Image
                   src={w.src}
                   alt={w.alt}
@@ -219,7 +206,7 @@ export function Work({ site: _site }: { site: SiteView }) {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="hand absolute right-3 bottom-2 left-3 text-center text-[20px] leading-none text-[#5A5148]">
+              <figcaption className="absolute right-3 bottom-2.5 left-3 truncate text-center text-[10.5px] font-semibold tracking-[0.14em] text-ink-3 uppercase">
                 {w.caption}
               </figcaption>
             </figure>
@@ -243,13 +230,16 @@ export function MarqueeBand({ site: _site }: { site: SiteView }) {
   ];
 
   return (
-    <div className="marq my-6 -rotate-[0.8deg] scale-[1.035] overflow-hidden bg-ink py-[15px] whitespace-nowrap text-kraft">
+<div className="my-6 overflow-hidden border-y border-white/10 bg-black/35 py-4 whitespace-nowrap">
       <div className="animate-marquee inline-block">
         {[0, 1].map((dup) => (
           <span key={dup}>
             {items.map((label) => (
-              <span key={label} className="mr-11 inline-block text-[19px] font-extrabold uppercase">
-                {label} <i className="not-italic text-yellow">✦</i>
+              <span
+                key={label}
+                className="mr-11 inline-block text-[12px] font-bold tracking-[0.22em] text-ink-2 uppercase"
+              >
+                {label} <i className="not-italic text-green">✦</i>
               </span>
             ))}
           </span>

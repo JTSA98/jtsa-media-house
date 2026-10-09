@@ -26,11 +26,11 @@ export function NavBar({ site }: { site: SiteView }) {
 
   return (
     <>
-      <div className="bg-ink px-5 py-2 text-[12.5px] text-kraft">
+      <div className="border-b border-white/10 bg-black/40 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase">
         <div className="mx-auto flex max-w-[1220px] flex-wrap justify-between gap-4">
           <p>
             Admission season <b className="font-bold text-yellow">2026</b> slots are
-            open — <span className="text-[#A79E92]">first reply within 24 hours</span>
+            open — <span className="text-ink-3">first reply within 24 hours</span>
           </p>
           <p>
             <b className="font-bold text-yellow">{site.udyam}</b> · {site.city},{" "}
@@ -39,20 +39,18 @@ export function NavBar({ site }: { site: SiteView }) {
         </div>
       </div>
 
-      <nav className="sticky top-0 z-80 border-b-2 border-dashed border-ink/22 bg-kraft/94 backdrop-blur-[10px]">
+      <nav className="sticky top-0 z-80 border-b border-white/10 bg-kraft/88 backdrop-blur-xl">
         <div className="wrap flex items-center justify-between gap-5 py-4">
           <Link href="#top" className="flex items-center gap-3">
-            <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold tracking-[-0.02em] text-white shadow-[3px_3px_0_var(--color-ink)]">
-              {site.ownerShort}
-            </span>
-            <span>
-              <b className="block text-[17px] leading-[1.1] font-extrabold tracking-[-0.02em]">
-                {site.name}
-              </b>
-              <span className="mt-0.5 block text-[9.5px] font-bold tracking-[0.26em] text-ink-2 uppercase">
-                Advertising &amp; Creative
-              </span>
-            </span>
+            {/* `-dark` = the brand artwork with its opaque black panel knocked out
+                to transparent, so it sits directly on the slate ground */}
+            <img
+              src="/brand/logo-horizontal-dark.png"
+              alt={site.name}
+              width={124}
+              height={44}
+              className="h-11 w-auto"
+            />
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
@@ -60,20 +58,20 @@ export function NavBar({ site }: { site: SiteView }) {
               <a
                 key={l.href}
                 href={l.href}
-                className="-rotate-[0.5deg] px-3 py-2 text-[13.5px] font-bold transition hover:-rotate-2 hover:scale-[1.06] hover:bg-yellow"
+                className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
               >
                 {l.label}
               </a>
             ))}
             <Link
               href="/portal"
-              className="px-3 py-2 text-[13.5px] font-bold transition hover:-rotate-2 hover:bg-yellow"
+              className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
             >
               Client Login
             </Link>
             <a
               href="#enquire"
-              className="btn btn-green ml-3 !px-[18px] !py-2 !text-[13px]"
+              className="btn btn-green ml-3 !px-[18px] !py-2.5 !text-[12px] !tracking-[0.1em] !uppercase"
             >
               Get a Quote
             </a>
@@ -83,9 +81,9 @@ export function NavBar({ site }: { site: SiteView }) {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className="flex size-[46px] items-center justify-center border-[2.5px] border-ink bg-yellow shadow-[3px_3px_0_var(--color-ink)] lg:hidden"
+            className="flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green lg:hidden"
           >
-            <Menu size={22} strokeWidth={2.5} />
+            <Menu size={20} strokeWidth={2.5} />
           </button>
         </div>
       </nav>
@@ -101,17 +99,17 @@ export function NavBar({ site }: { site: SiteView }) {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close menu"
-          className="absolute top-5 right-[5vw] flex size-[46px] items-center justify-center border-[2.5px] border-ink bg-red shadow-[3px_3px_0_var(--color-ink)]"
+          className="absolute top-5 right-[5vw] flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green"
         >
-          <X size={24} strokeWidth={3} />
+          <X size={22} strokeWidth={3} />
         </button>
 
-        {LINKS.map((l, i) => (
+        {LINKS.map((l) => (
           <a
             key={l.href}
             href={l.href}
             onClick={() => setOpen(false)}
-            className={`-rotate-1 text-[26px] font-extrabold ${i % 2 ? "rotate-1" : ""}`}
+            className="text-[24px] font-bold tracking-[0.06em] text-ink uppercase"
           >
             {l.label}
           </a>
@@ -119,7 +117,7 @@ export function NavBar({ site }: { site: SiteView }) {
         <Link
           href="/portal"
           onClick={() => setOpen(false)}
-          className="-rotate-1 text-[26px] font-extrabold"
+          className="text-[24px] font-bold tracking-[0.06em] text-green uppercase"
         >
           Client Login
         </Link>

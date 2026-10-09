@@ -5,21 +5,32 @@ import type { SiteView } from "@/lib/settings";
 
 export function SiteFooter({ site }: { site: SiteView }) {
   return (
-    <footer className="bg-ink pt-14 pb-8 text-kraft">
+// was `bg-ink text-kraft`, which inverted when the tokens flipped:
+    // the footer must stay the darkest band on the page
+    <footer className="border-t border-white/10 bg-black/45 pt-14 pb-8">
       <div className="wrap">
         <div className="grid gap-11 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
           <div>
-            <b className="block text-[19px] font-extrabold tracking-[-0.02em] text-white">
-              {site.name}
-            </b>
-            <p className="mt-3.5 max-w-[36ch] text-[13.5px] leading-[1.85] text-[#A79E92]">
-              A Sub-Venture of {site.owner}. Registered organisation —{" "}
+            <img
+              src="/brand/logo-horizontal-dark.png"
+              alt={site.name}
+              width={186}
+              height={65}
+              className="h-14 w-auto"
+            />
+            <p className="mt-5 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
+              Truth · Knowledge · Impact
+            </p>
+            <p className="mt-4 max-w-[36ch] text-[13.5px] leading-[1.85] text-ink-3">
+              A Sub-Venture of {site.owner}. Registered organisation &mdash;{" "}
               {site.udyam}. Rooted in {site.city}, ready for tomorrow.
             </p>
           </div>
 
           <div>
-            <p className="hand mb-4 text-[24px] leading-none text-yellow">Explore</p>
+            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
+              Explore
+            </p>
             <div className="flex flex-col gap-2.5">
               {[
                 ["#services", "Services"],
@@ -40,7 +51,9 @@ export function SiteFooter({ site }: { site: SiteView }) {
           </div>
 
           <div>
-            <p className="hand mb-4 text-[24px] leading-none text-yellow">Social</p>
+            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
+              Social
+            </p>
             <div className="flex flex-col gap-2.5">
               {site.socials.map((s) => (
                 <a
@@ -55,8 +68,10 @@ export function SiteFooter({ site }: { site: SiteView }) {
           </div>
 
           <div>
-            <p className="hand mb-4 text-[24px] leading-none text-yellow">Reach us</p>
-            <div className="flex flex-col gap-3.5 text-[13.5px] text-[#A79E92]">
+            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
+              Reach us
+            </p>
+            <div className="flex flex-col gap-3.5 text-[13.5px] text-ink-3">
               <p className="flex gap-3">
                 <i className="shrink-0 font-extrabold text-yellow">✉</i>
                 <span>
@@ -78,7 +93,7 @@ export function SiteFooter({ site }: { site: SiteView }) {
               <p className="flex gap-3">
                 <i className="shrink-0 font-extrabold text-yellow">◎</i>
                 <span>
-                  <b className="block font-bold text-white">{site.udyam}</b>
+                  <b className="block font-semibold text-ink">{site.udyam}</b>
                   Government of India, MSME
                 </span>
               </p>
@@ -86,7 +101,7 @@ export function SiteFooter({ site }: { site: SiteView }) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-between gap-4 border-t-[1.5px] border-dashed border-kraft/24 pt-6 text-[12.5px] text-[#8A8175]">
+        <div className="mt-10 flex flex-wrap justify-between gap-4 border-t border-white/10 pt-6 text-[12.5px] text-ink-3">
           <p>
             © 2026 {site.name}. A Sub-Venture of {site.ownerShort}. All
             rights reserved.

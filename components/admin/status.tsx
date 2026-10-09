@@ -5,29 +5,31 @@ export const requestStatusMeta: Record<
   RequestStatus,
   { label: string; chip: string; blurb: string }
 > = {
+  // `text-ink` is light on the dark ground, so every chip now carries an
+// explicit border and a tinted fill rather than a flat saturated block.
   new: {
     label: "New",
-    chip: "bg-red text-white",
+    chip: "bg-red/12 text-red border border-red/35",
     blurb: "Just registered — needs a first reply.",
   },
   contacted: {
     label: "Contacted",
-    chip: "bg-yellow text-ink",
+    chip: "bg-yellow/12 text-yellow border border-yellow/35",
     blurb: "We have reached out, waiting on them.",
   },
   quoted: {
     label: "Quoted",
-    chip: "bg-[#2B5EA8] text-white",
+    chip: "bg-[#2B5EA8]/18 text-[#8FB4E8] border border-[#2B5EA8]/45",
     blurb: "Quote sent, awaiting a decision.",
   },
   won: {
     label: "Working",
-    chip: "bg-green text-white",
+    chip: "bg-green/12 text-green border border-green/35",
     blurb: "Signed off — project is live in the portal.",
   },
   lost: {
     label: "Not going ahead",
-    chip: "bg-ink-3 text-white",
+    chip: "bg-white/8 text-ink-3 border border-white/15",
     blurb: "Declined or gone quiet.",
   },
 };

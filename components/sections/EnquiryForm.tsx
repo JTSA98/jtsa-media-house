@@ -127,7 +127,11 @@ export function EnquiryForm() {
         placeholder="Number of students, budget, language preference, or the message you want people to read."
       />
 
-      <button type="submit" disabled={state === "sending"} className="btn btn-green text-[15.5px] px-[38px] py-[19px] disabled:opacity-60">
+      <button
+        type="submit"
+        disabled={state === "sending"}
+        className="btn btn-green !px-[34px] !py-[16px] !text-[13px] !tracking-[0.1em] !uppercase disabled:opacity-60"
+      >
         {state === "sending" ? (
           <>
             <Loader2 size={18} className="mr-2 animate-spin" /> Sending…
@@ -140,16 +144,16 @@ export function EnquiryForm() {
       </button>
 
       {state === "sent" ? (
-        <p className="mt-4 flex items-center border-[2.5px] border-green bg-[#DFF0E2] px-4 py-3.5 text-center text-[14px] font-bold">
+        <p className="mt-4 flex items-center rounded-sm border border-green/40 bg-green/8 px-4 py-3.5 text-center text-[14px] font-medium text-ink">
           <Check size={18} className="mr-2 shrink-0 text-green" />
           Thank you — your enquiry is noted. We reply within 24 hours, usually sooner.
         </p>
       ) : null}
 
       {state === "error" ? (
-        <p className="mt-4 border-[2.5px] border-red bg-[#FBE7E2] px-4 py-3.5 text-[13.5px] text-ink">
+        <p className="mt-4 rounded-sm border border-red/40 bg-red/8 px-4 py-3.5 text-[13.5px] text-ink-2">
           Could not save that just now — {error}. Please WhatsApp or call us on{" "}
-          <a href={`tel:${site.phoneDigits}`} className="font-bold underline">
+          <a href={`tel:${site.phoneDigits}`} className="font-semibold text-green underline">
             {site.phone}
           </a>
           .

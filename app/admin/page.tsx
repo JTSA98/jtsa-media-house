@@ -128,7 +128,7 @@ export default async function AdminPage() {
                         {c.full_name ?? "—"}
                       </b>
                       {c.is_admin ? (
-                        <AdminBadge className="mt-1 bg-red text-white">Admin</AdminBadge>
+                        <AdminBadge className="mt-1 bg-red/12 text-red border border-red/35">Admin</AdminBadge>
                       ) : null}
                       <span className="text-[12px] text-ink-3">{c.client_type ?? ""}</span>
                     </td>

@@ -25,7 +25,7 @@ export default function RegisterPage() {
       <header className="border-b-[2.5px] border-ink bg-kraft">
         <div className="wrap flex items-center justify-between py-4">
           <Link href="/" className="flex items-center gap-3">
-            <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold text-white shadow-[3px_3px_0_var(--color-ink)]">
+            <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold text-white shadow-[0_8px_22px_rgba(2,6,12,0.5)]">
               {site.shortName}
             </span>
             <span>

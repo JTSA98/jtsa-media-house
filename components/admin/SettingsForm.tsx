@@ -79,9 +79,9 @@ export function SettingsForm({
             <button
               type="button"
               onClick={() => setOpenGroups((s) => ({ ...s, [group]: !s[group] }))}
-              className="flex w-full items-center justify-between gap-3 bg-ink px-5 py-3 text-left text-kraft"
+              className="flex w-full items-center justify-between gap-3 bg-black/40 px-5 py-3 text-left"
             >
-              <span className="text-[12.5px] font-extrabold tracking-[0.18em] uppercase">
+              <span className="text-[11px] font-semibold tracking-[0.18em] text-ink uppercase">
                 {labels[group] ?? group}
               </span>
               <span className="text-[11px] font-bold opacity-70">
@@ -101,7 +101,7 @@ export function SettingsForm({
       })}
 
       {/* save bar */}
-      <div className="sticky bottom-0 flex flex-wrap items-center gap-3 border-[2.5px] border-ink bg-kraft-2 p-4 shadow-[5px_5px_0_var(--color-ink)]">
+      <div className="sticky bottom-0 flex flex-wrap items-center gap-3 border-[2.5px] border-ink bg-kraft-2 p-4 shadow-[0_14px_34px_rgba(2,6,12,0.5)]">
         <button
           type="submit"
           disabled={pending}
@@ -109,7 +109,7 @@ export function SettingsForm({
         >
           {pending ? (
             <>
-              <Loader2 size={16} className="mr-2 animate-spin" /> Saving…
+              <Loader2 size={16} className="mr-2 animate-spin" /> Saving‚
             </>
           ) : (
             <>
@@ -119,14 +119,14 @@ export function SettingsForm({
         </button>
 
         {state.saved !== null && !state.error ? (
-          <span className="flex items-center border-2 border-green bg-[#DFF0E2] px-3 py-2 text-[13px] font-bold text-ink">
+          <span className="flex items-center border-2 border-green bg-green/10 px-3 py-2 text-[13px] font-bold text-ink">
             <Check size={15} className="mr-1.5 text-green" />
             {state.saved} setting{state.saved === 1 ? "" : "s"} saved
           </span>
         ) : null}
 
         {state.error ? (
-          <span className="flex items-center border-2 border-red bg-[#FBE7E2] px-3 py-2 text-[13px] text-ink">
+          <span className="flex items-center border-2 border-red bg-red/10 px-3 py-2 text-[13px] text-ink">
             <AlertCircle size={15} className="mr-1.5 text-red" />
             {state.error}
           </span>
@@ -210,7 +210,7 @@ export function SecretStatus({
         <span className="text-[12.5px] font-extrabold">{label}</span>
         <span
           className={`border-2 border-ink px-2 py-[1px] text-[10px] font-extrabold uppercase ${
-            configured ? "bg-green text-white" : "bg-red text-white"
+            configured ? "bg-green/12 text-green border-green/35" : "bg-red/12 text-red border-red/35"
           }`}
         >
           {configured ? "configured" : "missing"}

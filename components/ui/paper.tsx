@@ -1,20 +1,15 @@
 import { cn } from "@/lib/utils";
 
-/** A strip of washi tape. Position with the caller's classes. */
+/** Retired with the paper-craft design — kept as a no-op so the
+    remaining call sites compile without touching their markup. */
 export function Tape({
   className,
-  rotate = -3,
+  rotate: _rotate,
 }: {
   className?: string;
   rotate?: number;
 }) {
-  return (
-    <span
-      aria-hidden
-      className={cn("tape", className)}
-      style={{ transform: `rotate(${rotate}deg)` }}
-    />
-  );
+  return null;
 }
 
 /** Marker-highlighted phrase. */
@@ -33,11 +28,11 @@ export function Marker({
   );
 }
 
-/** Sticky note with handwriting. */
+/** Accent note card. */
 export function HandNote({
   children,
   className,
-  rotate = -2,
+  rotate = 0,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -45,8 +40,11 @@ export function HandNote({
 }) {
   return (
     <div
-      className={cn("hand-note", className)}
-      style={{ transform: `rotate(${rotate}deg)` }}
+      className={cn(
+        "rounded-sm border border-green/25 bg-kraft-3 px-4 py-3 font-semibold tracking-[0.06em] text-green shadow-[0_14px_34px_rgba(0,245,212,0.12)]",
+        className,
+      )}
+      style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
     >
       {children}
     </div>

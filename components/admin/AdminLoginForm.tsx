@@ -13,23 +13,21 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="card-white relative p-7 shadow-[7px_7px_0_rgba(0,0,0,0.92)] md:p-10">
-      <span aria-hidden className="tape -top-[14px] left-[14%] -rotate-3" />
+    <div className="card-white relative p-7 shadow-[0_22px_56px_rgba(2,6,12,0.55)] md:p-10">
+      
 
-      <div className="mb-4 flex size-14 items-center justify-center border-[2.5px] border-ink bg-red text-white">
+      <div className="mb-4 flex size-14 items-center justify-center rounded-sm border border-red/35 bg-red/12 text-red">
         <ShieldCheck size={26} strokeWidth={2.5} />
       </div>
 
-      <h1 className="text-[clamp(24px,3.6vw,34px)] leading-none font-extrabold tracking-[-0.032em] uppercase">
-        Staff sign in
-      </h1>
+      <h1 className="display text-[clamp(22px,3vw,30px)]">Staff sign in</h1>
       <p className="mt-2.5 text-[14px] leading-[1.75] text-ink-2">
         Restricted to owner accounts. Client logins are refused here even if they
         know this page exists.
       </p>
 
       {allowListCount === 0 ? (
-        <p className="mt-5 border-[2.5px] border-red bg-[#FBE7E2] px-3.5 py-3 text-[13px] leading-[1.7]">
+        <p className="mt-5 border-[2.5px] border-red bg-red/10 px-3.5 py-3 text-[13px] leading-[1.7]">
           <b>No admin allow-list configured.</b> Add your email to{" "}
           <code className="font-mono">ADMIN_EMAILS</code> in <code className="font-mono">.env.local</code>{" "}
           and restart the server.
@@ -88,7 +86,7 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
             className={`flex items-start gap-2 border-[2.5px] px-3.5 py-3 text-[13px] text-ink ${
               state.notAllowed
                 ? "border-ink bg-sticky"
-                : "border-red bg-[#FBE7E2]"
+                : "border-red bg-red/10"
             }`}
           >
             <AlertCircle
@@ -106,7 +104,7 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
         >
           {pending ? (
             <>
-              <Loader2 size={17} className="mr-2 animate-spin" /> Checking…
+              <Loader2 size={17} className="mr-2 animate-spin" /> Checking‚
             </>
           ) : (
             <>
@@ -124,7 +122,7 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
           </Link>
         </p>
         <Link href="/" className="block font-bold text-ink-2 underline hover:text-green">
-          ← Back to the website
+          â† Back to the website
         </Link>
       </div>
     </div>

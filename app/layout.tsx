@@ -1,24 +1,30 @@
 import type { Metadata } from "next";
-import { Caveat, Karla, Patrick_Hand } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
+import { AmbientBackdrop } from "@/components/AmbientBackdrop";
 
-const karla = Karla({
+/* Brand & Design Kit type stack:
+   Montserrat — headings, uppercase, wide tracking
+   Inter — body and UI
+   The CSS variable names are deliberately kept as --font-karla /
+   --font-caveat / --font-hand so existing class names keep resolving. */
+const karla = Inter({
   subsets: ["latin"],
   variable: "--font-karla",
   display: "swap",
 });
 
-const caveat = Caveat({
+const caveat = Montserrat({
   subsets: ["latin"],
   variable: "--font-caveat",
   display: "swap",
 });
 
-const patrickHand = Patrick_Hand({
+const patrickHand = Montserrat({
   subsets: ["latin"],
-  weight: "400",
+  weight: "700",
   variable: "--font-hand",
   display: "swap",
 });
@@ -57,9 +63,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${karla.variable} ${caveat.variable} ${patrickHand.variable} grain`}
+      className={`${karla.variable} ${caveat.variable} ${patrickHand.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <AmbientBackdrop />
+        {children}
+      </body>
     </html>
   );
 }

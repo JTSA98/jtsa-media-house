@@ -13,7 +13,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
         const isOpen = openIndex === i;
 
         return (
-          <div key={item.q} className="border-b-2 border-dashed border-ink/30">
+          <div key={item.q} className="border-b border-white/10">
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : i)}
@@ -21,7 +21,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               className="flex w-full cursor-pointer items-center justify-between gap-6 px-1.5 py-6 text-left"
             >
               <span
-                className={`text-[17px] leading-[1.4] font-bold transition-colors ${
+                className={`text-[16px] leading-[1.45] font-semibold transition-colors ${
                   isOpen ? "text-green" : "text-ink hover:text-green"
                 }`}
               >
@@ -29,7 +29,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
               </span>
               <span
                 aria-hidden
-                className={`shrink-0 text-[26px] leading-none font-bold text-green transition-transform duration-300 ${
+                className={`shrink-0 text-[24px] leading-none font-light text-green transition-transform duration-300 ${
                   isOpen ? "rotate-45" : ""
                 }`}
               >

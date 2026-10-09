@@ -21,7 +21,7 @@ export function PortalNavClient({ profile }: { profile?: Profile | null }) {
     <header className="border-b-[2.5px] border-ink bg-kraft">
       <div className="wrap flex items-center justify-between gap-4 py-4">
         <Link href="/portal" className="flex items-center gap-3">
-          <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold text-white shadow-[3px_3px_0_var(--color-ink)]">
+          <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold text-white shadow-[0_8px_22px_rgba(2,6,12,0.5)]">
             {site.shortName}
           </span>
           <span>
@@ -43,7 +43,7 @@ export function PortalNavClient({ profile }: { profile?: Profile | null }) {
           <button
             type="button"
             onClick={signOut}
-            className="flex items-center gap-2 border-[2.5px] border-ink bg-white px-3.5 py-2 text-[12.5px] font-extrabold transition hover:bg-sticky hover:shadow-[3px_3px_0_var(--color-ink)]"
+            className="flex items-center gap-2 border-[2.5px] border-ink bg-white px-3.5 py-2 text-[12.5px] font-extrabold transition hover:bg-sticky hover:shadow-[0_8px_22px_rgba(2,6,12,0.5)]"
           >
             <LogOut size={14} /> Sign out
           </button>
@@ -53,7 +53,7 @@ export function PortalNavClient({ profile }: { profile?: Profile | null }) {
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle portal menu"
-          className="flex size-[42px] items-center justify-center border-[2.5px] border-ink bg-yellow shadow-[3px_3px_0_var(--color-ink)] sm:hidden"
+          className="flex size-[42px] items-center justify-center border-[2.5px] border-ink bg-yellow shadow-[0_8px_22px_rgba(2,6,12,0.5)] sm:hidden"
         >
           {open ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
         </button>

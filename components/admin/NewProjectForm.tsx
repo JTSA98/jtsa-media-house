@@ -66,7 +66,7 @@ export function NewProjectForm({
 
     const amt = r.message?.match(/Budget:\s*(.+)/)?.[1];
     if (amt && !amount) {
-      const mid = { "Under ₹5,000": "5000", "₹5,000 – ₹10,000": "10000", "₹10,000 – ₹25,000": "25000", "₹25,000 – ₹50,000": "50000", "Above ₹50,000": "100000" }[amt];
+      const mid = { "Under â‚¹5,000": "5000", "â‚¹5,000 – â‚¹10,000": "10000", "â‚¹10,000 – â‚¹25,000": "25000", "â‚¹25,000 – â‚¹50,000": "50000", "Above â‚¹50,000": "100000" }[amt];
       if (mid) setAmount(mid);
     }
   }
@@ -207,11 +207,11 @@ export function NewProjectForm({
                 required
                 className="field !py-2.5 !text-[13px]"
               >
-                <option value="">Choose…</option>
+                <option value="">Choose‚</option>
                 {clients.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.organisation || c.full_name || c.email}
-                    {c.email ? ` · ${c.email}` : ""}
+                    {c.email ? ` Â· ${c.email}` : ""}
                   </option>
                 ))}
               </select>
@@ -253,7 +253,7 @@ export function NewProjectForm({
 
             <div>
               <label htmlFor="amt" className="mb-1.5 block text-[10.5px] font-extrabold tracking-[0.18em] text-ink-3 uppercase">
-                Agreed amount (₹)
+                Agreed amount (â‚¹)
               </label>
               <input
                 id="amt"
@@ -313,18 +313,18 @@ export function NewProjectForm({
               onChange={(e) => setWithMilestones(e.target.checked)}
               className="size-4"
             />
-            Add the 5 standard steps (brief → creative → approval → delivery → report)
+            Add the 5 standard steps (brief â†’ creative â†’ approval â†’ delivery â†’ report)
           </label>
 
           {error ? (
-            <p className="flex items-start gap-2 border-[2.5px] border-red bg-[#FBE7E2] px-3.5 py-3 text-[13px] text-ink">
+            <p className="flex items-start gap-2 border-[2.5px] border-red bg-red/10 px-3.5 py-3 text-[13px] text-ink">
               <AlertCircle size={16} className="mt-0.5 shrink-0 text-red" />
               {error}
             </p>
           ) : null}
 
           {created ? (
-            <p className="flex items-start gap-2 border-[2.5px] border-green bg-[#DFF0E2] px-3.5 py-3 text-[13px] text-ink">
+            <p className="flex items-start gap-2 border-[2.5px] border-green bg-green/10 px-3.5 py-3 text-[13px] text-ink">
               <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-green" />
               Project created. It is now in the list below and live in the
               client&apos;s portal.
@@ -334,7 +334,7 @@ export function NewProjectForm({
           <button type="submit" disabled={busy} className="btn btn-green w-fit disabled:opacity-60">
             {busy ? (
               <>
-                <Loader2 size={16} className="mr-2 animate-spin" /> Creating…
+                <Loader2 size={16} className="mr-2 animate-spin" /> Creating‚
               </>
             ) : (
               <>

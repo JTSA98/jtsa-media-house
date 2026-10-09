@@ -68,7 +68,7 @@ export function RequestStatusControl({
               title={meta.blurb}
               className={`border-2 border-ink px-2.5 py-1 text-[11px] font-extrabold tracking-[0.06em] uppercase transition ${
                 active
-                  ? `${meta.chip} shadow-[2px_2px_0_var(--color-ink)]`
+                  ? `${meta.chip} shadow-[0_6px_16px_rgba(2,6,12,0.45)]`
                   : "bg-white text-ink-3 hover:bg-sticky"
               }`}
             >

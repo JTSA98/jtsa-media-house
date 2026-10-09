@@ -37,3 +37,17 @@ yarn-error.log*
 .vercel
 
 .env*
+
+# local design review mockups (never deployed)
+/design-concepts/
+
+# Brand kit source extractions. Only logo-horizontal-dark.png is actually
+# referenced by the app; the rest are the unedited PDF crops kept locally
+# as the source for future logo variants. Ignored so they stay out of git
+# but remain on disk.
+public/brand/*
+!public/brand/logo-horizontal-dark.png
+
+# Brand kit source PDF — reference material, not something the app serves
+/*Brand*Design*Kit.pdf
+

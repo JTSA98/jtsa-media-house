@@ -123,7 +123,7 @@ function MilestoneRow({
                   href={f.file_url ?? "#"}
                   target={f.file_url ? "_blank" : undefined}
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 border-2 border-ink bg-white px-2.5 py-1.5 text-[12.5px] font-bold transition hover:bg-sticky hover:shadow-[3px_3px_0_var(--color-ink)]"
+                  className="inline-flex items-center gap-2 border-2 border-ink bg-white px-2.5 py-1.5 text-[12.5px] font-bold transition hover:bg-sticky hover:shadow-[0_8px_22px_rgba(2,6,12,0.5)]"
                 >
                   <FileText size={14} className="shrink-0 text-green" />
                   <span className="truncate">{f.label}</span>

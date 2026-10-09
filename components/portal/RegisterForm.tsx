@@ -27,11 +27,11 @@ const BUSINESS_TYPES = [
 ];
 
 const BUDGETS = [
-  "Under ₹5,000",
-  "₹5,000 – ₹10,000",
-  "₹10,000 – ₹25,000",
-  "₹25,000 – ₹50,000",
-  "Above ₹50,000",
+  "Under â‚¹5,000",
+  "â‚¹5,000 – â‚¹10,000",
+  "â‚¹10,000 – â‚¹25,000",
+  "â‚¹25,000 – â‚¹50,000",
+  "Above â‚¹50,000",
   "Not sure yet",
 ];
 
@@ -50,8 +50,8 @@ export function RegisterForm() {
 
   if (state.needsConfirmation) {
     return (
-      <div className="card-white relative p-7 shadow-[7px_7px_0_var(--color-ink)] md:p-10">
-        <span aria-hidden className="tape -top-[14px] left-[14%] -rotate-3" />
+      <div className="card-white relative p-7 shadow-[0_22px_56px_rgba(2,6,12,0.55)] md:p-10">
+        
         <MailCheck size={40} className="mb-4 text-green" />
         <h1 className="text-[clamp(24px,3.6vw,34px)] leading-none font-extrabold tracking-[-0.032em] uppercase">
           Check your inbox
@@ -72,8 +72,8 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="card-white relative p-7 shadow-[7px_7px_0_var(--color-ink)] md:p-10">
-      <span aria-hidden className="tape -top-[14px] left-[14%] -rotate-3" />
+    <div className="card-white relative p-7 shadow-[0_22px_56px_rgba(2,6,12,0.55)] md:p-10">
+      
 
       <p className="hand -rotate-2 text-[clamp(20px,2.6vw,28px)] text-red">
         Join the portal
@@ -87,7 +87,7 @@ export function RegisterForm() {
       </p>
 
       <form action={action} className="mt-7 flex flex-col gap-4">
-        {/* ── who you are ── */}
+        {/* â”€â”€ who you are â”€â”€ */}
         <Field label="Your name" name="fullName" required placeholder="Full name" />
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Email" name="email" type="email" required placeholder="you@organisation.com" />
@@ -112,7 +112,7 @@ export function RegisterForm() {
 
         <div className="h-px bg-ink/15" />
 
-        {/* ── your organisation ── */}
+        {/* â”€â”€ your organisation â”€â”€ */}
         <p className="-mt-1 text-[11px] font-extrabold tracking-[0.2em] text-green uppercase">
           About your work
         </p>
@@ -132,10 +132,10 @@ export function RegisterForm() {
             {CLIENT_TYPES.map((t) => (
               <label
                 key={t.value}
-                className={`flex cursor-pointer items-center gap-2.5 border-2 border-ink p-3 text-[13px] font-bold transition ${
+                className={`flex cursor-pointer items-center gap-2.5 border p-3 text-[13px] font-semibold transition ${
                   clientType === t.value
-                    ? "bg-green text-white shadow-[3px_3px_0_var(--color-ink)]"
-                    : "bg-white hover:bg-sticky"
+                    ? "border-green bg-green/12 text-ink"
+                    : "border-white/14 bg-white/4 text-ink-2 hover:border-green/40 hover:bg-white/7"
                 }`}
               >
                 <input
@@ -181,7 +181,7 @@ export function RegisterForm() {
         <Select label="How did you hear about us?" name="referral" options={REFERRALS} placeholder="Choose one (optional)" />
 
         {state.error ? (
-          <p className="flex items-start gap-2 border-[2.5px] border-red bg-[#FBE7E2] px-3.5 py-3 text-[13px] text-ink">
+          <p className="flex items-start gap-2 border-[2.5px] border-red bg-red/10 px-3.5 py-3 text-[13px] text-ink">
             <AlertCircle size={16} className="mt-0.5 shrink-0 text-red" />
             {state.error}
           </p>
@@ -194,7 +194,7 @@ export function RegisterForm() {
         >
           {pending ? (
             <>
-              <Loader2 size={17} className="mr-2 animate-spin" /> Creating your account…
+              <Loader2 size={17} className="mr-2 animate-spin" /> Creating your account‚
             </>
           ) : (
             <>

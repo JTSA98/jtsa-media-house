@@ -86,7 +86,7 @@ export default async function PortalPage() {
       {closed.length ? (
         <section>
           <h2 className="mb-5 flex items-center gap-3 text-[13px] font-extrabold tracking-[0.2em] text-ink-3 uppercase">
-            <span className="inline-block h-[2.5px] w-10 bg-ink/40" />
+            <span className="inline-block h-px w-10 bg-white/25" />
             Delivered &amp; closed ({closed.length})
           </h2>
           <div className="grid gap-6 md:grid-cols-2">

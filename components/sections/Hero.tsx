@@ -1,64 +1,69 @@
 import Image from "next/image";
 
-import { Tape } from "@/components/ui/paper";
 import { heroPolaroids } from "@/lib/site-config";
 import type { SiteView } from "@/lib/settings";
 
 export function Hero({ site }: { site: SiteView }) {
   return (
-    <header id="top" className="pt-16 pb-8">
+    <header id="top" className="pt-20 pb-14">
       <div className="wrap grid items-center gap-14 lg:grid-cols-[1.06fr_0.94fr]">
         {/* ── copy ── */}
         <div>
-          <span className="inline-flex items-center gap-2 border-2 border-ink bg-white px-[15px] py-[7px] text-[11.5px] font-bold tracking-[0.14em] uppercase shadow-[3px_3px_0_var(--color-ink)] -rotate-1.5">
-            <span className="size-2 rounded-full bg-red" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/8 px-[15px] py-[7px] text-[11px] font-semibold tracking-[0.18em] text-green uppercase">
+            <span className="size-1.5 rounded-full bg-green" />
             Ad Agency · Dhanbad · A Sub-Venture of JTSA
           </span>
 
-          <p className="hand -rotate-2 mt-6 text-[clamp(21px,2.7vw,31px)] text-green">
-            Aaj ka Prachar, Kal ki Pehchaan ✎
+          <p className="mt-7 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
+            Truth · Knowledge · Impact
           </p>
 
-          <h1 className="mt-4 text-[clamp(42px,7.4vw,90px)] leading-[0.94] font-extrabold tracking-[-0.038em] uppercase">
+          <h1 className="display mt-5 text-[clamp(40px,7vw,84px)]">
             We make your
             <br />
             notice board
             <br />
-            worth <span className="marker">stopping</span>
+            worth <span className="text-green">stopping</span>
             <br />
-            <span className="text-green">at.</span>
+            at.
           </h1>
 
-          <p className="mt-6 max-w-[45ch] text-[17px] leading-[1.75] text-ink-2">
+          <div className="accent-rule mt-7" />
+
+          <p className="mt-7 max-w-[46ch] text-[16.5px] leading-[1.8] text-ink-2">
             JTSA Media House is the advertising wing of{" "}
-            <b className="border-b-[2.5px] border-yellow font-bold text-ink">
-              Jharkhand Talent Search Association
-            </b>
+            <b className="font-semibold text-ink">Jharkhand Talent Search Association</b>
             . Posters, reels, campaigns and website listings for{" "}
-            <b className="border-b-[2.5px] border-yellow font-bold text-ink">
+            <b className="font-semibold text-ink">
               schools and local businesses
             </b>{" "}
-            across Dhanbad — made by hand, not from a template.
+            across Dhanbad — built for broadcast, not from a template.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3.5">
-            <a href="#enquire" className="btn btn-green text-[15.5px] px-[38px] py-[19px]">
+            <a
+              href="#enquire"
+              className="btn btn-green !px-[34px] !py-[17px] !text-[13px] !tracking-[0.1em] !uppercase"
+            >
               Get a Free Design Sample
             </a>
-            <a href="#pricing" className="btn btn-yellow text-[15.5px] px-[38px] py-[19px]">
+            <a
+              href="#pricing"
+              className="btn btn-white !px-[34px] !py-[17px] !text-[13px] !tracking-[0.1em] !uppercase"
+            >
               See Pricing
             </a>
           </div>
 
-          <dl className="mt-9 grid grid-cols-2 gap-x-7 gap-y-5 border-t-2 border-dashed border-ink/25 pt-6 sm:grid-cols-4">
+          <dl className="mt-11 grid grid-cols-2 gap-x-7 gap-y-6 border-t border-white/10 pt-7 sm:grid-cols-4">
             {site.stats.map((s) => (
               <div key={s.label}>
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
-                  <b className="block text-[30px] leading-none font-extrabold tracking-[-0.03em] text-green">
+                  <b className="block text-[30px] leading-none font-bold tracking-[-0.02em] text-green">
                     {s.value}
                   </b>
-                  <span className="text-[10.5px] font-bold tracking-[0.16em] text-ink-2 uppercase">
+                  <span className="mt-2 block text-[10px] font-semibold tracking-[0.16em] text-ink-3 uppercase">
                     {s.label}
                   </span>
                 </dd>
@@ -67,7 +72,7 @@ export function Hero({ site }: { site: SiteView }) {
           </dl>
         </div>
 
-        {/* ── polaroid stack ── */}
+        {/* ── work stack ── */}
         <div className="relative mx-auto h-[440px] w-full max-w-[480px] sm:h-[520px]">
           {heroPolaroids.map((p, i) => {
             const pos = [
@@ -79,10 +84,9 @@ export function Hero({ site }: { site: SiteView }) {
             return (
               <figure
                 key={p.src}
-                className={`absolute bg-white pt-3 pb-11 pr-3 pl-3 shadow-[0_16px_38px_rgba(43,38,32,0.3)] ${pos}`}
+                className={`absolute rounded-sm border border-white/12 bg-kraft-2 p-2.5 pb-8 shadow-[0_18px_44px_rgba(2,6,12,0.6)] ${pos}`}
               >
-                <Tape className="-top-[13px] left-1/2 w-[96px] -translate-x-1/2" rotate={-4} />
-                <div className="relative h-[206px] w-full overflow-hidden">
+                <div className="relative h-[206px] w-full overflow-hidden rounded-sm">
                   <Image
                     src={p.src}
                     alt={p.alt}
@@ -91,22 +95,22 @@ export function Hero({ site }: { site: SiteView }) {
                     className="object-cover"
                   />
                 </div>
-                <figcaption className="hand absolute right-3 bottom-2 left-3 text-center text-[21px] leading-none text-[#5A5148]">
+                <figcaption className="absolute right-3 bottom-2.5 left-3 truncate text-center text-[10.5px] font-semibold tracking-[0.14em] text-ink-3 uppercase">
                   {p.caption}
                 </figcaption>
               </figure>
             );
           })}
 
-          <div className="hand-note absolute -top-3 -right-2 z-60 rotate-6 text-[23px]">
+          <div className="absolute -top-3 -right-2 z-60 rounded-sm border border-green/25 bg-kraft-3 px-4 py-3 text-[13px] font-semibold tracking-[0.06em] text-green shadow-[0_14px_34px_rgba(0,245,212,0.12)]">
             50+ schools
             <br />
-            already in ✌
+            already in
           </div>
-          <div className="hand-note bottom-[96px] -left-4 z-60 -rotate-7 text-[20px]">
+          <div className="absolute bottom-[96px] -left-4 z-60 rounded-sm border border-yellow/25 bg-kraft-3 px-4 py-3 text-[13px] font-semibold tracking-[0.06em] text-yellow shadow-[0_14px_34px_rgba(255,184,0,0.12)]">
             48 hour
             <br />
-            delivery ⚡
+            delivery
           </div>
         </div>
       </div>
