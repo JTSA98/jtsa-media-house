@@ -230,3 +230,19 @@ export const paymentOptions = [
   { n: "02", title: "Offline — at your school", body: "Partner schools pay at the school office, exactly like the Olympiad fee." },
   { n: "03", title: "Free design sample first", body: "We design one draft before any money moves." },
 ];
+
+// ─── Budget bands ───────────────────────────────────────────────────
+// FALLBACKS only. The live values come from site_settings (budget.bands
+// + budget.mids), editable at /admin/settings. These exist so the
+// registration form still renders if the database is unreachable.
+export const budgetBands: string[] = [
+  "Under ₹5,000",
+  "₹5,000 — ₹10,000",
+  "₹10,000 — ₹25,000",
+  "₹25,000 — ₹50,000",
+  "Above ₹50,000",
+  "Not sure yet",
+];
+
+/** Rough pipeline value per band, parallel to budgetBands. */
+export const budgetMids: number[] = [5000, 10000, 25000, 50000, 100000, 0];

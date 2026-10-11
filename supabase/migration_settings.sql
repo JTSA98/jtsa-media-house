@@ -61,6 +61,9 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('payments.currency',     'INR',    'payments', 'Currency',            '', 3),
   ('payments.note',         'Pay by UPI or at your school office. Receipt issued either way.', 'payments', 'Payment note', 'Shown under the payment box.', 4),
 
+  -- portal visibility -------------------------------------------------
+  ('portal.client_login', 'false', 'general', 'Show client login links', 'true shows Client Login in the nav and Client Portal in the footer. Routes stay live either way.', 1),
+
   -- stats -------------------------------------------------------------
   ('stats.0', '50+',    'stats', 'Partner schools', '', 1),
   ('stats.1', '1,000+', 'stats', 'Students reached', '', 2),
@@ -94,6 +97,13 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('plan.premium.name',    'Premium', 'plans', U&'Premium \2014 name',  '', 8),
   ('plan.premium.price',   '19,999',  'plans', U&'Premium \2014 price', 'Digits only.', 9),
   ('plan.premium.features', '20 posts + 8 reels|Full campaign strategy|Event shoot coverage|Everything in Growth', 'plans', '', 'One feature per line.', 10),
+
+  -- budget bands (registration form + pipeline estimates) -----------
+  ('budget.bands', U&'Under \20B95,000|\20B95,000 \2014 \20B910,000|\20B910,000 \2014 \20B925,000|\20B925,000 \2014 \20B950,000|Above \20B950,000|Not sure yet', 'budgets', 'Budget bands', 'One option per line. Keep parallel with the values below.', 1),
+  ('budget.mids', '5000|10000|25000|50000|100000|0', 'budgets', 'Band values (₹)', 'Pipeline rupee value per band, same order, one per line.', 2),
+
+  -- online payment --------------------------------------------------
+  ('pay.flex_advance', '500', 'payments', U&'Flex advance (\20B9)', 'Flat online advance for flex work, which is otherwise priced per sq.ft. Digits only.', 5),
 
   -- services ----------------------------------------------------------
   ('service.posters-banners.price',     U&'\20B9299',   'services', U&'Posters & Banners \2014 from', '', 1),

@@ -73,12 +73,16 @@ export function NavBar({ site }: { site: SiteView }) {
                 {l.label}
               </a>
             ))}
-            <Link
-              href="/portal"
-              className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
-            >
-              Client Login
-            </Link>
+            {/* Hidden until the influencer login launches — see
+                portal.client_login. The /portal routes stay live. */}
+            {site.clientLoginVisible ? (
+              <Link
+                href="/portal"
+                className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
+              >
+                Client Login
+              </Link>
+            ) : null}
             <a
               href="#enquire"
               className="btn btn-green ml-3 !px-[18px] !py-2.5 !text-[12px] !tracking-[0.1em] !uppercase"
@@ -127,13 +131,15 @@ export function NavBar({ site }: { site: SiteView }) {
             {l.label}
           </a>
         ))}
-        <Link
-          href="/portal"
-          onClick={() => setOpen(false)}
-          className="text-[24px] font-bold tracking-[0.06em] text-green uppercase"
-        >
-          Client Login
-        </Link>
+        {site.clientLoginVisible ? (
+          <Link
+            href="/portal"
+            onClick={() => setOpen(false)}
+            className="text-[24px] font-bold tracking-[0.06em] text-green uppercase"
+          >
+            Client Login
+          </Link>
+        ) : null}
         <a
           href="#enquire"
           onClick={() => setOpen(false)}

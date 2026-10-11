@@ -129,9 +129,11 @@ export function SiteFooter({ site }: { site: SiteView }) {
             >
               <Download size={13} /> Research PDF
             </a>
-            <Link href="/portal" className="transition hover:text-yellow">
-              Client Portal
-            </Link>
+            {site.clientLoginVisible ? (
+              <Link href="/portal" className="transition hover:text-yellow">
+                Client Portal
+              </Link>
+            ) : null}
           </div>
         </div>
       </div>

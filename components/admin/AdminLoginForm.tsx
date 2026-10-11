@@ -122,7 +122,7 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
           </Link>
         </p>
         <Link href="/" className="block font-bold text-ink-2 underline hover:text-green">
-          â† Back to the website
+          ← Back to the website
         </Link>
       </div>
     </div>

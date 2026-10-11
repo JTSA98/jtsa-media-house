@@ -133,7 +133,7 @@ export function LoginForm({ demoMode }: { demoMode: boolean }) {
         href="/"
         className="mt-3 block text-center text-[12.5px] font-bold text-ink-2 underline hover:text-green"
       >
-        â† Back to the website
+        ← Back to the website
       </Link>
     </div>
   );

@@ -4,6 +4,18 @@ export function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
+/**
+ * Budget-band labels drift between en dash, em dash and hyphen across
+ * old rows (plus a round of mojibake). Normalise before comparing so a
+ * band picked last year still matches this year's settings.
+ */
+export function normBand(s: string): string {
+  return s
+    .replace(/[–—―-]/g, "—")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** ₹1,23,456.00 — Indian digit grouping. */
 export function formatINR(amount: number): string {
   return new Intl.NumberFormat("en-IN", {

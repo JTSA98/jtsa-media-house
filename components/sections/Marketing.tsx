@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { PayButton } from "@/components/payments/PayButton";
 import { services, work } from "@/lib/site-config";
 import type { SiteView } from "@/lib/settings";
 import { setting } from "@/lib/settings";
@@ -78,6 +79,12 @@ export function Services({ site }: { site: SiteView }) {
                   {setting(site.raw, `service.${s.slug}.price_note`, s.priceNote)}
                 </small>
               </p>
+              <PayButton
+                kind="job"
+                itemKey={`service.${s.slug}`}
+                label={`Pay ${setting(site.raw, `service.${s.slug}.price`, s.price)} online`}
+                className="mt-5 max-w-[280px]"
+              />
             </article>
           ))}
         </div>

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { MilestoneTracker } from "@/components/portal/MilestoneTracker";
+import { PayButton } from "@/components/payments/PayButton";
 import { ProgressDial } from "@/components/portal/Progress";
 import { invoiceStatusMeta, projectStatusMeta } from "@/components/portal/status";
 import {
@@ -228,11 +229,21 @@ export default async function ProjectPage({
             </ul>
 
             {due > 0 ? (
-              <p className="mt-4 border-[2.5px] border-dashed border-green bg-white p-3.5 text-[13px] leading-[1.7]">
+              <div className="mt-4 border-[2.5px] border-dashed border-green bg-white p-3.5 text-[13px] leading-[1.7]">
                 <b className="block text-green">Balance payable</b>
-                Pay by UPI — the ID and QR are on the homepage, or ask us for a fresh
-                invoice on WhatsApp.
-              </p>
+                <p className="mt-1">
+                  Pay by UPI — the ID and QR are on the homepage, or ask us for a fresh
+                  invoice on WhatsApp.
+                </p>
+                {/* Appears only when online payment is live. The amount is
+                    re-resolved from this project on the server. */}
+                <PayButton
+                  kind="due"
+                  projectId={project.id}
+                  label={`Pay ${formatINR(due)} online`}
+                  className="mt-3"
+                />
+              </div>
             ) : null}
           </section>
 

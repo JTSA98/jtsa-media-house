@@ -4,6 +4,7 @@ import { CheckCircle2, Lock } from "lucide-react";
 
 import { RegisterForm } from "@/components/portal/RegisterForm";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { fetchSettings, budgetOptions } from "@/lib/settings";
 import { site } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
   description: `Create a ${site.name} client account to track your campaign.`,
 };
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const budgets = budgetOptions(await fetchSettings()).map((o) => o.label);
   const perks = [
     "A percentage bar for the whole project",
     "Milestones you can approve or send back",
@@ -86,7 +88,7 @@ export default function RegisterPage() {
             </p>
           ) : null}
 
-          <RegisterForm />
+          <RegisterForm budgets={budgets} />
         </div>
       </main>
 

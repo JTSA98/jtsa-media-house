@@ -2,6 +2,8 @@ import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { normBand } from "@/lib/utils";
+import { budgetBands, budgetMids } from "@/lib/site-config";
 
 /**
  * Site settings come from the database so they can be edited at
@@ -20,6 +22,7 @@ export type SettingGroup =
   | "prices"
   | "plans"
   | "services"
+  | "budgets"
   | "general";
 
 export interface SettingRow {
@@ -99,6 +102,37 @@ export function settingList(value: string | undefined): string[] {
     .filter(Boolean);
 }
 
+export interface BudgetOption {
+  label: string;
+  mid: number;
+}
+
+/**
+ * Registration budget bands + their pipeline values, from site_settings
+ * (budget.bands + budget.mids, parallel pipe lists). Falls back to the
+ * code defaults when the database is unreachable — never hardcoded at
+ * the call site.
+ */
+export function budgetOptions(s: SettingsMap): BudgetOption[] {
+  const labels = settingList(s["budget.bands"]);
+  const mids = settingList(s["budget.mids"]).map((v) => Number(v));
+  const L = labels.length ? labels : budgetBands;
+  return L.map((label, i) => ({
+    label,
+    mid:
+      Number.isFinite(mids[i]) && mids[i] >= 0
+        ? mids[i]
+        : (budgetMids[i] ?? 0),
+  }));
+}
+
+/** Band label → pipeline rupees, dash-tolerant on both sides. */
+export function budgetMidMap(s: SettingsMap): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const o of budgetOptions(s)) map[normBand(o.label)] = o.mid;
+  return map;
+}
+
 export const groupLabels: Record<SettingGroup, string> = {
   contact: "Contact details",
   brand: "Brand & tagline",
@@ -109,6 +143,7 @@ export const groupLabels: Record<SettingGroup, string> = {
   prices: "One-time pricing",
   plans: "Monthly retainer plans",
   services: "Service prices",
+  budgets: "Budget bands",
   general: "Other",
 };
 
@@ -122,6 +157,7 @@ export const groupOrder: SettingGroup[] = [
   "prices",
   "plans",
   "services",
+  "budgets",
   "general",
 ];
 
@@ -163,6 +199,11 @@ export async function getSiteView() {
       "payments.note",
       "Pay by UPI or at your school office. Receipt issued either way.",
     ),
+    /* Client-login links (nav + footer). Hidden for now — the portal
+       routes keep working for anyone with the URL; this only controls
+       whether visitors are pointed at them. Flip portal.client_login
+       to true when the influencer login launches. */
+    clientLoginVisible: settingBool(s, "portal.client_login", false),
     enquiryEnabled: settingBool(s, "enquiry.enabled", true),
     enquiryWhatsapp: settingBool(s, "enquiry.whatsapp", true),
     replyNote: setting(

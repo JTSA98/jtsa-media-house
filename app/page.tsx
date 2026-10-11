@@ -32,22 +32,30 @@ export default async function HomePage() {
 
   // Prices, plans and the service price labels all come from settings,
   // falling back to the values in lib/site-config.ts.
+  // payKey/payLabel ride along so the Pay buttons charge exactly what is
+  // shown — the API re-resolves the amount server-side from the same keys.
+  const flexAdvance = setting(site.raw, "pay.flex_advance", "500");
   const oneTime = [
-    { price: setting(site.raw, "price.flex", oneTimeWork[0].price), label: setting(site.raw, "price.flex_note", oneTimeWork[0].label) },
-    { price: setting(site.raw, "price.standee", oneTimeWork[1].price), label: setting(site.raw, "price.standee_note", oneTimeWork[1].label) },
-    { price: setting(site.raw, "price.poster", oneTimeWork[2].price), label: setting(site.raw, "price.poster_note", oneTimeWork[2].label) },
-    { price: setting(site.raw, "price.shoot", oneTimeWork[3].price), label: setting(site.raw, "price.shoot_note", oneTimeWork[3].label) },
+    { price: setting(site.raw, "price.flex", oneTimeWork[0].price), label: setting(site.raw, "price.flex_note", oneTimeWork[0].label), payKey: "job.flex_advance", payLabel: `Pay ₹${flexAdvance} advance` },
+    { price: setting(site.raw, "price.standee", oneTimeWork[1].price), label: setting(site.raw, "price.standee_note", oneTimeWork[1].label), payKey: "job.standee", payLabel: `Pay ${setting(site.raw, "price.standee", oneTimeWork[1].price)} online` },
+    { price: setting(site.raw, "price.poster", oneTimeWork[2].price), label: setting(site.raw, "price.poster_note", oneTimeWork[2].label), payKey: "job.poster", payLabel: `Pay ${setting(site.raw, "price.poster", oneTimeWork[2].price)} online` },
+    { price: setting(site.raw, "price.shoot", oneTimeWork[3].price), label: setting(site.raw, "price.shoot_note", oneTimeWork[3].label), payKey: "job.shoot", payLabel: `Pay ${setting(site.raw, "price.shoot", oneTimeWork[3].price)} online` },
   ];
 
   const plans = defaultPlans.map((p) => {
     const k = p.name.toLowerCase();
     const features = settingList(site.raw[`plan.${k}.features`]);
+    const price = setting(site.raw, `plan.${k}.price`, p.price);
     return {
       name: setting(site.raw, `plan.${k}.name`, p.name),
-      price: setting(site.raw, `plan.${k}.price`, p.price),
+      price,
       features: features.length ? features : p.features,
       badge: setting(site.raw, `plan.${k}.badge`, p.badge ?? "") || undefined,
       highlight: p.highlight,
+      /* stable key from the DEFAULT name — the API matches on this even
+         if the plan was renamed in settings. */
+      payKey: `plan.${k}`,
+      payLabel: `Pay ₹${price} online`,
     };
   });
 

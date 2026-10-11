@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 
+import { PayButton } from "@/components/payments/PayButton";
 import { SectionHead } from "@/components/sections/Marketing";
 import { faqs, paymentOptions, processSteps, testimonials } from "@/lib/site-config";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
@@ -80,7 +81,7 @@ export function Voices({ site: _site }: { site: SiteView }) {
   );
 }
 
-export function Pricing({ oneTime, plans, site }: { oneTime: { price: string; label: string }[]; plans: { name: string; price: string; features: string[]; badge?: string; highlight?: boolean }[]; site: SiteView }) {
+export function Pricing({ oneTime, plans, site }: { oneTime: { price: string; label: string; payKey: string; payLabel: string }[]; plans: { name: string; price: string; features: string[]; badge?: string; highlight?: boolean; payKey: string; payLabel: string }[]; site: SiteView }) {
   return (
     <section id="pricing" className="pt-5 pb-20">
       <div className="wrap">
@@ -96,11 +97,14 @@ export function Pricing({ oneTime, plans, site }: { oneTime: { price: string; la
           <h4 className="display mb-5 text-[15px] text-ink-2">One-time work</h4>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {oneTime.map((o) => (
-              <div key={o.price}>
+              <div key={o.price} className="flex flex-col">
                 <b className="block text-[22px] leading-tight font-bold text-green">
                   {o.price}
                 </b>
                 <span className="mt-1 block text-[12.5px] text-ink-2">{o.label}</span>
+                {/* Appears only when online payment is live (keys +
+                    payments.enabled). Charges exactly o.price. */}
+                <PayButton kind="job" itemKey={o.payKey} label={o.payLabel} className="mt-3" />
               </div>
             ))}
           </div>
@@ -153,6 +157,9 @@ className={`btn mt-auto w-full !tracking-[0.1em] !uppercase ${
               >
                 {i === 0 ? "Start Here" : i === 1 ? "Choose Growth" : "Go Premium"}
               </a>
+              {/* Pay online appears only when live; charges this plan's
+                  settings price for the first month. */}
+              <PayButton kind="plan" itemKey={p.payKey} label={p.payLabel} className="mt-2.5" />
             </div>
           ))}
         </div>

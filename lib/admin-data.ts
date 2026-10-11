@@ -3,6 +3,7 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { isAllowlistedEmail } from "@/lib/admin-auth";
+import { normBand } from "@/lib/utils";
 import { projectProgress, outstandingBalance } from "./data";
 import type {
   Enquiry,
@@ -151,12 +152,15 @@ export type AdminSummary = {
   pipeline: number;
 };
 
-export function summarise(v: AdminView): AdminSummary {
+export function summarise(
+  v: AdminView,
+  mids: Record<string, number> = {},
+): AdminSummary {
   const collected = v.projects.reduce((s, p) => s + (p.paid_amount ?? 0), 0);
   const outstanding = v.projects.reduce((s, p) => s + p.balance, 0);
   const pipeline = v.requests
     .filter((r) => r.status === "new" || r.status === "contacted" || r.status === "quoted")
-    .reduce((s, r) => s + estimateValue(r), 0);
+    .reduce((s, r) => s + estimateValue(r, mids), 0);
 
   return {
     clients: v.clients.filter((c) => !c.is_admin).length,
@@ -173,22 +177,16 @@ export function summarise(v: AdminView): AdminSummary {
   };
 }
 
-/** Rough rupee value of a request, from the budget band the client picked. */
-export function estimateValue(r: Enquiry): number {
-  const band = r.message?.match(/Budget:\s*(.+)/)?.[1]?.trim();
-
-  switch (band) {
-    case "Under ₹5,000":
-      return 5000;
-    case "₹5,000 – ₹10,000":
-      return 10000;
-    case "₹10,000 – ₹25,000":
-      return 25000;
-    case "₹25,000 – ₹50,000":
-      return 50000;
-    case "Above ₹50,000":
-      return 100000;
-    default:
-      return 0;
-  }
+/**
+ * Rough rupee value of a request, from the budget band the client picked.
+ * Values come from /admin/settings (budget.mids) via the `mids` map;
+ * the default keeps old behaviour when settings are unavailable.
+ */
+export function estimateValue(
+  r: Enquiry,
+  mids: Record<string, number> = {},
+): number {
+  const band = r.message?.match(/Budget:\s*(.+)/)?.[1];
+  if (!band) return 0;
+  return mids[normBand(band)] ?? 0;
 }

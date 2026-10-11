@@ -15,6 +15,7 @@ import { NewProjectForm } from "@/components/admin/NewProjectForm";
 import { AdminBadge, requestStatusMeta } from "@/components/admin/status";
 import { ProgressBar } from "@/components/portal/Progress";
 import { estimateValue, loadAdminData, summarise } from "@/lib/admin-data";
+import { budgetMidMap, fetchSettings } from "@/lib/settings";
 import { fetchServices } from "@/lib/services";
 import { projectStatusMeta } from "@/components/portal/status";
 import { formatDate, formatDateTime, formatINR } from "@/lib/utils";
@@ -24,7 +25,9 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const view = await loadAdminData();
-  const s = summarise(view);
+  /* Pipeline values resolve from /admin/settings, not code. */
+  const mids = budgetMidMap(await fetchSettings());
+  const s = summarise(view, mids);
 
   return (
     <div className="flex flex-col gap-9">
@@ -86,7 +89,7 @@ export default async function AdminPage() {
         ) : (
           <div className="flex flex-col gap-5">
             {view.requests.map((r) => (
-              <RequestRow key={r.id} request={r} admin={view.signedInAs} />
+              <RequestRow key={r.id} request={r} admin={view.signedInAs} mids={mids} />
             ))}
           </div>
         )}
@@ -185,6 +188,7 @@ export default async function AdminPage() {
         requests={view.requests}
         clients={view.clients.filter((c) => !c.is_admin)}
         services={await fetchServices()}
+        budgetMids={mids}
       />
 
       {/* ── projects ── */}
@@ -280,12 +284,14 @@ function siteName() {
 function RequestRow({
   request,
   admin,
+  mids,
 }: {
   request: Enquiry;
   admin: string | null;
+  mids: Record<string, number>;
 }) {
   const meta = requestStatusMeta[request.status];
-  const value = estimateValue(request);
+  const value = estimateValue(request, mids);
   const digits = request.phone.replace(/\D/g, "");
   const wa = digits.length >= 10 ? digits.slice(-10) : "";
 

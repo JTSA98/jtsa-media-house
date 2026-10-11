@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { AlertCircle, CheckCircle2, FolderPlus, Loader2 } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
+import { normBand } from "@/lib/utils";
 import type { Enquiry, Profile, Service } from "@/types/database";
 
 const STARTER_MILESTONES = [
@@ -20,11 +21,14 @@ export function NewProjectForm({
   clients,
   services,
   defaultRequestId,
+  budgetMids,
 }: {
   requests: Enquiry[];
   clients: Profile[];
   services: Service[];
   defaultRequestId?: string;
+  /** Band label → pipeline rupees, from /admin/settings. */
+  budgetMids: Record<string, number>;
 }) {
   const router = useRouter();
   const [, startTransition] = useTransition();
@@ -64,10 +68,13 @@ export function NewProjectForm({
     const match = byOrg ?? byName;
     if (match) setClientId(match.id);
 
+    /* Suggested amount from the client's budget band. The values live in
+       /admin/settings (budget.mids) and arrive as props — the old inline
+       map here was both hardcoded and mojibake, so it never matched. */
     const amt = r.message?.match(/Budget:\s*(.+)/)?.[1];
     if (amt && !amount) {
-      const mid = { "Under â‚¹5,000": "5000", "â‚¹5,000 – â‚¹10,000": "10000", "â‚¹10,000 – â‚¹25,000": "25000", "â‚¹25,000 – â‚¹50,000": "50000", "Above â‚¹50,000": "100000" }[amt];
-      if (mid) setAmount(mid);
+      const mid = budgetMids[normBand(amt)];
+      if (mid) setAmount(String(mid));
     }
   }
 
@@ -253,7 +260,7 @@ export function NewProjectForm({
 
             <div>
               <label htmlFor="amt" className="mb-1.5 block text-[10.5px] font-extrabold tracking-[0.18em] text-ink-3 uppercase">
-                Agreed amount (â‚¹)
+                Agreed amount (₹)
               </label>
               <input
                 id="amt"
@@ -313,7 +320,7 @@ export function NewProjectForm({
               onChange={(e) => setWithMilestones(e.target.checked)}
               className="size-4"
             />
-            Add the 5 standard steps (brief â†’ creative â†’ approval â†’ delivery â†’ report)
+            Add the 5 standard steps (brief → creative → approval → delivery → report)
           </label>
 
           {error ? (

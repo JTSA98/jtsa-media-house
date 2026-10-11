@@ -5,7 +5,7 @@ import { useActionState, useState } from "react";
 import { AlertCircle, CheckCircle2, Loader2, MailCheck, UserPlus } from "lucide-react";
 
 import { registerClient, type RegisterState } from "@/app/register/actions";
-import { site } from "@/lib/site-config";
+import { budgetBands, site } from "@/lib/site-config";
 
 const initial: RegisterState = { error: null };
 
@@ -26,14 +26,9 @@ const BUSINESS_TYPES = [
   "Other",
 ];
 
-const BUDGETS = [
-  "Under â‚¹5,000",
-  "â‚¹5,000 – â‚¹10,000",
-  "â‚¹10,000 – â‚¹25,000",
-  "â‚¹25,000 – â‚¹50,000",
-  "Above â‚¹50,000",
-  "Not sure yet",
-];
+/* Bands come from /admin/settings (budget.bands) via props. The import
+   below is fallback only, for when the database is unreachable. */
+const BUDGET_FALLBACK = budgetBands;
 
 const REFERRALS = [
   "JTSA Olympiad website",
@@ -44,9 +39,10 @@ const REFERRALS = [
   "Search",
 ];
 
-export function RegisterForm() {
+export function RegisterForm({ budgets }: { budgets?: string[] }) {
   const [state, action, pending] = useActionState(registerClient, initial);
   const [clientType, setClientType] = useState("business");
+  const budgetOptions = budgets?.length ? budgets : BUDGET_FALLBACK;
 
   if (state.needsConfirmation) {
     return (
@@ -87,7 +83,7 @@ export function RegisterForm() {
       </p>
 
       <form action={action} className="mt-7 flex flex-col gap-4">
-        {/* â”€â”€ who you are â”€â”€ */}
+        {/* ── who you are ── */}
         <Field label="Your name" name="fullName" required placeholder="Full name" />
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Email" name="email" type="email" required placeholder="you@organisation.com" />
@@ -112,7 +108,7 @@ export function RegisterForm() {
 
         <div className="h-px bg-ink/15" />
 
-        {/* â”€â”€ your organisation â”€â”€ */}
+        {/* ── your organisation ── */}
         <p className="-mt-1 text-[11px] font-extrabold tracking-[0.2em] text-green uppercase">
           About your work
         </p>
@@ -174,7 +170,7 @@ export function RegisterForm() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Select label="Monthly budget" name="budgetBand" options={BUDGETS} placeholder="Choose a range" />
+          <Select label="Monthly budget" name="budgetBand" options={budgetOptions} placeholder="Choose a range" />
           <Field label="Area in Dhanbad" name="area" placeholder="e.g. Barkak deh, Hirapur" />
         </div>
 

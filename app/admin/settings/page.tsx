@@ -54,7 +54,7 @@ export default async function SettingsPage() {
         </div>
       ) : (
         <>
-          {/* â”€â”€ secret status â”€â”€ */}
+          {/* ── secret status ── */}
           <section>
             <h2 className="mb-3 flex items-center gap-2.5 text-[13px] font-extrabold tracking-[0.2em] text-ink-3 uppercase">
               <span className="inline-block h-[2.5px] w-8 bg-red" />
@@ -63,7 +63,7 @@ export default async function SettingsPage() {
             <div className="grid gap-3 sm:grid-cols-3">
               <SecretStatus
                 label="Razorpay key id"
-                name={razorpayKey ? `ends ‚${razorpayKey.slice(-4)}` : "RAZORPAY_KEY_ID"}
+                name={razorpayKey ? `•••• ${razorpayKey.slice(-4)}` : "RAZORPAY_KEY_ID"}
                 configured={Boolean(razorpayKey)}
               />
               <SecretStatus
