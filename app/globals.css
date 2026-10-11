@@ -1,84 +1,125 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════
-   JTSA Media House — "deep slate" design system
-   Per the official Brand & Design Kit: deep slate ground, neon teal
-   as the single accent, crimson gold reserved for emphasis. Hairline
-   borders and soft glows instead of the previous hard paper shadows.
+   JTSA Media House — broadcast design system
+   Straight from the official Brand & Design Kit: Deep Slate ground,
+   Neon Teal as the single accent, Crimson Gold reserved for emphasis.
+   Token NAMES are kept (kraft/ink/green/yellow) because ~700 existing
+   class references resolve through them — only the VALUES moved back
+   to the kit.
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* Surfaces — deep forest obsidian layers */
-  --color-kraft: #020f07;      /* page ground = Deep Forest Obsidian */
-  --color-kraft-2: #051f10;    /* cards */
-  --color-kraft-3: #082a17;    /* raised / hover */
+  /* Surfaces */
+  --color-kraft: #0b192c;      /* page ground = Deep Slate */
+  --color-kraft-2: #10233d;    /* cards = Deep Card */
+  --color-kraft-3: #1a3354;    /* raised / hover = Deep Border */
+  --color-deep-border: #1a3354; /* same value, named as the kit calls it */
 
-  /* Ink */
-  --color-ink: #ffffff;        /* primary text */
-  --color-ink-2: #e2e8f0;      /* secondary text */
-  --color-ink-3: #94a3b8;      /* muted text */
+  /* Ink — light on the dark ground. Names kept so `text-ink` stays valid. */
+  --color-ink: #ffffff;        /* primary text = Pure White */
+  --color-ink-2: #cbd5e1;      /* secondary text */
+  --color-ink-3: #94a3b8;      /* muted / meta text */
 
-  /* Accents */
-  --color-green: #22c55e;      /* Emerald */
-  --color-green-2: #4ade80;
-  --color-red: #ef4444;
-  --color-yellow: #f59e0b;     /* Champagne Gold */
-  --color-gold: #f59e0b;
-  --color-teal: #22c55e;
-
-  /* Forest tokens */
-  --color-forest-950: #020f07;
-  --color-forest-900: #051f10;
-  --color-forest-850: #082a17;
-  --color-forest-800: #0c3820;
-  --color-forest-700: #114a2a;
-  --color-forest-600: #166538;
-  --color-forest-500: #22c55e;
-  --color-forest-400: #4ade80;
-  --color-forest-300: #86efac;
-
-  /* Gold tokens */
-  --color-gold-300: #fde68a;
-  --color-gold-400: #fbbf24;
-  --color-gold-500: #f59e0b;
-  --color-gold-600: #d97706;
+  /* Accents. `green` is referenced ~105 times; it now resolves to
+     Neon Teal again, matching the logo artwork. */
+  --color-green: #00f5d4;
+  --color-green-2: #6bfff0;
+  --color-red: #ff5c7a;
+  --color-yellow: #ffb800;     /* Crimson Gold */
+  --color-gold: #ffb800;
+  --color-teal: #00f5d4;
 
   --font-karla: var(--font-sans), "Segoe UI", sans-serif;
-  --font-brand: var(--font-brand), "Space Grotesk", sans-serif;
-  --font-hand: var(--font-brand), "Space Grotesk", sans-serif;
+  --font-brand: var(--font-brand), "Segoe UI", sans-serif;
+  --font-hand: var(--font-brand), "Segoe UI", sans-serif;
 
   --shadow-print: 0 18px 50px rgba(2, 6, 12, 0.55);
   --shadow-print-sm: 0 10px 28px rgba(2, 6, 12, 0.45);
-  --shadow-print-green: 0 16px 44px rgba(34, 197, 94, 0.22);
+  --shadow-print-green: 0 0 20px rgba(0, 245, 212, 0.35);
+
+  /* Named shadows from the layout reference */
+  --shadow-teal-glow: 0 0 20px rgba(0, 245, 212, 0.35);
+  --shadow-gold-glow: 0 0 20px rgba(255, 184, 0, 0.35);
+}
+
+/* ── Broadcast lower-third ticker ──────────────────────────────────── */
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker 25s linear infinite;
+}
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* ── 45° cut angles (tribal geometry motif, per the brand kit) ─────── */
+@utility cut-corner-right {
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 100%, 0 100%);
+}
+@utility cut-badge {
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+}
+
+/* ── Glass cards ──────────────────────────────────────────────────── */
+@utility glass-card {
+  background: rgba(16, 35, 61, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(26, 51, 84, 0.8);
+  transition:
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@utility glass-card-hover {
+  &:hover {
+    border-color: #00f5d4;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px -10px rgba(0, 245, 212, 0.2);
+  }
 }
 
 .bento-card {
-  background: linear-gradient(135deg, rgba(8, 42, 23, 0.75) 0%, rgba(5, 31, 16, 0.85) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(16, 35, 61, 0.8) 0%,
+    rgba(11, 25, 44, 0.9) 100%
+  );
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(74, 222, 128, 0.18);
+  border: 1px solid rgba(0, 245, 212, 0.18);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bento-card:hover {
-  border-color: rgba(74, 222, 128, 0.45);
+  border-color: rgba(0, 245, 212, 0.45);
   transform: translateY(-4px);
-  box-shadow: 0 25px 50px -12px rgba(34, 197, 94, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 245, 212, 0.25);
 }
 .text-glow {
-  text-shadow: 0 0 35px rgba(74, 222, 128, 0.35);
+  text-shadow: 0 0 35px rgba(0, 245, 212, 0.35);
 }
 .gold-glow {
-  text-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+  text-shadow: 0 0 35px rgba(255, 184, 0, 0.4);
 }
-.perspective-mockup {
-  perspective: 1000px;
+
+/* ── Broadcast grid field (hero backdrop) ─────────────────────────── */
+@utility bg-broadcast-grid {
+  background-image: radial-gradient(#1a3354 1px, transparent 1px);
+  background-size: 24px 24px;
 }
-.phone-tilt {
-  transform: rotateY(-12deg) rotateX(6deg) rotateZ(2deg);
-  transition: transform 0.5s ease;
-}
-.phone-tilt:hover {
-  transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.03);
+
+/* ── Lower-third tag banner ───────────────────────────────────────── */
+@utility lower-third {
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
 }
 
 @layer base {
@@ -107,13 +148,41 @@
     font-family: var(--font-karla);
     line-height: 1.72;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
+
+  /* Brand kit type roles: headings in Montserrat, body in Plus Jakarta */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-brand {
+    font-family: var(--font-brand);
+  }
+
   main,
   header,
   footer,
   nav {
     position: relative;
     z-index: 1;
+  }
+
+  /* Custom scrollbar, per the layout reference */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b192c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a3354;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00f5d4;
   }
 
   ::selection {

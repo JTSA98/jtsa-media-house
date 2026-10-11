@@ -1,26 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import { Montserrat, Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
 import { AmbientBackdrop } from "@/components/AmbientBackdrop";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 
+/* Brand & Design Kit type stack (per the layout reference):
+   Montserrat — headings, uppercase, wide tracking
+   Plus Jakarta Sans — body and UI
+   Variable names kept as --font-sans / --font-brand so the existing
+   class names keep resolving. */
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const display = Montserrat({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["600", "700", "800", "900"],
   variable: "--font-brand",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#020F07",
+  themeColor: "#0B192C",
 };
 
 export const metadata: Metadata = {
@@ -71,7 +76,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${spaceGrotesk.variable}`}
+      className={`${sans.variable} ${display.variable}`}
     >
       <body>
         <AmbientBackdrop />

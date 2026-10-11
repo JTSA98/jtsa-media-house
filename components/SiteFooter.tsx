@@ -4,65 +4,108 @@ import type { SiteView } from "@/lib/settings";
 
 export function SiteFooter({ site }: { site: SiteView }) {
   return (
-// was `bg-ink text-kraft`, which inverted when the tokens flipped:
-    // the footer must stay the darkest band on the page
-    <footer className="border-t border-white/10 bg-black/45 pt-14 pb-8">
+    <footer className="border-t border-deep-border bg-kraft pt-16 pb-8 text-[13px] text-ink-2">
       <div className="wrap">
-        <div className="grid gap-11 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
-          <div>
+        <div className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-4">
+          {/* brand */}
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img
-                src="/brand/jtsa-official-mark.png"
-                alt={site.name}
-                width={48}
-                height={48}
-                className="size-12 rounded-xl object-contain"
-              />
+              <div className="flex size-9 items-center justify-center rounded border border-deep-border bg-kraft-2">
+                <img
+                  src="/brand/jtsa-official-mark.png"
+                  alt={site.name}
+                  width={24}
+                  height={24}
+                  className="size-6 scale-105 object-contain"
+                />
+              </div>
               <div>
-                <span className="font-brand text-xl font-black text-white">JTSA MEDIA HOUSE</span>
-                <p className="text-[10px] font-semibold text-green-2">Commercial Advertising Division</p>
+                <span className="font-brand text-xl font-black text-white">JTSA</span>
+                <div className="font-brand text-[8px] font-bold tracking-[0.2em] text-green uppercase">
+                  Media House
+                </div>
               </div>
             </div>
-            <p className="mt-4 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
+            <p className="text-[11px] leading-relaxed text-ink-3">
+              A Sub-Venture of {site.owner}. Registered organisation — {site.udyam}.
+            </p>
+            <div className="font-brand text-[10px] font-bold text-yellow">
               Truth · Knowledge · Impact
-            </p>
-            <p className="mt-2 max-w-[36ch] text-[13.5px] leading-[1.85] text-ink-3">
-              A Sub-Venture of {site.owner}. Registered organisation &mdash;{" "}
-              {site.udyam}. Rooted in {site.city}, ready for tomorrow.
-            </p>
+            </div>
           </div>
 
+          {/* quick links */}
           <div>
-            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
-              Explore
-            </p>
-            <div className="flex flex-col gap-2.5">
+            <h4 className="mb-4 font-brand text-xs font-bold tracking-wider text-white uppercase">
+              Quick Links
+            </h4>
+            <ul className="space-y-2.5">
               {[
+                ["#top", "Home"],
                 ["#services", "Services"],
-                ["#sectors", "Commercial Sectors"],
+                ["#rooms", "Who We Serve"],
                 ["#work", "Our Work"],
+                ["#process", "How It Works"],
                 ["#pricing", "Pricing"],
                 ["#faq", "FAQ"],
               ].map(([href, label]) => (
-                <a
-                  key={href}
-                  href={href}
-                  className="w-fit text-[13.5px] font-semibold transition hover:translate-x-1.5 hover:text-yellow"
-                >
-                  {label}
-                </a>
+                <li key={href}>
+                  <a href={href} className="transition-colors hover:text-green">
+                    {label}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
+          {/* broadcast desk */}
           <div>
-            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
-              Social
+            <h4 className="mb-4 font-brand text-xs font-bold tracking-wider text-white uppercase">
+              Reach Us
+            </h4>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-2">
+                <span className="text-green" aria-hidden>
+                  ◎
+                </span>
+                <span>
+                  {site.city}, {site.state}, India
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green" aria-hidden>
+                  ✉
+                </span>
+                <a href={`mailto:${site.email}`} className="break-all hover:text-green">
+                  {site.email}
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green" aria-hidden>
+                  ☎
+                </span>
+                <a href={`tel:+${site.phoneDigits}`} className="hover:text-green">
+                  {site.phone}
+                </a>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green" aria-hidden>
+                  ◈
+                </span>
+                <span>{site.udyam}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* social */}
+          <div>
+            <h4 className="mb-4 font-brand text-xs font-bold tracking-wider text-white uppercase">
+              Official Channels
+            </h4>
+            <p className="mb-4 text-[11px] text-ink-3">
+              Follow our live video broadcasts and daily stories.
             </p>
-            <div className="flex flex-col gap-2.5">
-              {/* Only wired-up profiles are links. The "#" placeholders
-                  used to jump back to the top of the page — worse than
-                  no link at all. Real URLs go live in admin settings. */}
+            <div className="flex gap-3">
               {site.socials.map((s) =>
                 s.href && s.href !== "#" ? (
                   <a
@@ -70,68 +113,36 @@ export function SiteFooter({ site }: { site: SiteView }) {
                     href={s.href}
                     target="_blank"
                     rel="noopener"
-                    className="w-fit text-[13.5px] font-semibold transition hover:translate-x-1.5 hover:text-yellow"
+                    aria-label={s.label}
+                    className="flex size-10 items-center justify-center rounded border border-deep-border bg-kraft-2 transition-all hover:border-green hover:text-green"
                   >
-                    {s.label}
+                    {s.label.slice(0, 2)}
                   </a>
                 ) : (
                   <span
                     key={s.label}
-                    className="w-fit text-[13.5px] font-semibold text-ink-3/60"
                     title="Coming soon"
+                    aria-label={`${s.label} — coming soon`}
+                    className="flex size-10 cursor-not-allowed items-center justify-center rounded border border-deep-border bg-kraft-2 text-ink-3/50"
                   >
-                    {s.label}
+                    {s.label.slice(0, 2)}
                   </span>
                 ),
               )}
             </div>
           </div>
-
-          <div>
-            <p className="mb-4 text-[11px] font-semibold tracking-[0.22em] text-ink-3 uppercase">
-              Reach us
-            </p>
-            <div className="flex flex-col gap-3.5 text-[13.5px] text-ink-3">
-              <p className="flex gap-3">
-                <i className="shrink-0 font-extrabold text-yellow">✉</i>
-                <span>
-                  <a href={`mailto:${site.email}`} className="font-bold text-white hover:text-yellow">
-                    {site.email}
-                  </a>
-                </span>
-              </p>
-              <p className="flex gap-3">
-                <i className="shrink-0 font-extrabold text-yellow">☎</i>
-                <span>
-                  <a href={`tel:${site.phoneDigits}`} className="font-bold text-white hover:text-yellow">
-                    {site.phone}
-                  </a>
-                  <br />
-                  {site.city}, {site.state}
-                </span>
-              </p>
-              <p className="flex gap-3">
-                <i className="shrink-0 font-extrabold text-yellow">◎</i>
-                <span>
-                  <b className="block font-semibold text-ink">{site.udyam}</b>
-                  Government of India, MSME
-                </span>
-              </p>
-            </div>
-          </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-between gap-4 border-t border-white/10 pt-6 text-[12.5px] text-ink-3">
-          <p>
-            © 2026 {site.name}. A Sub-Venture of {site.ownerShort}. All
-            rights reserved.
-          </p>
-          <div className="flex gap-5">
+        {/* bottom bar */}
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-deep-border/60 pt-8 text-[10px] text-ink-3 md:flex-row">
+          <div>© 2026 {site.name}. All rights reserved.</div>
+          <div className="flex gap-4">
             {site.clientLoginVisible ? (
-              <Link href="/portal" className="transition hover:text-yellow">
+              <Link href="/portal" className="hover:underline">
                 Client Portal
               </Link>
             ) : null}
+            <span>Designed to the official Brand Guidelines</span>
           </div>
         </div>
       </div>

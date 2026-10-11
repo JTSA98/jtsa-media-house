@@ -3,11 +3,10 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Hero } from "@/components/sections/Hero";
 import {
   Audiences,
-  MarqueeBand,
   Services,
   StatsBand,
-  Work,
 } from "@/components/sections/Marketing";
+import { Work } from "@/components/sections/MediaGrid";
 import {
   BigCta,
   Enquire,
@@ -94,12 +93,11 @@ export default async function HomePage() {
       <NavBar site={site} />
       <main>
         <Hero site={site} />
-        <MarqueeBand site={site} />
-        <Services site={site} />
         <StatsBand site={site} />
-        <Audiences site={site} />
-        <Work site={site} />
+        <Services site={site} />
         <Process site={site} />
+        <Work />
+        <Audiences site={site} />
         <Voices site={site} />
         <Pricing oneTime={oneTime} plans={plans} site={site} />
         <Faq site={site} />

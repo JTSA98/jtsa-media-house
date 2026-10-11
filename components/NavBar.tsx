@@ -2,16 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Send, X } from "lucide-react";
 
 import type { SiteView } from "@/lib/settings";
 
 const LINKS = [
+  { href: "#top", label: "Home" },
   { href: "#services", label: "Services" },
-  { href: "#sectors", label: "Commercial Sectors" },
+  { href: "#rooms", label: "Who We Serve" },
   { href: "#work", label: "Our Work" },
+  { href: "#process", label: "How It Works" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
+];
+
+/* Ticker copy is brand-agnostic on purpose — these are service lines and
+   an availability note, not claims about events or viewership numbers. */
+const TICKER = [
+  "Ad Agency · Dhanbad · A Sub-Venture of JTSA",
+  "Posters, Flex, Standees & Reels",
+  "Typical turnaround 48 hours",
+  "Free design sample before you pay",
 ];
 
 export function NavBar({ site }: { site: SiteView }) {
@@ -32,90 +43,102 @@ export function NavBar({ site }: { site: SiteView }) {
 
   return (
     <>
-      {/* Top corporate strip */}
-      <div className="border-b border-white/10 bg-black/60 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase">
-        <div className="mx-auto flex max-w-[1220px] flex-wrap items-center justify-between gap-4">
-          <p className="flex items-center gap-2">
-            <span className="inline-block size-2 rounded-full bg-green animate-pulse" />
-            Commercial Growth & Advertising Wing · <b className="font-bold text-yellow">JTSA</b>
-          </p>
-          <p>
-            <b className="font-bold text-yellow">{site.udyam}</b> · {site.city},{" "}
-            {site.state}
-          </p>
+      {/* ── broadcast lower-third ticker ── */}
+      <div className="sticky top-0 z-50 border-b border-deep-border bg-kraft text-xs">
+        <div className="mx-auto flex max-w-[1220px] flex-wrap items-center">
+          <div className="cut-badge relative z-10 flex items-center gap-2 bg-green px-4 py-2 font-brand text-xs font-black tracking-wider text-kraft uppercase shadow-lg">
+            <span className="inline-block size-2 animate-ping rounded-full bg-red-600" />
+            JTSA Media
+            <span className="ml-1 rounded bg-kraft px-1.5 py-0.5 text-[10px] text-green">
+              Open
+            </span>
+          </div>
+
+          <div className="relative flex flex-1 items-center overflow-hidden bg-black/40 py-1.5">
+            <div className="animate-ticker flex items-center gap-8 font-medium tracking-wide text-ink-2">
+              {[0, 1].map((dup) => (
+                /* the second copy is loop filler — hidden from AT so the
+                   ticker is not announced twice */
+                <span key={dup} aria-hidden={dup === 1} className="inline-flex">
+                  {TICKER.map((line) => (
+                    <span key={line} className="inline-flex items-center gap-2">
+                      <b className="text-white">{line}</b>
+                      <span className="text-green">|</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      <nav className="sticky top-0 z-80 border-b border-white/10 bg-kraft/90 backdrop-blur-xl">
-        <div className="wrap flex items-center justify-between gap-5 py-3.5">
-          <Link href="#top" className="flex shrink-0 items-center gap-3 group">
-            <div className="size-11 overflow-hidden rounded-xl border border-green/40 p-0.5 shadow-md transition group-hover:scale-105">
-<img
+      {/* ── main navbar ── */}
+      <nav className="sticky top-[33px] z-40 border-b border-deep-border bg-kraft/90 backdrop-blur-md">
+        <div className="wrap">
+          <div className="flex h-20 items-center justify-between">
+            <Link href="#top" className="group flex shrink-0 items-center gap-3">
+              <div className="flex size-11 items-center justify-center overflow-hidden rounded-lg border border-deep-border bg-kraft-2 transition-all group-hover:border-green group-hover:shadow-[0_0_20px_rgba(0,245,212,0.35)]">
+                <img
                   src="/brand/jtsa-official-mark.png"
-                  alt="JTSA Media House"
+                  alt={site.name}
                   width={44}
                   height={44}
-                  className="size-full rounded-[10px] object-contain"
+                  className="size-full scale-105 object-contain"
                 />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-brand text-2xl font-black tracking-tight text-white transition group-hover:text-green">
+              </div>
+              <div>
+                <span className="font-brand text-2xl font-black tracking-wider text-white">
                   JTSA
                 </span>
-                <span className="rounded-md border border-green/30 bg-green/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-green">
-                  MEDIA HOUSE
-                </span>
+                <div className="-mt-1 font-brand text-[9px] font-bold tracking-[0.25em] text-green uppercase">
+                  Media House
+                </div>
               </div>
-              <p className="text-[10px] font-semibold tracking-wider text-green-2">
-                आज का प्रचार, कल की पहचान
-              </p>
+            </Link>
+
+            <div className="hidden items-center gap-7 text-sm font-semibold tracking-wide lg:flex">
+              {LINKS.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="text-ink-2 transition-colors hover:text-green"
+                >
+                  {l.label}
+                </a>
+              ))}
+              {site.clientLoginVisible ? (
+                <Link href="/portal" className="text-ink-2 transition-colors hover:text-green">
+                  Client Login
+                </Link>
+              ) : null}
             </div>
-          </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
-            {LINKS.map((l) => (
+            <div className="hidden items-center gap-4 lg:flex">
               <a
-                key={l.href}
-                href={l.href}
-                className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
+                href="#enquire"
+                className="inline-flex items-center justify-center rounded-md bg-green px-6 py-2.5 font-brand text-xs font-bold tracking-widest text-kraft uppercase transition-all duration-300 shadow-[0_0_20px_rgba(0,245,212,0.35)] hover:bg-white hover:shadow-[0_0_20px_rgba(255,184,0,0.35)]"
               >
-                {l.label}
+                <Send size={13} className="mr-2" />
+                Get a Quote
               </a>
-            ))}
-            {/* Hidden until the influencer login launches — see
-                portal.client_login. The /portal routes stay live. */}
-            {site.clientLoginVisible ? (
-              <Link
-                href="/portal"
-                className="px-3 py-2 text-[12px] font-semibold tracking-[0.12em] text-ink-2 uppercase transition hover:text-green"
-              >
-                Client Login
-              </Link>
-            ) : null}
-            <a
-              href="#enquire"
-              className="btn btn-green ml-3 !px-[18px] !py-2.5 !text-[12px] !tracking-[0.1em] !uppercase shadow-lg"
-            >
-              Book Consultation
-            </a>
-          </div>
+            </div>
 
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            className="flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green lg:hidden rounded-xl"
-          >
-            <Menu size={20} strokeWidth={2.5} />
-          </button>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className="rounded-md p-2 text-ink-2 transition hover:text-green lg:hidden"
+            >
+              <Menu size={24} />
+            </button>
+          </div>
         </div>
       </nav>
 
-      {/* full-screen drawer.
-          `invisible` when closed matters: an off-canvas panel is still in
-          the tab order, so keyboard users could focus links they cannot
-          see. Visibility removes them from sequential focus. */}
+      {/* ── mobile drawer ──
+          `invisible` when closed matters: an off-canvas panel stays in
+          the tab order, so keyboard users could focus invisible links. */}
       <div
         className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] lg:hidden ${
           open ? "visible translate-y-0" : "invisible -translate-y-full"
@@ -126,9 +149,9 @@ export function NavBar({ site }: { site: SiteView }) {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close menu"
-          className="absolute top-5 right-[5vw] flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green"
+          className="absolute top-5 right-[5vw] p-2 text-ink-2 transition hover:text-green"
         >
-          <X size={22} strokeWidth={3} />
+          <X size={26} />
         </button>
 
         {LINKS.map((l) => (
@@ -136,7 +159,7 @@ export function NavBar({ site }: { site: SiteView }) {
             key={l.href}
             href={l.href}
             onClick={() => setOpen(false)}
-            className="text-[24px] font-bold tracking-[0.06em] text-ink uppercase"
+            className="font-brand text-[24px] font-bold tracking-wide text-ink uppercase"
           >
             {l.label}
           </a>
@@ -145,7 +168,7 @@ export function NavBar({ site }: { site: SiteView }) {
           <Link
             href="/portal"
             onClick={() => setOpen(false)}
-            className="text-[24px] font-bold tracking-[0.06em] text-green uppercase"
+            className="font-brand text-[24px] font-bold tracking-wide text-green uppercase"
           >
             Client Login
           </Link>
