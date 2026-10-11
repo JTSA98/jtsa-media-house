@@ -48,15 +48,18 @@ export function NavBar({ site }: { site: SiteView }) {
 
       <nav className="sticky top-0 z-80 border-b border-white/10 bg-kraft/88 backdrop-blur-xl">
         <div className="wrap flex items-center justify-between gap-5 py-4">
-          <Link href="#top" className="flex items-center gap-3">
+          <Link href="#top" className="flex shrink-0 items-center gap-3">
             {/* `-dark` = the brand artwork with its opaque black panel knocked out
-                to transparent, so it sits directly on the slate ground */}
+                to transparent, so it sits directly on the slate ground.
+                h-14: the 2.86:1 lockup reads tiny at 44px next to 40px
+                display type — 56px gives it equal weight. shrink-0 stops
+                the flex row squeezing it on narrow screens. */}
             <img
               src="/brand/logo-horizontal-dark.png"
               alt={site.name}
-              width={124}
-              height={44}
-              className="h-11 w-auto"
+              width={160}
+              height={56}
+              className="h-12 w-auto sm:h-14"
             />
           </Link>
 

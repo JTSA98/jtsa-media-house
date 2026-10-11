@@ -14,9 +14,9 @@ export function SiteFooter({ site }: { site: SiteView }) {
             <img
               src="/brand/logo-horizontal-dark.png"
               alt={site.name}
-              width={186}
-              height={65}
-              className="h-14 w-auto"
+              width={183}
+              height={64}
+              className="h-16 w-auto"
             />
             <p className="mt-5 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
               Truth · Knowledge · Impact
