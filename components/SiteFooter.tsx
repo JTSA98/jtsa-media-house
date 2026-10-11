@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Download } from "lucide-react";
 
 import type { SiteView } from "@/lib/settings";
 
@@ -122,13 +121,6 @@ export function SiteFooter({ site }: { site: SiteView }) {
             rights reserved.
           </p>
           <div className="flex gap-5">
-            <a
-              href="/JTSA-Ad-Agency-Research.pdf"
-              className="flex items-center gap-1.5 transition hover:text-yellow"
-              download
-            >
-              <Download size={13} /> Research PDF
-            </a>
             {site.clientLoginVisible ? (
               <Link href="/portal" className="transition hover:text-yellow">
                 Client Portal
