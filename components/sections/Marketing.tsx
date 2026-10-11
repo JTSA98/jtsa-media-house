@@ -17,8 +17,8 @@ function SectionHead({
   body?: string;
 }) {
   return (
-<div className="relative mb-13 text-center" data-reveal>
-      <p className="text-[11px] font-semibold tracking-[0.3em] text-green uppercase">
+    <div className="relative mb-13 text-center" data-reveal>
+      <p className="text-[11px] font-bold tracking-[0.3em] text-green uppercase">
         {kicker}
       </p>
       <h2 className="display mt-4 text-[clamp(28px,4.6vw,52px)]">
@@ -40,24 +40,24 @@ export function Services({ site }: { site: SiteView }) {
     <section id="services" className="py-20">
       <div className="wrap">
         <SectionHead
-          kicker="what we actually do"
-          title="Four things,"
-          highlight="done properly"
-          body="No retainers disguised as agency fees. Every job gets a fixed price, a fixed deadline and one clear owner."
+          kicker="commercial capabilities"
+          title="Engineered for"
+          highlight="Maximum Footfall & Revenue"
+          body="No vague retainers disguised as agency fees. Every project gets high-res production, guaranteed delivery timelines, and measurable Dhanbad impact."
         />
 
-<div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {services.map((s, i) => (
             <article
               key={s.slug}
               data-reveal
               style={{ "--d": `${i * 80}ms` } as CSSProperties}
-              className="card-paper relative rounded-sm p-8 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-green/35 hover:shadow-[0_24px_60px_rgba(0,245,212,0.1)]"
+              className="bento-card rounded-2xl p-8"
             >
               <p className="text-[11px] font-bold tracking-[0.24em] text-green">
                 {s.num}
               </p>
-              <h3 className="display mt-3 text-[clamp(19px,2.1vw,24px)]">
+              <h3 className="display mt-3 text-[clamp(19px,2.1vw,24px)] text-white">
                 {s.title}
               </h3>
               <p className="mb-5 text-[14.5px] leading-[1.72] text-ink-2">{s.body}</p>
@@ -95,14 +95,10 @@ export function Services({ site }: { site: SiteView }) {
 
 export function StatsBand({ site }: { site: SiteView }) {
   return (
-    <div className="grid grid-cols-2 border-y border-white/10 bg-black/25 md:grid-cols-4">
+    <div className="grid grid-cols-2 border-y border-white/10 bg-black/40 md:grid-cols-4">
       {site.stats.map((s, i) => (
         <div
           key={s.label}
-          /* mobile 2-col: even cells carry the vertical divider, top row
-             carries the horizontal one. desktop 4-col: every cell but the
-             last carries the vertical divider. Before, the md override sat
-             on the wrong cell and the 2nd–3rd divider never painted. */
           className={`border-white/10 px-5 py-9 text-center ${
             i % 2 === 0 ? "border-r" : ""
           } ${i < 2 ? "border-b md:border-b-0" : ""} ${
@@ -122,47 +118,73 @@ export function StatsBand({ site }: { site: SiteView }) {
 }
 
 export function Audiences({ site: _site }: { site: SiteView }) {
+  const sectors = [
+    {
+      heading: "For",
+      highlight: "Gold & Jewellery Showrooms",
+      intro:
+        "Dhanteras, Akshaya Tritiya, and Wedding Season campaigns. High-impact billboards at Bank More & Steel Gate with 4K macro video reels.",
+      points: [
+        ["Festive & Wedding Season Blitz", "Coordinated roadside hoardings, promotional flyers, and social reels on one schedule."],
+        ["4K Macro Jewellery Shoots", "Close-up macro video reels highlighting bridal collections, sparkle, and hallmark trust."],
+        ["Prime Highway & City Billboards", "High-visibility flex hoardings at Bank More, Hirapur, and main Dhanbad crossings."],
+        ["Hyper-Targeted Local Footfall Ads", "Meta ad campaigns targeting high-income Dhanbad families for festive shopping."],
+        ["Corporate GST Invoicing", "Complete business accounting compliance with instant digital receipts."],
+      ],
+    },
+    {
+      heading: "For",
+      highlight: "Gyms & Fitness Centers",
+      intro:
+        "High-energy 30-sec kinetic reels, annual membership enrollment drives, and city hotspot promotional standees.",
+      points: [
+        ["Viral Workout Reels", "Kinetic transformation videos with hard-hitting sound design and trainer spotlights."],
+        ["Seasonal Membership Drives", "Massive enrollment campaigns driving hundreds of annual memberships."],
+        ["Showroom Walkthroughs", "30s 4K tours showcasing world-class equipment and personal training facilities."],
+        ["City Hotspot Standees", "Deluxe 6x2.5 ft roll-up standees placed at popular Dhanbad malls and markets."],
+        ["Predictable Retainer Budget", "Fixed monthly fee with zero agency retainer surprises."],
+      ],
+    },
+    {
+      heading: "For",
+      highlight: "Auto Dealers & Mega Retail",
+      intro:
+        "Grand showroom openings, new vehicle launches, and festival discount clearance campaigns with high-impact outdoor flex.",
+      points: [
+        ["Grand Opening Blitz", "Mega flex hoardings, directional street signage, and showroom launch coverage."],
+        ["Festive Clearance Drives", "High-urgency promotional graphics and reels designed for immediate footfall."],
+        ["Inquiry Automation", "Click-to-WhatsApp digital ads connecting car/bike buyers directly to your sales floor."],
+        ["Showroom Hardware", "Roll-up aluminum standees and high-gloss promotional brochures."],
+      ],
+    },
+    {
+      heading: "For",
+      highlight: "Corporates & Real Estate",
+      intro:
+        "Residential project booking drives, healthcare announcements, industrial films, and regional Dhanbad brand presence.",
+      points: [
+        ["Real Estate Project Launches", "3D architectural render flex, site boundary branding, and booking launch reels."],
+        ["Healthcare Announcements", "New doctor onboarding campaigns and hospital department banners."],
+        ["Official JTSA Directory Page", "Verified institutional profile on the high-traffic JTSA ecosystem."],
+        ["Corporate Billing", "Official GST invoices with flexible NEFT/RTGS payment settlement."],
+      ],
+    },
+  ];
+
   return (
-    <section id="rooms" className="py-20">
+    <section id="sectors" className="py-20">
       <div className="wrap">
         <SectionHead
-          kicker="who we work with"
-          title="Two kinds of"
-          highlight="client, one team"
-          body="We started with schools because we already knew how they work. Now local businesses use the same process."
+          kicker="commercial industries"
+          title="Engineered for"
+          highlight="Dhanbad's Top Sectors"
+          body="Whether you operate a high-turnover jewelry showroom, a premium gym, an auto dealership, or a corporate enterprise, we have specialized advertising playbooks."
         />
 
         <div className="grid gap-6 md:grid-cols-2">
-          {[
-            {
-              heading: "For",
-              highlight: "Schools",
-              intro:
-                "Admission season, exam results, science day, sports day, annual functions — the moments a school actually needs to fill.",
-              points: [
-                ["Admission season package", "Posters, banners, standees and reels on one schedule."],
-                ["Result-day creative", "Same-day designs the moment results drop."],
-                ["Event coverage", "Reels from exam day, prize distribution and certification day."],
-                ["Free website listing", "Partner schools get the first JTSA listing at no cost."],
-                ["Offline payment", "Pay at the school office, exactly like the Olympiad process."],
-              ],
-            },
-            {
-              heading: "For",
-              highlight: "Local Business",
-              intro:
-                "Shops, coaching centres, clinics, showrooms and service businesses that need regular visibility without a big agency retainer.",
-              points: [
-                ["Openings & offers", "Creative for a new shop, sale or festival."],
-                ["Social on a budget", "12 posts and 4 reels a month, fixed price."],
-                ["Short video", "Product reels shot on location in Dhanbad."],
-                ["Get found locally", "Website listing with map pin and tap-to-call."],
-                ["Pay how you like", "UPI online, or cash at a partner school."],
-              ],
-            },
-].map((a) => (
-            <div key={a.highlight} data-reveal className="card-paper rounded-sm p-8">
-              <h3 className="display text-[clamp(21px,2.4vw,28px)]">
+          {sectors.map((a) => (
+            <div key={a.highlight} data-reveal className="bento-card rounded-2xl p-8">
+              <h3 className="display text-[clamp(21px,2.4vw,28px)] text-white">
                 {a.heading} <span className="text-green">{a.highlight}</span>
               </h3>
               <p className="my-5 text-[14.5px] text-ink-2">{a.intro}</p>
@@ -176,7 +198,7 @@ export function Audiences({ site: _site }: { site: SiteView }) {
                       ✓
                     </span>
                     <span>
-                      <b className="mb-px block font-semibold text-ink">{title}</b>
+                      <b className="mb-px block font-semibold text-white">{title}</b>
                       {body}
                     </span>
                   </li>
@@ -195,30 +217,30 @@ export function Work({ site: _site }: { site: SiteView }) {
     <section id="work" className="pt-5 pb-20">
       <div className="wrap">
         <SectionHead
-          kicker="pinned to the wall"
-          title="Recent"
-          highlight="work"
-          body="Real campaigns from the last admission season. No stock photos, no mock-ups."
+          kicker="proven commercial impact"
+          title="Selected Commercial"
+          highlight="Campaigns & Print"
+          body="Real hoardings, commercial video shoots, and print hardware executed across Dhanbad. No stock graphics."
         />
 
         <div className="grid gap-6 px-2.5 py-3 sm:grid-cols-2 lg:grid-cols-3">
           {work.map((w, i) => (
-<figure
+            <figure
               key={w.src + i}
               data-reveal
               style={{ "--d": `${(i % 3) * 80}ms` } as CSSProperties}
-              className="group relative rounded-sm border border-white/12 bg-kraft-2 p-2.5 pb-9 shadow-[0_18px_44px_rgba(2,6,12,0.55)] transition duration-300 hover:z-20 hover:border-green/35 hover:scale-[1.03]"
+              className="bento-card group relative rounded-2xl p-3 pb-9 transition duration-300 hover:z-20 hover:scale-[1.02]"
             >
-              <div className="relative h-[212px] w-full overflow-hidden rounded-sm">
+              <div className="relative h-[212px] w-full overflow-hidden rounded-xl">
                 <Image
                   src={w.src}
                   alt={w.alt}
                   fill
                   sizes="(max-width: 640px) 92vw, (max-width: 1024px) 44vw, 30vw"
-                  className="object-cover"
+                  className="object-cover group-hover:scale-105 transition duration-500"
                 />
               </div>
-              <figcaption className="absolute right-3 bottom-2.5 left-3 truncate text-center text-[10.5px] font-semibold tracking-[0.14em] text-ink-3 uppercase">
+              <figcaption className="absolute right-3 bottom-2.5 left-3 truncate text-center text-[11px] font-bold tracking-[0.14em] text-green uppercase">
                 {w.caption}
               </figcaption>
             </figure>
@@ -231,22 +253,20 @@ export function Work({ site: _site }: { site: SiteView }) {
 
 export function MarqueeBand({ site: _site }: { site: SiteView }) {
   const items = [
-    "Posters",
-    "Banners",
-    "Flex",
-    "Standees",
-    "Reels",
-    "Social Ads",
-    "Website Listing",
-    "48h Delivery",
+    "Jewellery Campaigns",
+    "Gym Transformation Reels",
+    "Mega Roadside Hoardings",
+    "Showroom Standees",
+    "4K Commercial Video",
+    "Dhanbad Ad Targeting",
+    "Corporate Retainers",
+    "48h Express Delivery",
   ];
 
   return (
-<div className="marquee-band my-6 overflow-hidden border-y border-white/10 bg-black/35 py-4 whitespace-nowrap">
+    <div className="marquee-band my-6 overflow-hidden border-y border-white/10 bg-black/40 py-4 whitespace-nowrap">
       <div className="animate-marquee inline-block">
         {[0, 1].map((dup) => (
-          /* second copy is loop filler — hidden from screen readers so
-             the ticker isn't announced twice */
           <span key={dup} aria-hidden={dup === 1}>
             {items.map((label) => (
               <span

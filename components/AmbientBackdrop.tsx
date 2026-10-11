@@ -22,7 +22,7 @@ export function AmbientBackdrop() {
     document.body.append(aurora, motes);
 
     const COUNT = 14;
-    const TEAL = [0, 245, 212];
+    const TEAL = [34, 197, 94];
     const GOLD = [255, 184, 0];
     const BLUE = [56, 150, 210];
     const rand = (a: number, b: number) => a + Math.random() * (b - a);

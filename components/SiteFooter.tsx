@@ -10,17 +10,23 @@ export function SiteFooter({ site }: { site: SiteView }) {
       <div className="wrap">
         <div className="grid gap-11 md:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1.3fr]">
           <div>
-            <img
-              src="/brand/logo-horizontal-dark.png"
-              alt={site.name}
-              width={183}
-              height={64}
-              className="h-16 w-auto"
-            />
-            <p className="mt-5 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
+            <div className="flex items-center gap-3">
+              <img
+                src="/brand/jtsa-official-mark.png"
+                alt={site.name}
+                width={48}
+                height={48}
+                className="size-12 rounded-xl object-contain"
+              />
+              <div>
+                <span className="font-brand text-xl font-black text-white">JTSA MEDIA HOUSE</span>
+                <p className="text-[10px] font-semibold text-green-2">Commercial Advertising Division</p>
+              </div>
+            </div>
+            <p className="mt-4 text-[11px] font-semibold tracking-[0.3em] text-yellow uppercase">
               Truth · Knowledge · Impact
             </p>
-            <p className="mt-4 max-w-[36ch] text-[13.5px] leading-[1.85] text-ink-3">
+            <p className="mt-2 max-w-[36ch] text-[13.5px] leading-[1.85] text-ink-3">
               A Sub-Venture of {site.owner}. Registered organisation &mdash;{" "}
               {site.udyam}. Rooted in {site.city}, ready for tomorrow.
             </p>
@@ -33,7 +39,7 @@ export function SiteFooter({ site }: { site: SiteView }) {
             <div className="flex flex-col gap-2.5">
               {[
                 ["#services", "Services"],
-                ["#rooms", "Who We Serve"],
+                ["#sectors", "Commercial Sectors"],
                 ["#work", "Our Work"],
                 ["#pricing", "Pricing"],
                 ["#faq", "FAQ"],

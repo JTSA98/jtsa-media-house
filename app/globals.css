@@ -8,34 +8,77 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* Surfaces — the page and its raised layers, darkest to lightest */
-  --color-kraft: #0b192c;      /* page ground = Deep Slate */
-  --color-kraft-2: #10233b;    /* cards */
-  --color-kraft-3: #162c48;    /* raised / hover */
+  /* Surfaces — deep forest obsidian layers */
+  --color-kraft: #020f07;      /* page ground = Deep Forest Obsidian */
+  --color-kraft-2: #051f10;    /* cards */
+  --color-kraft-3: #082a17;    /* raised / hover */
 
-  /* Ink — on a dark ground these are LIGHT. Token names are kept so
-     the ~260 existing `text-ink` usages stay valid without edits. */
+  /* Ink */
   --color-ink: #ffffff;        /* primary text */
-  --color-ink-2: #c2d0e0;      /* secondary text */
-  --color-ink-3: #8296ae;      /* muted / meta text */
+  --color-ink-2: #e2e8f0;      /* secondary text */
+  --color-ink-3: #94a3b8;      /* muted text */
 
-  /* Accents. `green` is retained as a name because it is referenced
-     ~105 times; it now resolves to Neon Teal. */
-  --color-green: #00f5d4;
-  --color-green-2: #6bfff0;
-  --color-red: #ff5c7a;
-  --color-yellow: #ffb800;     /* Crimson Gold */
-  --color-sticky: #13294a;     /* highlight fill, was pale yellow */
+  /* Accents */
+  --color-green: #22c55e;      /* Emerald */
+  --color-green-2: #4ade80;
+  --color-red: #ef4444;
+  --color-yellow: #f59e0b;     /* Champagne Gold */
+  --color-gold: #f59e0b;
+  --color-teal: #22c55e;
 
-  --color-gold: #ffb800;
-  --color-teal: #00f5d4;
+  /* Forest tokens */
+  --color-forest-950: #020f07;
+  --color-forest-900: #051f10;
+  --color-forest-850: #082a17;
+  --color-forest-800: #0c3820;
+  --color-forest-700: #114a2a;
+  --color-forest-600: #166538;
+  --color-forest-500: #22c55e;
+  --color-forest-400: #4ade80;
+  --color-forest-300: #86efac;
 
-  --font-karla: var(--font-karla), "Segoe UI", sans-serif;
-  --font-hand: var(--font-hand), "Segoe UI", sans-serif;
+  /* Gold tokens */
+  --color-gold-300: #fde68a;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+
+  --font-karla: var(--font-sans), "Segoe UI", sans-serif;
+  --font-brand: var(--font-brand), "Space Grotesk", sans-serif;
+  --font-hand: var(--font-brand), "Space Grotesk", sans-serif;
 
   --shadow-print: 0 18px 50px rgba(2, 6, 12, 0.55);
   --shadow-print-sm: 0 10px 28px rgba(2, 6, 12, 0.45);
-  --shadow-print-green: 0 16px 44px rgba(0, 245, 212, 0.22);
+  --shadow-print-green: 0 16px 44px rgba(34, 197, 94, 0.22);
+}
+
+.bento-card {
+  background: linear-gradient(135deg, rgba(8, 42, 23, 0.75) 0%, rgba(5, 31, 16, 0.85) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(74, 222, 128, 0.18);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bento-card:hover {
+  border-color: rgba(74, 222, 128, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px -12px rgba(34, 197, 94, 0.25);
+}
+.text-glow {
+  text-shadow: 0 0 35px rgba(74, 222, 128, 0.35);
+}
+.gold-glow {
+  text-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+}
+.perspective-mockup {
+  perspective: 1000px;
+}
+.phone-tilt {
+  transform: rotateY(-12deg) rotateX(6deg) rotateZ(2deg);
+  transition: transform 0.5s ease;
+}
+.phone-tilt:hover {
+  transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1.03);
 }
 
 @layer base {

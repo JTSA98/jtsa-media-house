@@ -8,7 +8,7 @@ import type { SiteView } from "@/lib/settings";
 
 const LINKS = [
   { href: "#services", label: "Services" },
-  { href: "#rooms", label: "Who We Serve" },
+  { href: "#sectors", label: "Commercial Sectors" },
   { href: "#work", label: "Our Work" },
   { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
@@ -32,12 +32,12 @@ export function NavBar({ site }: { site: SiteView }) {
 
   return (
     <>
-      {/* hidden on phones: two wrapping micro-lines ate 3 rows at 390px */}
-      <div className="hidden border-b border-white/10 bg-black/40 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase sm:block">
-        <div className="mx-auto flex max-w-[1220px] flex-wrap justify-between gap-4">
-          <p>
-            Admission season <b className="font-bold text-yellow">2026</b> slots are
-            open — <span className="text-ink-3">first reply within 24 hours</span>
+      {/* Top corporate strip */}
+      <div className="border-b border-white/10 bg-black/60 px-5 py-2 text-[11px] tracking-[0.14em] text-ink-2 uppercase">
+        <div className="mx-auto flex max-w-[1220px] flex-wrap items-center justify-between gap-4">
+          <p className="flex items-center gap-2">
+            <span className="inline-block size-2 rounded-full bg-green animate-pulse" />
+            Commercial Growth & Advertising Wing · <b className="font-bold text-yellow">JTSA</b>
           </p>
           <p>
             <b className="font-bold text-yellow">{site.udyam}</b> · {site.city},{" "}
@@ -46,21 +46,31 @@ export function NavBar({ site }: { site: SiteView }) {
         </div>
       </div>
 
-      <nav className="sticky top-0 z-80 border-b border-white/10 bg-kraft/88 backdrop-blur-xl">
-        <div className="wrap flex items-center justify-between gap-5 py-4">
-          <Link href="#top" className="flex shrink-0 items-center gap-3">
-            {/* `-dark` = the brand artwork with its opaque black panel knocked out
-                to transparent, so it sits directly on the slate ground.
-                h-14: the 2.86:1 lockup reads tiny at 44px next to 40px
-                display type — 56px gives it equal weight. shrink-0 stops
-                the flex row squeezing it on narrow screens. */}
-            <img
-              src="/brand/logo-horizontal-dark.png"
-              alt={site.name}
-              width={160}
-              height={56}
-              className="h-12 w-auto sm:h-14"
-            />
+      <nav className="sticky top-0 z-80 border-b border-white/10 bg-kraft/90 backdrop-blur-xl">
+        <div className="wrap flex items-center justify-between gap-5 py-3.5">
+          <Link href="#top" className="flex shrink-0 items-center gap-3 group">
+            <div className="size-11 overflow-hidden rounded-xl border border-green/40 p-0.5 shadow-md transition group-hover:scale-105">
+<img
+                  src="/brand/jtsa-official-mark.png"
+                  alt="JTSA Media House"
+                  width={44}
+                  height={44}
+                  className="size-full rounded-[10px] object-contain"
+                />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-brand text-2xl font-black tracking-tight text-white transition group-hover:text-green">
+                  JTSA
+                </span>
+                <span className="rounded-md border border-green/30 bg-green/10 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-green">
+                  MEDIA HOUSE
+                </span>
+              </div>
+              <p className="text-[10px] font-semibold tracking-wider text-green-2">
+                आज का प्रचार, कल की पहचान
+              </p>
+            </div>
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
@@ -85,9 +95,9 @@ export function NavBar({ site }: { site: SiteView }) {
             ) : null}
             <a
               href="#enquire"
-              className="btn btn-green ml-3 !px-[18px] !py-2.5 !text-[12px] !tracking-[0.1em] !uppercase"
+              className="btn btn-green ml-3 !px-[18px] !py-2.5 !text-[12px] !tracking-[0.1em] !uppercase shadow-lg"
             >
-              Get a Quote
+              Book Consultation
             </a>
           </div>
 
@@ -95,7 +105,7 @@ export function NavBar({ site }: { site: SiteView }) {
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className="flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green lg:hidden"
+            className="flex size-[46px] items-center justify-center border border-white/15 bg-kraft-2 text-green lg:hidden rounded-xl"
           >
             <Menu size={20} strokeWidth={2.5} />
           </button>

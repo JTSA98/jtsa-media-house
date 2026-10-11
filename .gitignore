@@ -41,12 +41,13 @@ yarn-error.log*
 # local design review mockups (never deployed)
 /design-concepts/
 
-# Brand kit source extractions. Only logo-horizontal-dark.png is actually
-# referenced by the app; the rest are the unedited PDF crops kept locally
-# as the source for future logo variants. Ignored so they stay out of git
-# but remain on disk.
+# Brand kit source extractions. Only the logos the app actually serves are
+# committed; the rest are unedited PDF crops kept locally as the source for
+# future variants. Ignored so they stay out of git but remain on disk.
 public/brand/*
 !public/brand/logo-horizontal-dark.png
+!public/brand/jtsa-official-logo.png
+!public/brand/jtsa-official-mark.png
 
 # Brand kit source PDF — reference material, not something the app serves
 /*Brand*Design*Kit.pdf

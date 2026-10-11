@@ -9,19 +9,23 @@ import { site } from "@/lib/site-config";
 import type { FaqItem } from "@/lib/site-config";
 
 const CLIENT_TYPES = [
-  "School",
-  "Coaching centre",
-  "Shop / Showroom",
-  "Clinic / Service",
-  "Other",
+  "Gold / Jewellery Showroom",
+  "Gym / Fitness Center",
+  "Automobile / Bike Showroom",
+  "Retail Store / Mega Shop",
+  "Real Estate / Builder",
+  "Hospital / Clinic",
+  "School / Coaching Institution",
+  "Other Commercial Enterprise",
 ];
 
 const SERVICES = [
-  "Posters & Banners",
-  "Social Media Campaign",
-  "Video / Reel",
-  "Website Listing",
-  "Full package",
+  "Mega Outdoor Hoardings & Flex",
+  "Commercial 4K Video Reel",
+  "Monthly Social Retainer (12 Posts + 4 Reels)",
+  "Roll-Up Standees & Promo Print",
+  "JTSA Verified Business Directory Listing",
+  "Full 360° Commercial Launch Campaign",
 ];
 
 type State = "idle" | "sending" | "sent" | "error";
@@ -120,11 +124,11 @@ export function EnquiryForm() {
         </div>
       </div>
 
-      <Field label="Event & date" name="event" required placeholder="e.g. Admission open — 15 June" />
+      <Field label="Campaign / Launch & date" name="event" required placeholder="e.g. Festive Jewellery Sale — 12 Nov / Grand Showroom Opening" />
       <Field
-        label="Anything else"
+        label="Specific requirements / notes"
         name="message"
-        placeholder="Number of students, budget, language preference, or the message you want people to read."
+        placeholder="Showroom location in Dhanbad, expected budget, target audience, billboard spots, or creative ideas."
       />
 
       <button

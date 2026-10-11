@@ -27,9 +27,15 @@ export default async function RegisterPage() {
       <header className="border-b-[2.5px] border-ink bg-kraft">
         <div className="wrap flex items-center justify-between py-4">
           <Link href="/" className="flex items-center gap-3">
-            <span className="-rotate-3 flex size-11 items-center justify-center border-[2.5px] border-ink bg-green text-[15px] font-extrabold text-white shadow-[0_8px_22px_rgba(2,6,12,0.5)]">
-              {site.shortName}
-            </span>
+            <div className="size-11 overflow-hidden rounded-xl border border-green/40 p-0.5 shadow-md">
+<img
+                  src="/brand/jtsa-official-mark.png"
+                  alt="JTSA Media House"
+                  width={44}
+                  height={44}
+                  className="size-full rounded-[10px] object-contain"
+                />
+            </div>
             <span>
               <b className="block text-[16px] leading-[1.15] font-extrabold tracking-[-0.02em]">
                 {site.name}

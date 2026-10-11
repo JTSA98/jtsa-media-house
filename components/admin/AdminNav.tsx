@@ -26,9 +26,15 @@ export function AdminNav({ email }: { email: string | null }) {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
       <div className="wrap flex items-center justify-between gap-4 py-3.5">
         <div className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-sm border border-red/40 bg-red/12 text-[12px] font-bold tracking-[0.06em] text-red">
-            ADM
-          </span>
+          <div className="size-10 overflow-hidden rounded-xl border border-green/40 p-0.5 shadow-md">
+<img
+                src="/brand/jtsa-official-mark.png"
+                alt="JTSA Media House"
+                width={40}
+                height={40}
+                className="size-full rounded-[10px] object-contain"
+              />
+          </div>
           <span>
             <b className="block text-[14px] leading-tight font-semibold tracking-[0.02em] text-ink">
               {site.name} — Admin

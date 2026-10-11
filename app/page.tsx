@@ -69,7 +69,7 @@ export default async function HomePage() {
         "@type": "ProfessionalService",
         name: site.name,
         description:
-          "Posters, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
+          "High-impact roadside hoardings, 4K commercial reels, social retainers, and branding for jewellery showrooms, gyms, automobile dealers, and retail businesses in Dhanbad.",
         areaServed: `${site.city}, ${site.state}`,
         url: siteDefaults.mainSite,
         priceRange: "₹₹",

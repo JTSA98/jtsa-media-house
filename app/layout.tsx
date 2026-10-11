@@ -1,49 +1,43 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
 import { AmbientBackdrop } from "@/components/AmbientBackdrop";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 
-/* Brand & Design Kit type stack:
-   Montserrat 700/800 — headings, uppercase, wide tracking
-   Inter — body and UI
-   The CSS variable names are deliberately kept as --font-karla /
-   --font-hand so existing class names keep resolving. A second,
-   full-weight Montserrat load was dropped: nothing used it. */
-const karla = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-karla",
+  variable: "--font-sans",
   display: "swap",
 });
 
-const display = Montserrat({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-hand",
+  weight: ["600", "700"],
+  variable: "--font-brand",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0B192C",
+  themeColor: "#020F07",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.mainSite),
   title: {
-    default: `${site.name} — Posters, Reels & Campaigns for Schools and Shops in Dhanbad`,
+    default: `${site.name} — Commercial Advertising, Hoardings & 4K Reels in Dhanbad`,
     template: `%s · ${site.name}`,
   },
   description:
-    "JTSA Media House is the advertising arm of Jharkhand Talent Search Association. Posters, banners, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
+    "JTSA Media House is the commercial advertising and growth agency of Jharkhand Talent Search Association. Roadside hoardings, 4K viral reels, social retainers, and branding for gold showrooms, gyms, and retail brands in Dhanbad.",
   keywords: [
-    "ad agency Dhanbad",
+    "commercial ad agency Dhanbad",
     "JTSA Media House",
-    "school admission poster Dhanbad",
-    "social media campaign Jharkhand",
-    "reel making Dhanbad",
-    "flex printing Dhanbad",
+    "jewellery showroom advertisement Dhanbad",
+    "gym advertising campaign Jharkhand",
+    "4k commercial reels Dhanbad",
+    "flex hoardings Dhanbad",
     "standee design Jharkhand",
   ],
   openGraph: {
@@ -77,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${karla.variable} ${display.variable}`}
+      className={`${sans.variable} ${spaceGrotesk.variable}`}
     >
       <body>
         <AmbientBackdrop />

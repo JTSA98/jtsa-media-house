@@ -44,7 +44,7 @@ export function Voices({ site: _site }: { site: SiteView }) {
           kicker="what they said"
           title="Notes back from"
           highlight="clients"
-          body="Real notes from admission season and shop openings across Dhanbad."
+          body="Real feedback from jewellery showrooms, fitness centers, and commercial retail brands across Dhanbad."
         />
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -199,7 +199,7 @@ export function Enquire({ site }: { site: SiteView }) {
             <div className="rounded-sm border border-white/12 bg-black/25 p-6 md:p-7">
               <h4 className="display text-[14px] text-ink-2">Pay how you like</h4>
               <p className="my-3 text-[13.5px] text-ink-2">
-                We keep it the same as the Olympiad process, so nothing is new for you.
+                Fast digital settlement via UPI, NEFT, or formal corporate invoice with full GST billing.
               </p>
 
               {/* was a box labelled "UPI QR" with no code in it — a
@@ -257,12 +257,12 @@ export function BigCta({ site }: { site: SiteView }) {
         Truth · Knowledge · Impact
       </p>
       <h2 className="display relative z-10 mt-5 text-[clamp(30px,5.4vw,64px)]">
-        Got a date?
+        Got an upcoming launch?
         <br />
         We&apos;ll make it loud.
       </h2>
       <p className="relative z-10 mx-auto mt-6 max-w-[52ch] text-[15.5px] text-ink-2">
-        Admission season, results day, a shop opening, a festival sale — one
+        Festive showroom drives, gym membership blitz, grand openings, highway billboards — one
         conversation is enough to start.
       </p>
       <div className="relative z-10 mt-9 flex flex-wrap justify-center gap-3">

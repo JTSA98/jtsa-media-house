@@ -10,20 +10,22 @@ import { budgetBands, site } from "@/lib/site-config";
 const initial: RegisterState = { error: null };
 
 const CLIENT_TYPES = [
-  { value: "school", label: "A school or college" },
-  { value: "business", label: "A business or shop" },
+  { value: "business", label: "Commercial business or showroom" },
+  { value: "corporate", label: "Corporate enterprise or builder" },
+  { value: "institution", label: "School or educational institution" },
   { value: "other", label: "Something else" },
 ];
 
 const BUSINESS_TYPES = [
-  "Coaching centre / tuition",
-  "Shop / showroom",
-  "Clinic / doctor",
-  "Gym / salon / service",
-  "Restaurant / cafe",
-  "NGO / trust",
-  "Event / wedding planner",
-  "Other",
+  "Gold & jewellery showroom",
+  "Gym & fitness center",
+  "Automobile / bike dealership",
+  "Retail store / mega shop",
+  "Real estate / builder",
+  "Hospital / healthcare",
+  "Restaurant / hospitality",
+  "Coaching centre / institution",
+  "Other commercial",
 ];
 
 /* Bands come from /admin/settings (budget.bands) via props. The import
@@ -31,12 +33,12 @@ const BUSINESS_TYPES = [
 const BUDGET_FALLBACK = budgetBands;
 
 const REFERRALS = [
-  "JTSA Olympiad website",
-  "A school or teacher told me",
-  "Instagram or Facebook",
+  "Outdoor hoarding / billboard in Dhanbad",
+  "Instagram or Facebook reel",
+  "Direct business recommendation",
   "WhatsApp",
-  "Someone I worked with before",
-  "Search",
+  "JTSA official ecosystem",
+  "Google Search",
 ];
 
 export function RegisterForm({ budgets }: { budgets?: string[] }) {
