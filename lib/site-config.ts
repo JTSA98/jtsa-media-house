@@ -177,24 +177,156 @@ export const oneTimeWork = [
 ];
 
 export type Plan = {
+  /** Stable key. Settings and the payment API both key off this, so a
+      rename in the admin panel never orphans a price row. */
+  id: string;
   name: string;
   price: string;
+  /** who it is for */
+  tagline: string;
+  /** digital deliverables */
   features: string[];
+  /** physical ground execution bundled with the tier */
+  physical: string[];
   badge?: string;
   highlight?: boolean;
+  /** billing period shown after the price */
+  period: string;
 };
 
 export const plans: Plan[] = [
-  { name: "Starter", price: "4,999", features: ["8 social posts", "2 reels", "1 outdoor banner design", "Monthly ROI report"] },
   {
-    name: "Commercial Scale",
-    price: "9,999",
-    features: ["12 posts + 4 full reels", "Dhanbad ad boost management", "2 hoarding designs", "Verified JTSA directory listing", "Priority 24h turnaround"],
-    badge: "Most Chosen",
-    highlight: true,
+    id: "silver",
+    name: "4-Influencer Silver Combo",
+    price: "14,999",
+    tagline: "Cafes, boutiques, coaching batches",
+    features: [
+      "4 micro local creators (5K–20K)",
+      "4 dedicated Instagram reels",
+      "8 promotional stories with tags",
+      "~35,000 estimated local reach",
+    ],
+    physical: ["500 B2B leaflets", "1 standee banner"],
+    period: "per campaign",
   },
-  { name: "Corporate Dominance", price: "19,999", features: ["20 posts + 8 reels", "Full campaign roadmap", "On-location commercial shoot", "Unlimited billboard layouts", "Everything in Scale"] },
+  {
+    id: "gold",
+    name: "5-Influencer Gold Growth Pack",
+    price: "24,999",
+    tagline: "Schools, jewellery, retail showrooms",
+    features: [
+      "5 mid-tier local creators (10K–50K)",
+      "5 cinematic reels + co-authoring",
+      "10 stories with direct link tags",
+      "~80,000 estimated local reach",
+    ],
+    physical: ["1,000 leaflets", "2 premium standees"],
+    badge: "Most Popular",
+    highlight: true,
+    period: "per campaign",
+  },
+  {
+    id: "platinum",
+    name: "10-Influencer Platinum Swarm",
+    price: "49,999",
+    tagline: "Grand openings and mega sales",
+    features: [
+      "10 regional mixed-tier creators",
+      "10 simultaneous reel drops",
+      "20 stories + live on-site coverage",
+      "~200,000 estimated local reach",
+    ],
+    physical: ["2,500 leaflets", "Durga pandal slot"],
+    period: "per campaign",
+  },
+  {
+    id: "vip",
+    name: "VIP Premium Annual Membership",
+    price: "1,19,999",
+    tagline: "Established institutions, yearly umbrella",
+    features: [
+      "4 combo campaigns a year (1 per quarter)",
+      "Dedicated videographer & scriptwriter",
+      "Permanent standee in 10+ partner hubs",
+      "5,000 yearly direct leaflet drops",
+    ],
+    physical: ["Year-round ground presence"],
+    badge: "15 Slots Only",
+    period: "per year",
+  },
 ];
+
+/* ─── Offline / ground add-ons ───────────────────────────────────────
+   Physical execution priced per unit, quoted separately from the
+   digital creator tiers above. */
+export type OfflineAddOn = {
+  id: string;
+  title: string;
+  body: string;
+  rate: string;
+  unit: string;
+  points: string[];
+  onRequest?: boolean;
+};
+
+export const offlineAddOns: OfflineAddOn[] = [
+  {
+    id: "leaflets",
+    title: "Hand-to-Hand Leaflet Dropping",
+    body: "School gates, coaching corridors and busy market hubs like Bank More and City Centre.",
+    rate: "₹300 – ₹450",
+    unit: "per 1,000 copies",
+    points: ["Direct audience engagement", "Live photo/GPS proof updates"],
+  },
+  {
+    id: "newspaper",
+    title: "Newspaper Leaflet Insertion",
+    body: "Morning delivery flyers inside the local dailies.",
+    rate: "₹250 – ₹350",
+    unit: "per 1,000 copies",
+    points: ["Guaranteed residential doorstep reach", "Minimum order: 2,000 copies"],
+  },
+  {
+    id: "flex",
+    title: "Flex Pasting & Wall Banners",
+    body: "Street pole flex banners and market wall posters across prime student areas.",
+    rate: "₹12 – ₹18",
+    unit: "per sq. ft.",
+    points: ["Printing + mounting included", "High-frequency street exposure"],
+  },
+  {
+    id: "auto",
+    title: "Auto-Rickshaw Branding",
+    body: "Moving hood banners on autos traversing key routes in Dhanbad.",
+    rate: "₹150 – ₹250",
+    unit: "per auto / month",
+    points: ["Moving city-wide visibility", "Minimum order: 10 autos"],
+  },
+  {
+    id: "hoardings",
+    title: "Hoardings & Banners",
+    body: "Mounted street banners and prime junction holding spaces.",
+    rate: "₹450 – ₹800",
+    unit: "per banner",
+    points: ["Key traffic intersections", "Durga Puja pandal gates available"],
+  },
+  {
+    id: "press",
+    title: "Media Partner Collaboration",
+    body: "Press briefings, live news channel interviews and news features.",
+    rate: "On request",
+    unit: "quoted per slot",
+    points: ["Priced as per media house norms"],
+    onRequest: true,
+  },
+];
+
+/** Standalone membership pass, quoted separately from the tiers above. */
+export const vipPass = {
+  price: "999",
+  period: "per year",
+  benefit: "Flat 20% off every individual combo and offline order for 365 days",
+};
 
 export type FaqItem = { q: string; a: string };
 

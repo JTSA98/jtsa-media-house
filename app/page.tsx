@@ -18,6 +18,7 @@ import {
 import { getSiteView, setting, settingList } from "@/lib/settings";
 import {
   faqs,
+  offlineAddOns,
   oneTimeWork,
   plans as defaultPlans,
   site as siteDefaults,
@@ -42,18 +43,20 @@ export default async function HomePage() {
   ];
 
   const plans = defaultPlans.map((p) => {
-    const k = p.name.toLowerCase();
-    const features = settingList(site.raw[`plan.${k}.features`]);
-    const price = setting(site.raw, `plan.${k}.price`, p.price);
+    const features = settingList(site.raw[`plan.${p.id}.features`]);
+    const physical = settingList(site.raw[`plan.${p.id}.physical`]);
+    const price = setting(site.raw, `plan.${p.id}.price`, p.price);
     return {
-      name: setting(site.raw, `plan.${k}.name`, p.name),
+      id: p.id,
+      name: setting(site.raw, `plan.${p.id}.name`, p.name),
+      tagline: setting(site.raw, `plan.${p.id}.tagline`, p.tagline),
       price,
       features: features.length ? features : p.features,
-      badge: setting(site.raw, `plan.${k}.badge`, p.badge ?? "") || undefined,
+      physical: physical.length ? physical : p.physical,
+      badge: setting(site.raw, `plan.${p.id}.badge`, p.badge ?? "") || undefined,
       highlight: p.highlight,
-      /* stable key from the DEFAULT name — the API matches on this even
-         if the plan was renamed in settings. */
-      payKey: `plan.${k}`,
+      period: p.period,
+      payKey: `plan.${p.id}`,
       payLabel: `Pay ₹${price} online`,
     };
   });
@@ -99,7 +102,12 @@ export default async function HomePage() {
         <Work />
         <Audiences site={site} />
         <Voices site={site} />
-        <Pricing oneTime={oneTime} plans={plans} site={site} />
+        <Pricing
+          oneTime={oneTime}
+          plans={plans}
+          site={site}
+          offlineAddOns={offlineAddOns}
+        />
         <Faq site={site} />
         <Enquire site={site} />
         <BigCta site={site} />

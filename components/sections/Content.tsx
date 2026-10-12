@@ -5,7 +5,7 @@ import { PayButton } from "@/components/payments/PayButton";
 import { SectionHead } from "@/components/sections/Marketing";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { CopyUpi, EnquiryForm } from "@/components/sections/EnquiryForm";
-import { faqs, paymentOptions, processSteps, testimonials } from "@/lib/site-config";
+import { faqs, offlineAddOns, paymentOptions, processSteps, testimonials, vipPass } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import type { SiteView } from "@/lib/settings";
 
@@ -177,33 +177,160 @@ export function Pricing({
   oneTime,
   plans,
   site,
+  offlineAddOns: addOns,
 }: {
   oneTime: { price: string; label: string; payKey: string; payLabel: string }[];
   plans: {
+    id: string;
     name: string;
+    tagline: string;
     price: string;
     features: string[];
+    physical: string[];
     badge?: string;
     highlight?: boolean;
+    period: string;
     payKey: string;
     payLabel: string;
   }[];
   site: SiteView;
+  offlineAddOns: (typeof offlineAddOns)[number][];
 }) {
+  /* rates resolve from the admin panel; the shape stays in site-config */
+  const rateFor = (id: string): string | null => {
+    const r = site.offlineRates as Record<string, string>;
+    return r[id] ?? null;
+  };
   return (
     <section id="pricing" className="py-24">
       <div className="wrap">
         <SectionHead
-          kicker="Plain, honest pricing"
-          title="Pick a"
-          highlight="plan"
-          body="One-time jobs below. Monthly retainers underneath. Every price is final."
+          kicker="Official rate card"
+          title="Creator combos &"
+          highlight="ground packages"
+          body="Every tier bundles a digital creator swarm with physical ground execution. One price, one team."
         />
 
-        {/* one-time */}
-        <div data-reveal className="glass-card rounded-xl border border-deep-border p-7 md:p-8">
+        {/* ── combo tiers ── */}
+        <div className="grid items-start gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {plans.map((p, i) => (
+            <div
+              key={p.id}
+              data-reveal
+              style={{ "--d": `${i * 80}ms` } as CSSProperties}
+              className={cn(
+                "glass-card relative flex flex-col rounded-xl p-7",
+                p.highlight &&
+                  "border-2 border-yellow/60 bg-gradient-to-b from-kraft-2/80 to-kraft shadow-[0_0_30px_-10px_rgba(255,184,0,0.4)]",
+              )}
+            >
+              {p.badge ? (
+                <span
+                  className={cn(
+                    "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 font-brand text-[10px] font-black tracking-widest uppercase",
+                    p.highlight
+                      ? "bg-yellow text-kraft"
+                      : "border border-yellow/40 bg-kraft text-yellow",
+                  )}
+                >
+                  {p.badge}
+                </span>
+              ) : null}
+
+              <h3 className="mt-1 font-brand text-lg font-extrabold text-white">
+                {p.name}
+              </h3>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-ink-3">
+                {p.tagline}
+              </p>
+
+              <div className="mt-5 rounded-xl border border-deep-border bg-kraft/60 p-4">
+                <p className="font-brand text-[30px] leading-none font-black tracking-tight text-white">
+                  ₹{p.price}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold text-ink-3">
+                  {p.period}
+                </p>
+              </div>
+
+              <p className="mt-5 mb-2 font-brand text-[10px] font-bold tracking-widest text-green uppercase">
+                Digital
+              </p>
+              <ul className="flex flex-col gap-2">
+                {p.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-[13px] leading-snug text-ink-2">
+                    <Check size={14} className="mt-0.5 shrink-0 text-green" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-5 mb-2 font-brand text-[10px] font-bold tracking-widest text-yellow uppercase">
+                Physical ground
+              </p>
+              <ul className="flex flex-col gap-2">
+                {p.physical.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-[13px] leading-snug text-ink-2">
+                    <Check size={14} className="mt-0.5 shrink-0 text-yellow" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#enquire"
+                className={`btn mt-auto w-full !text-[12px] !tracking-[0.1em] !uppercase ${
+                  p.highlight ? "btn-yellow" : "btn-green"
+                }`}
+                style={{ marginTop: "1.75rem" }}
+              >
+                Book {p.name.split(" ").slice(-1)[0]}
+              </a>
+              <PayButton
+                kind="plan"
+                itemKey={p.payKey}
+                label={p.payLabel}
+                className="mt-2.5"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* ── standalone VIP pass ── */}
+        <div
+          data-reveal
+          className="mt-8 flex flex-col items-center justify-between gap-6 rounded-2xl border border-yellow/30 bg-kraft-2/70 p-7 md:flex-row md:p-8"
+        >
+          <div className="max-w-2xl">
+            <span className="mb-3 inline-block rounded-full border border-yellow/30 bg-yellow/10 px-3 py-1 font-brand text-[10px] font-bold tracking-widest text-yellow uppercase">
+              Standalone annual option
+            </span>
+            <h3 className="font-brand text-2xl font-extrabold text-white md:text-3xl">
+              Prefer to pay as you go?
+            </h3>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">
+              Take the <b className="text-yellow">₹{site.vipPass.price}</b>{" "}
+              membership pass instead of a combo and unlock {site.vipPass.benefit}.
+            </p>
+          </div>
+          <div className="shrink-0 text-center">
+            <p className="font-brand text-4xl font-black text-yellow">
+              ₹{site.vipPass.price}
+              <span className="text-xs font-normal text-ink-3">
+                {" "}
+                {site.vipPass.period}
+              </span>
+            </p>
+            <a href="#enquire" className="btn btn-yellow mt-3">
+              Get VIP Pass
+            </a>
+          </div>
+        </div>
+
+        {/* ── one-time design work ── */}
+        <div data-reveal className="glass-card mt-8 rounded-xl border border-deep-border p-7 md:p-8">
           <h4 className="mb-5 font-brand text-xs font-bold tracking-[0.2em] text-ink-3 uppercase">
-            One-time work
+            One-time design & print
           </h4>
           <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {oneTime.map((o) => (
@@ -223,55 +350,55 @@ export function Pricing({
           </div>
         </div>
 
-        {/* retainers */}
-        <div className="mt-8 grid items-start gap-6 md:grid-cols-3">
-          {plans.map((p, i) => (
-            <div
-              key={p.name}
-              data-reveal
-              style={{ "--d": `${i * 80}ms` } as CSSProperties}
-              className={cn(
-                "glass-card relative flex flex-col rounded-xl p-7",
-                p.highlight && "border-green/60 shadow-[0_0_30px_-10px_rgba(0,245,212,0.4)]",
-              )}
-            >
-              {p.badge ? (
-                <span className="absolute -top-3 right-4 rounded-full border border-yellow/40 bg-kraft px-3 py-1 font-brand text-[10px] font-bold tracking-[0.16em] text-yellow uppercase">
-                  {p.badge}
-                </span>
-              ) : null}
+        {/* ── offline rate card ── */}
+        <div className="mt-16">
+          <div className="mb-10 text-center" data-reveal>
+            <p className="mb-2 font-brand text-xs font-bold tracking-[0.25em] text-green uppercase">
+              Physical &amp; ground services
+            </p>
+            <h3 className="font-brand text-2xl font-black text-white sm:text-3xl">
+              On-ground marketing rate card
+            </h3>
+            <p className="mx-auto mt-3 max-w-[54ch] text-sm text-ink-3">
+              Quote any single service on its own, without taking a combo.
+            </p>
+          </div>
 
-              <h3 className="font-brand text-xs font-bold tracking-[0.2em] text-ink-3 uppercase">
-                {p.name}
-              </h3>
-              <p className="mt-3 font-brand text-[clamp(30px,3.2vw,42px)] leading-none font-black tracking-tight">
-                ₹{p.price}
-                <small className="text-[13px] font-bold tracking-wide text-ink-3">
-                  {" "}
-                  /month
-                </small>
-              </p>
-
-              <ul className="my-5 flex flex-col gap-2.5">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-[14px] leading-relaxed text-ink-2">
-                    <Check size={15} className="mt-0.5 shrink-0 text-green" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="#enquire"
-                className={`btn mt-auto w-full !tracking-[0.1em] !uppercase ${
-                  p.highlight ? "btn-yellow" : "btn-green"
-                }`}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {addOns.map((o, i) => (
+              <article
+                key={o.id}
+                data-reveal
+                style={{ "--d": `${(i % 3) * 70}ms` } as CSSProperties}
+                className={cn(
+                  "glass-card glass-card-hover rounded-xl p-6",
+                  o.onRequest && "border-dashed",
+                )}
               >
-                {i === 0 ? "Start Here" : i === 1 ? "Choose Growth" : "Go Premium"}
-              </a>
-              <PayButton kind="plan" itemKey={p.payKey} label={p.payLabel} className="mt-2.5" />
-            </div>
-          ))}
+                <h4 className="font-brand text-lg font-bold text-white">
+                  {o.title}
+                </h4>
+                <p className="mt-2 text-[13px] leading-relaxed text-ink-3">
+                  {o.body}
+                </p>
+                <p className="mt-4 font-brand text-2xl font-extrabold text-white">
+                  {rateFor(o.id) ?? o.rate}
+                  <span className="text-[11px] font-normal text-ink-3">
+                    {" "}
+                    {o.unit}
+                  </span>
+                </p>
+                <ul className="mt-4 flex flex-col gap-1.5">
+                  {o.points.map((p) => (
+                    <li key={p} className="flex items-start gap-2 text-xs text-ink-2">
+                      <Check size={13} className="mt-0.5 shrink-0 text-green" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -86,17 +86,45 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('price.shoot',   U&'\20B914,999',      'prices', 'Half-day event shoot', '', 7),
   ('price.shoot_note', 'Half-day event shoot', 'prices', '', '', 8),
 
-  -- retainer plans ----------------------------------------------------
-  ('plan.starter.name',  'Starter',  'plans', U&'Starter \2014 name',  '', 1),
-  ('plan.starter.price', '4,999',    'plans', U&'Starter \2014 price', 'Digits only.', 2),
-  ('plan.starter.features', '8 social posts|2 reels|1 poster design|Monthly report', 'plans', '', 'One feature per line.', 3),
-  ('plan.growth.name',    'Growth',   'plans', U&'Growth \2014 name',   '', 4),
-  ('plan.growth.price',   '9,999',    'plans', U&'Growth \2014 price',  'Digits only.', 5),
-  ('plan.growth.badge',   'Most Chosen', 'plans', U&'Growth \2014 badge', 'Leave blank for none.', 6),
-  ('plan.growth.features', '12 posts + 4 reels|Boost management|2 poster designs|Website listing|Priority support', 'plans', '', 'One feature per line.', 7),
-  ('plan.premium.name',    'Premium', 'plans', U&'Premium \2014 name',  '', 8),
-  ('plan.premium.price',   '19,999',  'plans', U&'Premium \2014 price', 'Digits only.', 9),
-  ('plan.premium.features', '20 posts + 8 reels|Full campaign strategy|Event shoot coverage|Everything in Growth', 'plans', '', 'One feature per line.', 10),
+  -- creator combo tiers + standalone pass + offline rate card ----------
+  -- Keyed on plan.<id>.* where id is stable (silver/gold/platinum/vip),
+  -- so renaming a tier in the admin panel never orphans its price row.
+  ('plan.silver.name',     '4-Influencer Silver Combo', 'plans', U&'Silver \2014 name', '', 1),
+  ('plan.silver.price',    '14,999',   'plans', U&'Silver \2014 price', 'Digits only.', 2),
+  ('plan.silver.tagline',  'Cafes, boutiques, coaching batches', 'plans', U&'Silver \2014 audience', '', 3),
+  ('plan.silver.features', U&'4 micro local creators (5K\201320K)|4 dedicated Instagram reels|8 promotional stories with tags|~35,000 estimated local reach', 'plans', '', 'One per line.', 4),
+  ('plan.silver.physical', '500 B2B leaflets|1 standee banner', 'plans', '', 'One per line.', 5),
+
+  ('plan.gold.name',     '5-Influencer Gold Growth Pack', 'plans', U&'Gold \2014 name', '', 6),
+  ('plan.gold.price',    '24,999',   'plans', U&'Gold \2014 price', 'Digits only.', 7),
+  ('plan.gold.tagline',  'Schools, jewellery, retail showrooms', 'plans', U&'Gold \2014 audience', '', 8),
+  ('plan.gold.features', U&'5 mid-tier local creators (10K\201350K)|5 cinematic reels + co-authoring|10 stories with direct link tags|~80,000 estimated local reach', 'plans', '', 'One per line.', 9),
+  ('plan.gold.physical', '1,000 leaflets|2 premium standees', 'plans', '', 'One per line.', 10),
+  ('plan.gold.badge',    'Most Popular', 'plans', U&'Gold \2014 badge', 'Leave blank for none.', 11),
+
+  ('plan.platinum.name',     '10-Influencer Platinum Swarm', 'plans', U&'Platinum \2014 name', '', 12),
+  ('plan.platinum.price',    '49,999',   'plans', U&'Platinum \2014 price', 'Digits only.', 13),
+  ('plan.platinum.tagline',  'Grand openings and mega sales', 'plans', U&'Platinum \2014 audience', '', 14),
+  ('plan.platinum.features', '10 regional mixed-tier creators|10 simultaneous reel drops|20 stories + live on-site coverage|~200,000 estimated local reach', 'plans', '', 'One per line.', 15),
+  ('plan.platinum.physical', '2,500 leaflets|Durga pandal slot', 'plans', '', 'One per line.', 16),
+
+  ('plan.vip.name',     'VIP Premium Annual Membership', 'plans', U&'VIP \2014 name', '', 17),
+  ('plan.vip.price',    '1,19,999', 'plans', U&'VIP \2014 price', 'Digits only.', 18),
+  ('plan.vip.tagline',  'Established institutions, yearly umbrella', 'plans', U&'VIP \2014 audience', '', 19),
+  ('plan.vip.features', '4 combo campaigns a year (1 per quarter)|Dedicated videographer and scriptwriter|Permanent standee in 10+ partner hubs|5,000 yearly direct leaflet drops', 'plans', '', 'One per line.', 20),
+  ('plan.vip.physical', 'Year-round ground presence', 'plans', '', 'One per line.', 21),
+  ('plan.vip.badge',    '15 Slots Only', 'plans', U&'VIP \2014 badge', 'Leave blank for none.', 22),
+
+  -- standalone annual membership pass ----------------------------------
+  ('vip.pass_price',   '999',  'plans', 'VIP pass price', 'Standalone annual membership pass.', 23),
+  ('vip.pass_benefit', 'Flat 20% off every individual combo and offline order for 365 days', 'plans', 'VIP pass benefit', '', 24),
+
+  -- offline / ground add-on rates --------------------------------------
+  ('offline.leaflets.rate',  U&'\20B9300 \2013 \20B9450', 'prices', 'Leaflet dropping rate', 'Per 1,000 copies.', 9),
+  ('offline.newspaper.rate', U&'\20B9250 \2013 \20B9350', 'prices', 'Newspaper insert rate', 'Per 1,000 copies.', 10),
+  ('offline.flex.rate',      U&'\20B912 \2013 \20B918',  'prices', 'Flex pasting rate', 'Per sq. ft.', 11),
+  ('offline.auto.rate',      U&'\20B9150 \2013 \20B9250', 'prices', 'Auto branding rate', 'Per auto / month.', 12),
+  ('offline.hoardings.rate', U&'\20B9450 \2013 \20B9800', 'prices', 'Hoarding rate', 'Per banner.', 13),
 
   -- budget bands (registration form + pipeline estimates) -----------
   ('budget.bands', U&'Under \20B95,000|\20B95,000 \2014 \20B910,000|\20B910,000 \2014 \20B925,000|\20B925,000 \2014 \20B950,000|Above \20B950,000|Not sure yet', 'budgets', 'Budget bands', 'One option per line. Keep parallel with the values below.', 1),
@@ -115,6 +143,16 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('service.website-listing.price',     U&'\20B9999',   'services', U&'Website Listing \2014 per month', '', 7),
   ('service.website-listing.price_note','per month', 'services', '', '', 8)
 on conflict (key) do nothing;
+
+-- --- retire the superseded monthly retainer rows -----------------------
+-- Starter / Scale / Premium were monthly retainers. The site now sells
+-- creator combo tiers keyed plan.silver|gold|platinum|vip. Left in place
+-- these dead rows would still render in the admin settings form.
+delete from public.site_settings where key in (
+  'plan.starter.name','plan.starter.price','plan.starter.features',
+  'plan.growth.name','plan.growth.price','plan.growth.features','plan.growth.badge',
+  'plan.premium.name','plan.premium.price','plan.premium.features'
+);
 
 -- --- track when a setting last changed -------------------------------
 create or replace function public.touch_settings_updated_at()

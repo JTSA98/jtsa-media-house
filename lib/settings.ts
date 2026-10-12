@@ -204,6 +204,24 @@ export async function getSiteView() {
        whether visitors are pointed at them. Flip portal.client_login
        to true when the influencer login launches. */
     clientLoginVisible: settingBool(s, "portal.client_login", false),
+    /* Standalone annual membership pass + offline add-on rates. Both are
+       priced in the admin panel like everything else. */
+    vipPass: {
+      price: setting(s, "vip.pass_price", "999"),
+      period: "per year",
+      benefit: setting(
+        s,
+        "vip.pass_benefit",
+        "Flat 20% off every individual combo and offline order for 365 days",
+      ),
+    },
+    offlineRates: {
+      leaflets: setting(s, "offline.leaflets.rate", "₹300 – ₹450"),
+      newspaper: setting(s, "offline.newspaper.rate", "₹250 – ₹350"),
+      flex: setting(s, "offline.flex.rate", "₹12 – ₹18"),
+      auto: setting(s, "offline.auto.rate", "₹150 – ₹250"),
+      hoardings: setting(s, "offline.hoardings.rate", "₹450 – ₹800"),
+    },
     enquiryEnabled: settingBool(s, "enquiry.enabled", true),
     enquiryWhatsapp: settingBool(s, "enquiry.whatsapp", true),
     replyNote: setting(

@@ -49,14 +49,13 @@ export function payablesFromSettings(s: SettingsMap): Payable[] {
   const items: Payable[] = [];
 
   for (const p of defaultPlans) {
-    const k = p.name.toLowerCase();
-    const paise = parsePaise(setting(s, `plan.${k}.price`, p.price));
+    const paise = parsePaise(setting(s, `plan.${p.id}.price`, p.price));
     if (paise === null) continue;
     items.push({
       kind: "plan",
-      key: `plan.${k}`,
-      title: `${setting(s, `plan.${k}.name`, p.name)} — monthly retainer`,
-      subtitle: "First month, charged now. We confirm on WhatsApp before work starts.",
+      key: `plan.${p.id}`,
+      title: `${setting(s, `plan.${p.id}.name`, p.name)} — ${p.period}`,
+      subtitle: "Confirmed on WhatsApp before creator slots are booked.",
       amountPaise: paise,
     });
   }
