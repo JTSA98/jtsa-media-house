@@ -10,37 +10,90 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* Surfaces */
-  --color-kraft: #0b192c;      /* page ground = Deep Slate */
-  --color-kraft-2: #10233d;    /* cards = Deep Card */
-  --color-kraft-3: #1a3354;    /* raised / hover = Deep Border */
-  --color-deep-border: #1a3354; /* same value, named as the kit calls it */
+  /* Surfaces — the launch/festive palette */
+  --color-kraft: #0b0f19;      /* page ground */
+  --color-kraft-2: #131a2a;    /* card */
+  --color-kraft-3: #1f2937;    /* raised / hover */
+  --color-deep-border: #1f2937;
 
-  /* Ink — light on the dark ground. Names kept so `text-ink` stays valid. */
-  --color-ink: #ffffff;        /* primary text = Pure White */
-  --color-ink-2: #cbd5e1;      /* secondary text */
-  --color-ink-3: #94a3b8;      /* muted / meta text */
+  /* Ink */
+  --color-ink: #f3f4f6;        /* primary text */
+  --color-ink-2: #9ca3af;      /* secondary */
+  --color-ink-3: #6b7280;      /* muted / meta */
 
-  /* Accents. `green` is referenced ~105 times; it now resolves to
-     Neon Teal again, matching the logo artwork. */
-  --color-green: #00f5d4;
-  --color-green-2: #6bfff0;
-  --color-red: #ff5c7a;
-  --color-yellow: #ffb800;     /* Crimson Gold */
-  --color-gold: #ffb800;
-  --color-teal: #00f5d4;
+  /* Accents.
+     NOTE: `green` is a legacy token name kept because ~700 existing class
+     references resolve through it. It now resolves to the INDIGO primary
+     accent, not green — see the named tokens below. Nothing reads as a
+     literal green any more. */
+  --color-green: #6366f1;
+  --color-green-2: #818cf8;
+  --color-red: #ef4444;
+  --color-yellow: #f59e0b;
+  --color-gold: #f59e0b;
+  --color-teal: #8b5cf6;
+
+  /* Named accents, matching the reference's config */
+  --color-indigo: #6366f1;
+  --color-violet: #8b5cf6;
+  --color-pink: #ec4899;
+  --color-amber: #d97706;
+  --color-emerald: #10b981;
+  --color-amber-400: #fbbf24;
+  --color-amber-300: #fcd34d;
 
   --font-karla: var(--font-sans), "Segoe UI", sans-serif;
   --font-brand: var(--font-brand), "Segoe UI", sans-serif;
   --font-hand: var(--font-brand), "Segoe UI", sans-serif;
 
-  --shadow-print: 0 18px 50px rgba(2, 6, 12, 0.55);
-  --shadow-print-sm: 0 10px 28px rgba(2, 6, 12, 0.45);
-  --shadow-print-green: 0 0 20px rgba(0, 245, 212, 0.35);
+  --shadow-print: 0 18px 50px rgba(2, 4, 12, 0.6);
+  --shadow-print-sm: 0 10px 28px rgba(2, 4, 12, 0.5);
+  --shadow-print-green: 0 12px 30px -10px rgba(99, 102, 241, 0.25);
+  --shadow-teal-glow: 0 0 20px rgba(99, 102, 241, 0.35);
+  --shadow-gold-glow: 0 0 20px rgba(245, 158, 11, 0.35);
+}
 
-  /* Named shadows from the layout reference */
-  --shadow-teal-glow: 0 0 20px rgba(0, 245, 212, 0.35);
-  --shadow-gold-glow: 0 0 20px rgba(255, 184, 0, 0.35);
+/* ── Festive gradients ─────────────────────────────────────────────── */
+@utility text-gradient-festive {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 40%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility bg-festive-gradient {
+  background-image: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d97706 100%);
+}
+@utility bg-card-gradient {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+}
+
+/* Gradient halo behind an element, lifted on hover. */
+@utility glow-effect {
+  position: relative;
+}
+.glow-effect::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #6366f1, #8b5cf6, #f59e0b);
+  opacity: 0.4;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+.glow-effect:hover::before {
+  opacity: 0.8;
 }
 
 /* ── Broadcast lower-third ticker ──────────────────────────────────── */
@@ -71,10 +124,10 @@
 
 /* ── Glass cards ──────────────────────────────────────────────────── */
 @utility glass-card {
-  background: rgba(16, 35, 61, 0.7);
+  background: rgba(19, 26, 42, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(26, 51, 84, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition:
     border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -82,9 +135,9 @@
 }
 @utility glass-card-hover {
   &:hover {
-    border-color: #00f5d4;
+    border-color: rgba(139, 92, 246, 0.45);
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px -10px rgba(0, 245, 212, 0.2);
+    box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.25);
   }
 }
 
@@ -96,24 +149,24 @@
   );
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 245, 212, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.18);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bento-card:hover {
-  border-color: rgba(0, 245, 212, 0.45);
+  border-color: rgba(99, 102, 241, 0.45);
   transform: translateY(-4px);
-  box-shadow: 0 25px 50px -12px rgba(0, 245, 212, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
 }
 .text-glow {
-  text-shadow: 0 0 35px rgba(0, 245, 212, 0.35);
+  text-shadow: 0 0 35px rgba(99, 102, 241, 0.35);
 }
 .gold-glow {
-  text-shadow: 0 0 35px rgba(255, 184, 0, 0.4);
+  text-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
 }
 
 /* ── Broadcast grid field (hero backdrop) ─────────────────────────── */
 @utility bg-broadcast-grid {
-  background-image: radial-gradient(#1a3354 1px, transparent 1px);
+  background-image: radial-gradient(#1f2937 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -175,20 +228,20 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #0b192c;
+    background: #0b0f19;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1a3354;
+    background: #1f2937;
     border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #00f5d4;
+    background: #6366f1;
   }
 
   ::selection {
     background-color: var(--color-green);
     /* dark ink on teal: teal is far too light to carry white text */
-    color: #050c14;
+    color: #0b0f19;
   }
 
   :focus-visible {
@@ -226,7 +279,7 @@
     height: 780px;
     top: -18%;
     right: -14%;
-    background: radial-gradient(circle, rgba(0, 245, 212, 0.3), transparent 68%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 68%);
     animation: drift-a 26s ease-in-out infinite;
   }
   .bg-aurora .a2 {
@@ -234,7 +287,7 @@
     height: 620px;
     bottom: -16%;
     left: -12%;
-    background: radial-gradient(circle, rgba(255, 184, 0, 0.16), transparent 68%);
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.16), transparent 68%);
     animation: drift-b 32s ease-in-out infinite;
   }
   .bg-aurora .a3 {
@@ -330,8 +383,8 @@
     height: 16px;
     background: linear-gradient(
       90deg,
-      rgba(0, 245, 212, 0.28),
-      rgba(0, 245, 212, 0.1)
+      rgba(99, 102, 241, 0.28),
+      rgba(99, 102, 241, 0.1)
     );
     z-index: -1;
   }
@@ -376,8 +429,8 @@
   }
   .btn-green {
     background: var(--color-green);
-    /* dark ink on teal — white on #00F5D4 fails contrast badly */
-    color: #050c14;
+    /* dark ink on the indigo primary — light text would fail contrast */
+    color: #0b0f19;
     box-shadow: var(--shadow-print-green);
   }
   .btn-green:hover {
@@ -385,12 +438,12 @@
   }
   .btn-yellow {
     background: var(--color-yellow);
-    color: #050c14;
+    color: #0b0f19;
   }
   .btn-white {
     background: #fff;
     /* was `var(--color-ink)`, which is now white — would be invisible */
-    color: #050c14;
+    color: #0b0f19;
   }
 
   /* ── Cards ─────────────────────────────────────────────────────── */
@@ -426,7 +479,7 @@
   .field:focus {
     background: var(--color-kraft-2);
     border-color: var(--color-green);
-    box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.15);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
   }
   .field::placeholder {
     color: var(--color-ink-3);
@@ -436,7 +489,7 @@
      stay light unless told otherwise. Without this the option list is
      white-on-white against the dark field. */
   .field option {
-    background: #10233b;
+    background: #131a2a;
     color: #ffffff;
   }
   .field:-webkit-autofill {
@@ -481,27 +534,27 @@
      The theme flip turned two token colours light, which silently broke
      a set of existing combos:
 
-       bg-green text-white  -> teal #00F5D4 under white ≈ 1.5:1
+       bg-green text-white  -> light primary accent under white, poor contrast
        bg-ink   text-white  -> white on white, fully invisible
 
      Rather than chase ~25 call sites across the status/portal/admin
      files, these are corrected centrally. Two-class selectors outrank
      the single-class utilities, so these win regardless of order. */
   :is(.bg-green, .bg-yellow).text-white {
-    color: #050c14;
+    color: #0b0f19;
   }
   .bg-ink.text-white {
     background: var(--color-kraft);
-    color: #fff;
+    color: #f3f4f6;
   }
   .bg-ink-3.text-white {
-    color: #050c14;
+    color: #0b0f19;
   }
 
   /* `bg-white` controls inherited the now-white body colour, so they
      were white-on-white. Force the dark text they always meant. */
   .bg-white {
-    color: #0b192c;
+    color: #0b0f19;
   }
   .bg-white.text-ink-3 {
     color: #3d5170;

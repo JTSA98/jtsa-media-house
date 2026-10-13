@@ -3,7 +3,18 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { normBand } from "@/lib/utils";
-import { budgetBands, budgetMids } from "@/lib/site-config";
+import {
+  budgetBands,
+  budgetMids,
+  calcBases,
+  comparisonCards,
+  festivePhases,
+  intensityLevels,
+  launchPerks,
+  pillars,
+  recallPrinciple,
+  sectors,
+} from "@/lib/site-config";
 
 /**
  * Site settings come from the database so they can be edited at
@@ -23,6 +34,12 @@ export type SettingGroup =
   | "plans"
   | "services"
   | "budgets"
+  | "hero"
+  | "compare"
+  | "pillars"
+  | "sectors"
+  | "festive"
+  | "calculator"
   | "general";
 
 export interface SettingRow {
@@ -144,6 +161,12 @@ export const groupLabels: Record<SettingGroup, string> = {
   plans: "Monthly retainer plans",
   services: "Service prices",
   budgets: "Budget bands",
+  hero: "Hero section",
+  compare: "Why combo",
+  pillars: "360 Architecture",
+  sectors: "Sector playbooks",
+  festive: "Festive campaign",
+  calculator: "ROI calculator",
   general: "Other",
 };
 
@@ -158,6 +181,12 @@ export const groupOrder: SettingGroup[] = [
   "plans",
   "services",
   "budgets",
+  "hero",
+  "compare",
+  "pillars",
+  "sectors",
+  "festive",
+  "calculator",
   "general",
 ];
 

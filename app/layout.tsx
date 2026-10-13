@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
@@ -17,15 +17,15 @@ const sans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const display = Montserrat({
+const display = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
+  weight: ["600", "700", "800"],
   variable: "--font-brand",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0B192C",
+  themeColor: "#0B0F19",
 };
 
 export const metadata: Metadata = {

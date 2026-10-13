@@ -328,6 +328,348 @@ export const vipPass = {
   benefit: "Flat 20% off every individual combo and offline order for 365 days",
 };
 
+// ═══════════════════════════════════════════════════════════════════
+//  Launch-site content. Every field carries a stable id so the same
+//  string can be overridden from /admin/settings under
+//  <group>.<id>.<field> without the keys ever drifting.
+// ═══════════════════════════════════════════════════════════════════
+
+export interface CmpCard {
+  id: string;
+  label: string;
+  title: string;
+  body: string;
+  impact: string;
+}
+
+/** "Why Combo" — traditional methods and where they fall short. */
+export const comparisonCards: CmpCard[] = [
+  {
+    id: "single-reel",
+    label: "Traditional Method 1",
+    title: "Single Influencer Reel",
+    body: "60%+ of their audience lives outside Dhanbad. Followers are fragmented and isolated.",
+    impact: "High cost, zero footfall conversions for local stores and schools.",
+  },
+  {
+    id: "passive-leaflets",
+    label: "Traditional Method 2",
+    title: "Passive Leaflets",
+    body: "Distributed without an active pitch or any digital verification anchor.",
+    impact: "95% material waste, zero trackable customer leads.",
+  },
+  {
+    id: "social-ads",
+    label: "Traditional Method 3",
+    title: "Uncoordinated Social Ads",
+    body: "Generic graphics that lack hyper-local cultural context or creator trust.",
+    impact: "Wasted ad spend, easily ignored sponsored posts.",
+  },
+  {
+    id: "static-flex",
+    label: "Traditional Method 4",
+    title: "Static Billboards / Flex",
+    body: "Expensive upfront, entirely passive, with zero digital retargeting capability.",
+    impact: "Massive fixed cost with no lead generation analytics.",
+  },
+];
+
+export const recallPrinciple = {
+  title: "The Multi-Touchpoint Recall Principle",
+  body: "A local customer in Dhanbad needs to see a brand at least 5 to 7 times across online reels and physical street touchpoints within 48 hours before making a buying or admission decision.",
+};
+
+export interface Pillar {
+  id: string;
+  label: string;
+  title: string;
+  body: string;
+  points: string[];
+}
+
+/** The 360° engine — three pillars. */
+export const pillars: Pillar[] = [
+  {
+    id: "digital",
+    label: "Pillar 01: Digital Army",
+    title: "Multi-Creator Swarms",
+    body: "4, 5 and 10 local influencers drop synchronised video content within a tight 48-hour window, overwhelming the local feed to create a genuine viral trend.",
+    points: [
+      "Simultaneous Instagram reels and stories",
+      "Co-authoring and hyper-local geo tags",
+      "Combined 35K to 200K+ estimated local views",
+    ],
+  },
+  {
+    id: "physical",
+    label: "Pillar 02: Ground Trust",
+    title: "Physical Dominance",
+    body: "High-visibility physical presence validates online excitement. Strategic pandal banners, promotional canopy hubs and hand-to-hand leaflet drops across prime spots.",
+    points: [
+      "Top Durga Puja pandal gates and LED screens",
+      "Canopy hubs at Bank More and City Centre",
+      "Targeted school and coaching gate flyer drops",
+    ],
+  },
+  {
+    id: "conversion",
+    label: "Pillar 03: Conversion",
+    title: "QR Bridge & Footfall",
+    body: "Every flyer, standee and banner carries an interactive QR code pointing straight at creator reels, WhatsApp offers and walk-in coupon verification.",
+    points: [
+      "Instant lead capture and WhatsApp integration",
+      "Exclusive JTSA festive VIP coupons",
+      "Transparent post-campaign analytics report",
+    ],
+  },
+];
+
+export interface Sector {
+  id: string;
+  tab: string;
+  title: string;
+  subtitle: string;
+  digital: string[];
+  physical: string[];
+  impact: string;
+  recommended: { digital: string; ground: string; locations: string };
+}
+
+/** Sector playbooks — the four tabs. */
+export const sectors: Sector[] = [
+  {
+    id: "education",
+    tab: "Education & Coaching",
+    title: "Educational Institutions & Coaching Hubs",
+    subtitle: "Admission surge model for schools, NEET/JEE coaching and colleges",
+    digital: [
+      "Peer-to-peer reels by popular college creators reviewing campus facilities.",
+      "Topper testimonial production: high-quality cinematic interviews.",
+      "Hyper-local campaign aimed at parents within 15km.",
+    ],
+    physical: [
+      "School-gate leaflet drops, synchronised during exit hours.",
+      "Parent counselling booths near exam centres on testing days.",
+      "Hostel and mess standees in student residential zones.",
+    ],
+    impact: "Increases inquiry call volume by an average of 250% during admission cycles.",
+    recommended: {
+      digital: "5 to 10 local creators",
+      ground: "1,000+ pamphlet drops and standees",
+      locations: "Bank More, City Centre, Saraidhela",
+    },
+  },
+  {
+    id: "retail",
+    tab: "Retail & Showrooms",
+    title: "Retail Showrooms, Fashion & Electronics",
+    subtitle: "Festive shopping blitz for showrooms and megastores",
+    digital: [
+      "In-store creator experience: shop-with-me and festive haul reels.",
+      "Collection discounts and store walkthroughs by 5-10 local creators.",
+      "Flash Instagram countdown stories before Dhanteras and Durga Puja.",
+    ],
+    physical: [
+      "JTSA VIP discount coupons handed out in high-footfall markets.",
+      "Standee placement in partner cafes and youth hangouts.",
+      "Promotional festive canopy at Bank More and City Centre.",
+    ],
+    impact: "Drives immediate physical store walk-ins and festive stock clearance.",
+    recommended: {
+      digital: "5 to 10 local creators",
+      ground: "1,000+ pamphlet drops and standees",
+      locations: "Bank More, City Centre, Saraidhela",
+    },
+  },
+  {
+    id: "hospitality",
+    tab: "Restaurants & Cafes",
+    title: "Restaurants, Cafes & Food Outlets",
+    subtitle: "Food creator swarm and ambience experience engine",
+    digital: [
+      "Food blogger swarm: 4-6 creators invited for an exclusive tasting night.",
+      "Cinematic reels covering signature dishes, festive menus and decor.",
+      "Google review drive initiated by creators to boost local rankings.",
+    ],
+    physical: [
+      "QR table standees encouraging customers to post reels for discounts.",
+      "Co-branded tent cards across hospitality partner hubs.",
+      "Festive menu flyers in high-density residential apartments.",
+    ],
+    impact: "Routinely yields 10,000+ local views per reel, driving weekend bookings.",
+    recommended: {
+      digital: "4 to 6 food creators",
+      ground: "800 pamphlets and table stands",
+      locations: "City Centre, Bank More",
+    },
+  },
+  {
+    id: "b2b",
+    tab: "Real Estate & Health",
+    title: "Real Estate, Clinics & High-Value B2B",
+    subtitle: "Trust-building and authoritative lead generation model",
+    digital: [
+      "Site tour reels hosted by trusted regional anchors.",
+      "Doctor and specialist spotlights establishing authority.",
+      "Direct WhatsApp lead generation ads with booking links.",
+    ],
+    physical: [
+      "Targeted flyer drops in high-income residential neighbourhoods.",
+      "Standee placement in premium diagnostic labs and commercial hubs.",
+      "VIP invitation cards for site visits and clinic discounts.",
+    ],
+    impact: "Captures high-intent verified leads with maximum trustworthiness.",
+    recommended: {
+      digital: "3 to 5 specialist creators",
+      ground: "600 premium pamphlets and stands",
+      locations: "Premium residential sectors",
+    },
+  },
+];
+
+export interface Phase {
+  id: string;
+  label: string;
+  title: string;
+  points: string[];
+}
+
+/** Festive rollout — three phases. */
+export const festivePhases: Phase[] = [
+  {
+    id: "pre-puja",
+    label: "Phase 1: Pre-Puja Hype",
+    title: "Saptami to Navami Surge",
+    points: [
+      "Teaser posts across all partner creators introducing the brand deal.",
+      "B2B outreach offering inaugural launch discounts.",
+      "Inauguration banners placed across key pandal routes.",
+    ],
+  },
+  {
+    id: "puja",
+    label: "Phase 2: On-Ground Pandal Surge",
+    title: "Puja Live Coverage",
+    points: [
+      "JTSA ground teams deploying festive coupons to visitors.",
+      "Creator combos filming live pandal walk-throughs and store tags.",
+      "Real-time stories to drive footfall through the festive week.",
+    ],
+  },
+  {
+    id: "diwali",
+    label: "Phase 3: Dhanteras & Diwali Blitz",
+    title: "High-Ticket Purchase Blitz",
+    points: [
+      "Product showcases and store walk-throughs 48h before Dhanteras.",
+      "Targeted B2B corporate gifting catalogues and WhatsApp outreach.",
+      "High-intensity 3-day creator swarm for immediate sales.",
+    ],
+  },
+];
+
+export interface Perk {
+  id: string;
+  headline: string;
+  body: string;
+}
+
+/** Launch special — three perks. */
+export const launchPerks: Perk[] = [
+  {
+    id: "discount",
+    headline: "10% Flat Off",
+    body: "Early-bird discount on the Silver and Gold combo packages.",
+  },
+  {
+    id: "flyers",
+    headline: "Free 1,000 Flyers",
+    body: "Complimentary festive pandal leaflet distribution included.",
+  },
+  {
+    id: "reel",
+    headline: "Launch Reel Slot",
+    body: "Featured spot in the JTSA official opening broadcast across handles.",
+  },
+];
+
+/**
+ * ROI calculator bases, one per combo tier. The slider multiplies these
+ * by the chosen intensity, so every number below is editable in admin.
+ */
+export interface CalcBase {
+  id: string;
+  label: string;
+  views: number;
+  flyers: number;
+  creators: string;
+  leadsLow: number;
+  leadsHigh: number;
+  score: number;
+  /** how fast views scale with intensity (0-1) */
+  viewRate: number;
+  /** how fast the score climbs with intensity */
+  scoreStep: number;
+}
+
+export const calcBases: CalcBase[] = [
+  {
+    id: "silver",
+    label: "4-Influencer Silver Combo",
+    views: 35000,
+    flyers: 500,
+    creators: "4 Creators",
+    leadsLow: 40,
+    leadsHigh: 90,
+    score: 6.5,
+    viewRate: 1,
+    scoreStep: 0.5,
+  },
+  {
+    id: "gold",
+    label: "5-Influencer Gold Growth Pack",
+    views: 80000,
+    flyers: 1000,
+    creators: "5 Creators",
+    leadsLow: 100,
+    leadsHigh: 220,
+    score: 7.8,
+    viewRate: 0.9,
+    scoreStep: 0.5,
+  },
+  {
+    id: "platinum",
+    label: "10-Influencer Platinum Swarm",
+    views: 200000,
+    flyers: 2500,
+    creators: "10 Creators",
+    leadsLow: 250,
+    leadsHigh: 500,
+    score: 8.9,
+    viewRate: 0.85,
+    scoreStep: 0.3,
+  },
+  {
+    id: "vip",
+    label: "VIP Annual Membership",
+    views: 500000,
+    flyers: 5000,
+    creators: "Dedicated Network",
+    leadsLow: 0,
+    leadsHigh: 0,
+    score: 10,
+    viewRate: 1,
+    scoreStep: 0,
+  },
+];
+
+/** Slider positions for the calculator intensity control. */
+export const intensityLevels = [
+  "Single Weekend Push",
+  "Festive 3-Day Blitz",
+  "10-Day Festival Dominance",
+];
+
 export type FaqItem = { q: string; a: string };
 
 export const faqs: FaqItem[] = [

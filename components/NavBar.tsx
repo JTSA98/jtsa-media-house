@@ -2,27 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, Send, X } from "lucide-react";
+import { Calculator, Menu, Phone, X } from "lucide-react";
 
 import type { SiteView } from "@/lib/settings";
 
 const LINKS = [
-  { href: "#top", label: "Home" },
-  { href: "#services", label: "Services" },
-  { href: "#rooms", label: "Who We Serve" },
-  { href: "#work", label: "Our Work" },
-  { href: "#process", label: "How It Works" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
-];
-
-/* Ticker copy is brand-agnostic on purpose — these are service lines and
-   an availability note, not claims about events or viewership numbers. */
-const TICKER = [
-  "Ad Agency · Dhanbad · A Sub-Venture of JTSA",
-  "Posters, Flex, Standees & Reels",
-  "Typical turnaround 48 hours",
-  "Free design sample before you pay",
+  { href: "#why-combo", label: "Why Combo?" },
+  { href: "#solution", label: "360° Architecture" },
+  { href: "#packages", label: "Packages" },
+  { href: "#sectors", label: "Sector Playbooks" },
+  { href: "#festive", label: "Festive Offer" },
+  { href: "#calculator", label: "ROI Calculator" },
 ];
 
 export function NavBar({ site }: { site: SiteView }) {
@@ -43,84 +33,61 @@ export function NavBar({ site }: { site: SiteView }) {
 
   return (
     <>
-      {/* ── broadcast lower-third ticker ── */}
-      <div className="sticky top-0 z-50 border-b border-deep-border bg-kraft text-xs">
-        <div className="mx-auto flex max-w-[1220px] flex-wrap items-center">
-          <div className="cut-badge relative z-10 flex items-center gap-2 bg-green px-4 py-2 font-brand text-xs font-black tracking-wider text-kraft uppercase shadow-lg">
-            <span className="inline-block size-2 animate-ping rounded-full bg-red-600" />
-            JTSA Media
-            <span className="ml-1 rounded bg-kraft px-1.5 py-0.5 text-[10px] text-green">
-              Open
-            </span>
-          </div>
-
-          <div className="relative flex flex-1 items-center overflow-hidden bg-black/40 py-1.5">
-            <div className="animate-ticker flex items-center gap-8 font-medium tracking-wide text-ink-2">
-              {[0, 1].map((dup) => (
-                /* the second copy is loop filler — hidden from AT so the
-                   ticker is not announced twice */
-                <span key={dup} aria-hidden={dup === 1} className="inline-flex">
-                  {TICKER.map((line) => (
-                    <span key={line} className="inline-flex items-center gap-2">
-                      <b className="text-white">{line}</b>
-                      <span className="text-green">|</span>
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── main navbar ── */}
-      <nav className="sticky top-[33px] z-40 border-b border-deep-border bg-kraft/90 backdrop-blur-md">
+      <header className="fixed top-0 right-0 left-0 z-50 border-b border-white/10 bg-kraft/80 backdrop-blur-md">
         <div className="wrap">
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-20 items-center justify-between gap-4">
             <Link href="#top" className="group flex shrink-0 items-center gap-3">
-              <div className="flex size-11 items-center justify-center overflow-hidden rounded-lg border border-deep-border bg-kraft-2 transition-all group-hover:border-green group-hover:shadow-[0_0_20px_rgba(0,245,212,0.35)]">
+              <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-kraft-2 shadow-lg shadow-violet/20 transition group-hover:shadow-amber-400/20">
                 <img
                   src="/brand/jtsa-official-mark.png"
                   alt={site.name}
-                  width={44}
-                  height={44}
-                  className="size-full scale-105 object-contain"
+                  width={40}
+                  height={40}
+                  className="size-full scale-110 object-contain"
                 />
               </div>
-              <div>
-                <span className="font-brand text-2xl font-black tracking-wider text-white">
-                  JTSA
+              <div className="hidden sm:block">
+                <span className="block text-xl leading-none font-extrabold tracking-tight text-white">
+                  JTSA <span className="text-gradient-festive">MEDIA HOUSE</span>
                 </span>
-                <div className="-mt-1 font-brand text-[9px] font-bold tracking-[0.25em] text-green uppercase">
-                  Media House
-                </div>
+                <span className="mt-1 block text-[10px] font-semibold tracking-wider text-amber-400 uppercase">
+                  {site.city} &amp; {site.state}
+                </span>
               </div>
             </Link>
 
-            <div className="hidden items-center gap-7 text-sm font-semibold tracking-wide lg:flex">
+            {/* Six links + a phone chip + CTA need real width; they only
+                appear from xl so they never crowd the wordmark. */}
+            <nav className="hidden items-center gap-5 text-sm font-medium text-ink-2 xl:flex">
               {LINKS.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
-                  className="text-ink-2 transition-colors hover:text-green"
+                  className="whitespace-nowrap transition-colors hover:text-amber-400"
                 >
                   {l.label}
                 </a>
               ))}
               {site.clientLoginVisible ? (
-                <Link href="/portal" className="text-ink-2 transition-colors hover:text-green">
+                <Link href="/portal" className="whitespace-nowrap transition-colors hover:text-amber-400">
                   Client Login
                 </Link>
               ) : null}
-            </div>
+            </nav>
 
-            <div className="hidden items-center gap-4 lg:flex">
+            <div className="hidden items-center gap-4 sm:flex">
               <a
-                href="#enquire"
-                className="inline-flex items-center justify-center rounded-md bg-green px-6 py-2.5 font-brand text-xs font-bold tracking-widest text-kraft uppercase transition-all duration-300 shadow-[0_0_20px_rgba(0,245,212,0.35)] hover:bg-white hover:shadow-[0_0_20px_rgba(255,184,0,0.35)]"
+                href={`tel:+${site.phoneDigits}`}
+                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-ink-2 transition-colors hover:border-amber-500/50 hover:text-white"
               >
-                <Send size={13} className="mr-2" />
-                Get a Quote
+                <Phone size={13} className="text-amber-400" />
+                {site.phone}
+              </a>
+              <a
+                href="#booking"
+                className="glow-effect inline-flex items-center justify-center rounded-xl bg-festive-gradient px-5 py-2.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg transition-transform hover:scale-105"
+              >
+                Book a Slot
               </a>
             </div>
 
@@ -128,19 +95,18 @@ export function NavBar({ site }: { site: SiteView }) {
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="rounded-md p-2 text-ink-2 transition hover:text-green lg:hidden"
+              className="rounded-lg p-2 text-ink-2 transition hover:bg-white/5 hover:text-white xl:hidden"
             >
-              <Menu size={24} />
+              <Menu size={22} />
             </button>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* ── mobile drawer ──
-          `invisible` when closed matters: an off-canvas panel stays in
-          the tab order, so keyboard users could focus invisible links. */}
+      {/* mobile drawer — visibility gated so hidden links stay out of the
+          tab order */}
       <div
-        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] lg:hidden ${
+        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] xl:hidden ${
           open ? "visible translate-y-0" : "invisible -translate-y-full"
         }`}
         aria-hidden={!open}
@@ -149,9 +115,9 @@ export function NavBar({ site }: { site: SiteView }) {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close menu"
-          className="absolute top-5 right-[5vw] p-2 text-ink-2 transition hover:text-green"
+          className="absolute top-5 right-[5vw] rounded-lg p-2 text-ink-2 transition hover:text-white"
         >
-          <X size={26} />
+          <X size={24} />
         </button>
 
         {LINKS.map((l) => (
@@ -159,7 +125,7 @@ export function NavBar({ site }: { site: SiteView }) {
             key={l.href}
             href={l.href}
             onClick={() => setOpen(false)}
-            className="font-brand text-[24px] font-bold tracking-wide text-ink uppercase"
+            className="text-[22px] font-bold tracking-wide text-ink"
           >
             {l.label}
           </a>
@@ -168,17 +134,25 @@ export function NavBar({ site }: { site: SiteView }) {
           <Link
             href="/portal"
             onClick={() => setOpen(false)}
-            className="font-brand text-[24px] font-bold tracking-wide text-green uppercase"
+            className="text-[22px] font-bold tracking-wide text-amber-400"
           >
             Client Login
           </Link>
         ) : null}
         <a
-          href="#enquire"
-          onClick={() => setOpen(false)}
-          className="btn btn-green mt-4"
+          href={`tel:+${site.phoneDigits}`}
+          className="mt-2 flex items-center gap-2 rounded-lg border border-amber-500/30 bg-white/5 px-4 py-2.5 text-sm font-semibold text-amber-400"
         >
-          Get a Quote
+          <Phone size={14} />
+          Call {site.phone}
+        </a>
+        <a
+          href="#booking"
+          onClick={() => setOpen(false)}
+          className="btn mt-4 bg-festive-gradient text-white"
+        >
+          <Calculator size={15} className="mr-2" />
+          Book a Slot
         </a>
       </div>
     </>

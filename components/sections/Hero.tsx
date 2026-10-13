@@ -1,95 +1,113 @@
-import Image from "next/image";
+import { ArrowRight, Calculator } from "lucide-react";
 
-import { heroPolaroids } from "@/lib/site-config";
 import type { SiteView } from "@/lib/settings";
 
-export function Hero({ site }: { site: SiteView }) {
-  const lead = heroPolaroids[0];
+export type HeroStat = { value: string; label: string };
+export type HeroView = {
+  badge: string;
+  titleTop: string;
+  titleGradient: string;
+  body: string;
+  stats: HeroStat[];
+};
+
+const FALLBACK_STATS: HeroStat[] = [
+  { value: "360°", label: "Regional Funnel" },
+  { value: "200K+", label: "Views / Campaign" },
+  { value: "5-7 Touch", label: "Recall Principle" },
+  { value: "250%", label: "Avg Lead Surge" },
+];
+
+/* Static class strings — Tailwind only generates what it can see in the
+   source, so these cannot be built by interpolation. */
+const ACCENTS = [
+  { text: "text-indigo", edge: "border-t-indigo/30" },
+  { text: "text-violet", edge: "border-t-violet/30" },
+  { text: "text-amber-400", edge: "border-t-amber-400/30" },
+  { text: "text-emerald", edge: "border-t-emerald/30" },
+] as const;
+
+export function Hero({ site, view }: { site: SiteView; view: HeroView }) {
+  const stats = view.stats.length === 4 ? view.stats : FALLBACK_STATS;
 
   return (
     <section
       id="top"
-      className="relative flex min-h-[88vh] items-center justify-center overflow-hidden pt-12 pb-20"
+      className="relative flex min-h-[90vh] items-center justify-center overflow-hidden pt-28 pb-20"
     >
-      {/* broadcast grid field + glow orbs */}
-      <div aria-hidden className="bg-broadcast-grid absolute inset-0 opacity-40" />
+      {/* background glows */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 -left-40 size-96 rounded-full bg-green/10 blur-3xl"
+        className="pointer-events-none absolute top-1/4 left-1/2 size-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-tr from-violet/20 via-amber-500/10 to-indigo/20 blur-[120px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-40 -bottom-40 size-96 rounded-full bg-yellow/10 blur-3xl"
+        className="pointer-events-none absolute top-1/3 right-10 size-80 rounded-full bg-amber-500/10 blur-[100px]"
       />
 
       <div className="wrap relative z-10 text-center">
-        {/* tagline badge */}
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-green/40 bg-kraft-2 px-4 py-1.5 font-brand text-xs font-bold tracking-[0.2em] text-green uppercase shadow-[0_0_20px_rgba(0,245,212,0.35)]">
-          Truth · Knowledge · Impact
+        {/* festive badge */}
+        <div className="glass-card mb-8 inline-flex animate-pulse items-center gap-2 rounded-full border border-amber-500/30 px-4 py-2">
+          <span className="size-2.5 rounded-full bg-amber-400" />
+          <span className="text-xs font-semibold tracking-wider text-amber-300 uppercase sm:text-sm">
+            {view.badge}
+          </span>
         </div>
 
-        {/* headline — gradient on the second line */}
-        <h1 className="mx-auto mb-6 max-w-5xl font-brand text-[clamp(38px,7vw,72px)] leading-tight font-black tracking-tight text-white">
-          We make your
-          <br />
-          <span className="bg-gradient-to-r from-green via-white to-yellow bg-clip-text text-transparent">
-            notice board worth stopping at.
-          </span>
+        {/* headline */}
+        <h1 className="mx-auto mb-6 max-w-5xl text-[clamp(30px,6vw,68px)] leading-[1.15] font-extrabold tracking-tight text-white">
+          {view.titleTop}
+          <br className="hidden sm:block" />
+          <span className="text-gradient-festive">{view.titleGradient}</span>
         </h1>
 
-        <p className="mx-auto mb-10 max-w-3xl text-[16px] leading-relaxed text-ink-2 sm:text-xl">
-          {site.name} is the advertising wing of {site.owner}. Posters, reels,
-          campaigns and website listings for schools and local businesses across{" "}
-          {site.city} — built for broadcast, not from a template.
+        <p className="mx-auto mb-10 max-w-3xl text-[16px] leading-relaxed font-normal text-ink-2 sm:text-xl">
+          {view.body}
         </p>
 
-        {/* max-w-md squeezed the pair until the labels wrapped mid-phrase;
-            buttons now take their natural width. */}
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        {/* dual CTA */}
+        <div className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#enquire"
-            className="flex w-full items-center justify-center gap-3 rounded-lg bg-green px-8 py-4 font-brand text-sm font-bold tracking-wider whitespace-nowrap text-kraft uppercase shadow-[0_0_20px_rgba(0,245,212,0.35)] transition-all hover:scale-105 hover:bg-white sm:w-auto"
+            href="#packages"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-festive-gradient px-8 py-4 text-sm font-bold tracking-wider text-white uppercase shadow-xl shadow-violet-600/25 transition-all hover:scale-105 sm:w-auto"
           >
-            {site.sampleOffer}
+            Explore Creator Bundles
+            <ArrowRight size={15} />
           </a>
           <a
-            href="#services"
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-deep-border bg-kraft-2 px-8 py-4 font-brand text-sm font-bold tracking-wider whitespace-nowrap text-white uppercase transition-all hover:border-green hover:text-green sm:w-auto"
+            href="#calculator"
+            className="glass-card flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-8 py-4 text-sm font-bold tracking-wider text-ink-2 uppercase transition-all hover:bg-white/10 sm:w-auto"
           >
-            Media Services
+            <Calculator size={15} className="text-amber-400" />
+            Calculate Campaign ROI
           </a>
         </div>
 
-        {/* ── lower-third featured card ── */}
-        <div className="mx-auto mt-16 max-w-4xl rounded-xl bg-gradient-to-r from-green via-yellow to-green p-1 shadow-2xl">
-          <div className="flex flex-col items-center justify-between gap-6 rounded-lg border border-deep-border bg-kraft p-6 text-left md:flex-row">
-            <div className="flex items-center gap-4">
-              <div className="flex size-14 shrink-0 items-center justify-center rounded-lg border border-green bg-green/10 text-2xl text-green">
-                <Image
-                  src={lead.src}
-                  alt={lead.alt}
-                  width={24}
-                  height={24}
-                  className="size-6 rounded object-cover"
-                />
+        {/* trust stats */}
+        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
+          {stats.map((s, i) => {
+            const a = ACCENTS[i] ?? ACCENTS[0];
+            return (
+              <div
+                key={s.label}
+                data-reveal
+                className={`glass-card ${a.edge} rounded-2xl border-t p-4 text-center`}
+              >
+                <div className={`mb-1 text-2xl font-extrabold sm:text-3xl ${a.text}`}>
+                  {s.value}
+                </div>
+                <div className="text-xs font-medium tracking-wider text-ink-3 uppercase">
+                  {s.label}
+                </div>
               </div>
-              <div>
-                <span className="font-brand text-xs font-bold tracking-widest text-yellow uppercase">
-                  Featured work
-                </span>
-                <h3 className="mt-0.5 font-brand text-xl font-bold text-white">
-                  {lead.caption}
-                </h3>
-                <p className="mt-1 text-xs text-ink-3">{lead.alt}</p>
-              </div>
-            </div>
-            <div className="shrink-0">
-              <span className="inline-block rounded bg-yellow px-4 py-2 font-brand text-xs font-black tracking-wider text-kraft uppercase">
-                Real campaign
-              </span>
-            </div>
-          </div>
+            );
+          })}
         </div>
+
+        <p className="mt-8 text-xs text-ink-3">
+          Serving {site.city}, {site.state} — {site.ownerShort} registered,{" "}
+          {site.udyam}
+        </p>
       </div>
     </section>
   );

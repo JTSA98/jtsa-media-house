@@ -202,7 +202,7 @@ export function Pricing({
     return r[id] ?? null;
   };
   return (
-    <section id="pricing" className="py-24">
+    <section id="packages" className="py-24">
       <div className="wrap">
         <SectionHead
           kicker="Official rate card"
