@@ -527,7 +527,7 @@ export function BigCta({ site }: { site: SiteView }) {
           {site.sampleOffer}
         </a>
         <a
-          href={`tel:+${site.phoneDigits}`}
+          href={`tel:${site.phoneDigits}`}
           className="flex items-center justify-center rounded-lg border border-deep-border bg-kraft-2 px-8 py-4 font-brand text-[13px] font-bold tracking-[0.1em] text-white uppercase transition-all hover:border-green hover:text-green"
         >
           {site.phone}

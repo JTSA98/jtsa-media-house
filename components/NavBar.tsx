@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Calculator, Menu, Phone, X } from "lucide-react";
+import { ArrowRight, CalendarCheck, Menu, Phone, X } from "lucide-react";
 
 import type { SiteView } from "@/lib/settings";
 
@@ -46,11 +46,11 @@ export function NavBar({ site }: { site: SiteView }) {
                   className="size-full scale-110 object-contain"
                 />
               </div>
-              <div className="hidden sm:block">
-                <span className="block text-xl leading-none font-extrabold tracking-tight text-white">
+              <div className="min-w-0">
+                <span className="block text-[15px] leading-none font-extrabold tracking-tight whitespace-nowrap text-white sm:text-xl">
                   JTSA <span className="text-gradient-festive">MEDIA HOUSE</span>
                 </span>
-                <span className="mt-1 block text-[10px] font-semibold tracking-wider text-amber-400 uppercase">
+                <span className="mt-1 hidden text-[10px] font-semibold tracking-wider text-amber-400 uppercase sm:block">
                   {site.city} &amp; {site.state}
                 </span>
               </div>
@@ -77,7 +77,7 @@ export function NavBar({ site }: { site: SiteView }) {
 
             <div className="hidden items-center gap-4 sm:flex">
               <a
-                href={`tel:+${site.phoneDigits}`}
+                href={`tel:${site.phoneDigits}`}
                 className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-ink-2 transition-colors hover:border-amber-500/50 hover:text-white"
               >
                 <Phone size={13} className="text-amber-400" />
@@ -106,54 +106,115 @@ export function NavBar({ site }: { site: SiteView }) {
       {/* mobile drawer — visibility gated so hidden links stay out of the
           tab order */}
       <div
-        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-5 bg-kraft transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] xl:hidden ${
+        className={`fixed inset-0 z-90 flex flex-col bg-kraft-2 transition-[transform,visibility] duration-400 [transition-behavior:allow-discrete] xl:hidden ${
           open ? "visible translate-y-0" : "invisible -translate-y-full"
         }`}
         aria-hidden={!open}
       >
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          aria-label="Close menu"
-          className="absolute top-5 right-[5vw] rounded-lg p-2 text-ink-2 transition hover:text-white"
-        >
-          <X size={24} />
-        </button>
+        {/* ambient wash so the panel is not a flat black sheet */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(99,102,241,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,.10) 1px, transparent 1px)",
+            backgroundSize: "52px 52px",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-40 -right-32 h-[460px] w-[460px] rounded-full blur-3xl"
+          style={{
+            background:
+              "radial-gradient(closest-side, rgba(139,92,246,.28), transparent 70%)",
+          }}
+        />
 
-        {LINKS.map((l) => (
-          <a
-            key={l.href}
-            href={l.href}
-            onClick={() => setOpen(false)}
-            className="text-[22px] font-bold tracking-wide text-ink"
-          >
-            {l.label}
-          </a>
-        ))}
-        {site.clientLoginVisible ? (
-          <Link
-            href="/portal"
-            onClick={() => setOpen(false)}
-            className="text-[22px] font-bold tracking-wide text-amber-400"
-          >
-            Client Login
-          </Link>
-        ) : null}
-        <a
-          href={`tel:+${site.phoneDigits}`}
-          className="mt-2 flex items-center gap-2 rounded-lg border border-amber-500/30 bg-white/5 px-4 py-2.5 text-sm font-semibold text-amber-400"
-        >
-          <Phone size={14} />
-          Call {site.phone}
-        </a>
-        <a
-          href="#booking"
-          onClick={() => setOpen(false)}
-          className="btn mt-4 bg-festive-gradient text-white"
-        >
-          <Calculator size={15} className="mr-2" />
-          Book a Slot
-        </a>
+        <div className="relative flex min-h-0 flex-1 flex-col">
+          <div className="flex shrink-0 items-center justify-between px-5 pt-5 pb-5 sm:px-8">
+            <span className="flex items-center gap-3">
+              <span className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-kraft shadow-lg shadow-violet/25">
+                <img
+                  src="/brand/jtsa-official-mark.png"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="size-full scale-110 object-contain"
+                />
+              </span>
+              <span className="text-[15px] leading-none font-extrabold tracking-tight text-white">
+                JTSA{" "}
+                <span className="text-gradient-festive">MEDIA HOUSE</span>
+              </span>
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+              className="-mr-2 rounded-xl p-2 text-ink-2 transition hover:bg-white/10 hover:text-white"
+            >
+              <X size={22} />
+            </button>
+          </div>
+
+          <nav className="min-h-0 flex-1 overflow-y-auto px-5 sm:px-8">
+            <p className="px-1 pb-4 text-[10px] font-bold tracking-[0.22em] text-ink-3 uppercase">
+              Explore
+            </p>
+
+            <ul className="flex flex-col gap-1.5">
+              {LINKS.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-white/8 bg-white/4 px-4 py-4 text-[17px] font-bold tracking-tight text-white transition-colors hover:border-indigo-400/40 hover:bg-white/8"
+                  >
+                    {l.label}
+                    <ArrowRight
+                      size={17}
+                      aria-hidden
+                      className="shrink-0 text-ink-3 transition-transform group-hover:translate-x-0.5 group-hover:text-amber-400"
+                    />
+                  </a>
+                </li>
+              ))}
+              {site.clientLoginVisible ? (
+                <li>
+                  <Link
+                    href="/portal"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between gap-3 rounded-2xl border border-white/8 bg-white/4 px-4 py-4 text-[17px] font-bold tracking-tight text-amber-400"
+                  >
+                    Client Login
+                    <ArrowRight size={17} aria-hidden className="shrink-0" />
+                  </Link>
+                </li>
+              ) : null}
+            </ul>
+          </nav>
+
+          <div className="shrink-0 border-t border-white/10 bg-kraft/60 px-5 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:px-8">
+            <div className="flex flex-col gap-2.5">
+              <a
+                href={`tel:${site.phoneDigits}`}
+                className="flex items-center justify-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/8 px-4 py-3.5 text-sm font-bold text-amber-400 transition-colors hover:bg-amber-500/14"
+              >
+                <Phone size={15} />
+                Call {site.phone}
+              </a>
+              <a
+                href="#booking"
+                onClick={() => setOpen(false)}
+                className="glow-effect flex items-center justify-center rounded-2xl bg-festive-gradient px-4 py-3.5 text-xs font-black tracking-wider text-white uppercase"
+              >
+                <CalendarCheck size={15} className="mr-2" />
+                Book a Slot
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

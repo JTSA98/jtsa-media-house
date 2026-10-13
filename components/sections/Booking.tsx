@@ -36,7 +36,7 @@ export function Booking({
 
             <div className="space-y-4 pt-4">
               <a
-                href={`tel:+${site.phoneDigits}`}
+                href={`tel:${site.phoneDigits}`}
                 className="glass-card group flex items-center gap-4 rounded-2xl border border-amber-500/30 p-4 transition hover:border-amber-500"
               >
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-xl text-amber-400 transition-all group-hover:bg-amber-500 group-hover:text-kraft">

@@ -203,8 +203,13 @@ export const groupOrder: SettingGroup[] = [
 export async function getSiteView() {
   const s = await fetchSettings();
 
-  const phone = setting(s, "site.phone", "+91 00000 00000");
-  const digits = setting(s, "site.phone_digits", "910000000000");
+  const rawPhone = setting(s, "site.phone", "9304336590");
+  const rawDigits = setting(s, "site.phone_digits", "9304336590");
+  /* Both are concatenated into wa.me and tel: URLs. A "+", a space or a 91
+     prefix typed into the admin panel would silently produce a dead link, so
+     keep digits only here rather than trusting the stored string. */
+  const digits = rawDigits.replace(/\D/g, "") || "9304336590";
+  const phone = rawPhone.replace(/\D/g, "") || digits;
   const socials = [
     { label: "Instagram", href: setting(s, "social.instagram", "") },
     { label: "Facebook", href: setting(s, "social.facebook", "") },

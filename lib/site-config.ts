@@ -15,8 +15,10 @@ export const site = {
 
   // ── Replace before launch ──────────────────────────────────────────
   email: "commercial@jtsamediahouse.in",
-  phone: "+91 00000 00000",
-  phoneDigits: "910000000000",
+  // Plain 10-digit local number, no "+" and no 91 prefix: this value is fed
+  // straight into wa.me and tel: links, where either would break them.
+  phone: "9304336590",
+  phoneDigits: "9304336590",
   upiId: "jtsamedia@upi",
   mainSite: "https://jtsa.in",
 } as const;
