@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
-import { fetchSettings, settingBool, setting } from "@/lib/settings";
+import { fetchSettings, settingBool, setting, toWhatsappDigits } from "@/lib/settings";
 import { AmbientBackdrop } from "@/components/AmbientBackdrop";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
@@ -91,7 +91,7 @@ export default async function RootLayout({
 
         {settingBool(s, "wa.enabled", true) ? (
           <FloatingWhatsApp
-            digits={setting(s, "site.phone_digits", "")}
+            digits={toWhatsappDigits(setting(s, "site.phone_digits", ""))}
             label={setting(s, "wa.label", "Chat with us")}
             sublabel={setting(s, "wa.sublabel", "")}
             message={setting(

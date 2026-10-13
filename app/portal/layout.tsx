@@ -49,7 +49,7 @@ export default async function PortalLayout({
         <p className="text-center text-[12.5px] text-ink-3">
           Need something changed urgently?{" "}
           <a
-            href={`https://wa.me/${site.phoneDigits}`}
+            href={`https://wa.me/${site.whatsappDigits}`}
             className="font-bold text-green underline"
           >
             WhatsApp {site.name}

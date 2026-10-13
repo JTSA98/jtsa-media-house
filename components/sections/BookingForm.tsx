@@ -70,7 +70,7 @@ export function BookingForm({
           .filter(Boolean)
           .join("\n");
         window.open(
-          `https://wa.me/${site.phoneDigits}?text=${encodeURIComponent(text)}`,
+          `https://wa.me/${site.whatsappDigits}?text=${encodeURIComponent(text)}`,
           "_blank",
         );
         form.reset();

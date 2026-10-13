@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendMail, templates, emailConfigured } from "@/lib/email";
-import { fetchSettings, settingBool } from "@/lib/settings";
+import { fetchSettings, settingBool, toWhatsappDigits } from "@/lib/settings";
 
 export const runtime = "nodejs";
 
@@ -159,9 +159,11 @@ async function notifyAgency({
     return { sent: false, skipped: true, reason: "No recipient configured" };
   }
 
-  // The form's wa.me fallback is only useful when we have the full number,
-  // country code included. 10 local digits is all we ever get from the form.
-  const agencyDigits = lead.whatsappDigits || (settings["site.phone_digits"] ?? "").slice(-10);
+  // The agency may want to WhatsApp the lead straight back from the email, so
+  // the link needs the full international number, not the local 10 digits.
+  const agencyDigits = toWhatsappDigits(
+    lead.whatsappDigits || (settings["site.phone_digits"] ?? ""),
+  );
 
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/+$/, "");
 

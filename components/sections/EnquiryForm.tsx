@@ -61,7 +61,7 @@ export function EnquiryForm() {
         .join("\n");
 
       window.open(
-        `https://wa.me/${site.phoneDigits}?text=${encodeURIComponent(text)}`,
+        `https://wa.me/${site.whatsappDigits}?text=${encodeURIComponent(text)}`,
         "_blank",
       );
 

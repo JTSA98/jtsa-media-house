@@ -19,6 +19,9 @@ export const site = {
   // straight into wa.me and tel: links, where either would break them.
   phone: "9304336590",
   phoneDigits: "9304336590",
+  /* wa.me needs the full international number. phoneDigits above stays local
+     for tel: and on-screen display. */
+  whatsappDigits: "919304336590",
   upiId: "jtsamedia@upi",
   mainSite: "https://jtsa.in",
 } as const;
@@ -26,7 +29,7 @@ export const site = {
 export const social = [
   { label: "Instagram", href: "#" },
   { label: "Facebook", href: "#" },
-  { label: "WhatsApp", href: `https://wa.me/${site.phoneDigits}` },
+  { label: "WhatsApp", href: `https://wa.me/${site.whatsappDigits}` },
   { label: "YouTube", href: "#" },
 ] as const;
 

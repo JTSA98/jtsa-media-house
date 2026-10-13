@@ -195,6 +195,14 @@ export const groupOrder: SettingGroup[] = [
   "general",
 ];
 
+/** India country code, prepended to wa.me links only — never to the number
+ *  shown on screen, which stays a plain local 10-digit number. */
+export const toWhatsappDigits = (local: string | null | undefined): string => {
+  const d = (local ?? "").replace(/\D/g, "");
+  if (!d) return "";
+  return d.length === 10 ? `91${d}` : d;
+};
+
 /**
  * A view of the site assembled from settings + code defaults. Components
  * read from this instead of importing site-config directly, so a value
@@ -210,10 +218,15 @@ export async function getSiteView() {
      keep digits only here rather than trusting the stored string. */
   const digits = rawDigits.replace(/\D/g, "") || "9304336590";
   const phone = rawPhone.replace(/\D/g, "") || digits;
+  /* WhatsApp reads the number after wa.me/ as a FULL international number. A
+     bare 10-digit value opens the country picker and never reaches the
+     contact, so +91 goes in here — link only. phoneDigits stays local
+     because that is what tel: and the visible number want. */
+  const whatsappDigits = toWhatsappDigits(digits);
   const socials = [
     { label: "Instagram", href: setting(s, "social.instagram", "") },
     { label: "Facebook", href: setting(s, "social.facebook", "") },
-    { label: "WhatsApp", href: `https://wa.me/${digits}` },
+    { label: "WhatsApp", href: `https://wa.me/${whatsappDigits}` },
     { label: "YouTube", href: setting(s, "social.youtube", "") },
   ];
 
@@ -229,6 +242,7 @@ export async function getSiteView() {
     state: setting(s, "site.state", "Jharkhand"),
     phone,
     phoneDigits: digits,
+    whatsappDigits,
     email: setting(s, "site.email", "hello@jtsamediahouse.in"),
     upiId: setting(s, "site.upi", "jtsamedia@upi"),
     socials: socials.filter((x) => x.href !== ""),
