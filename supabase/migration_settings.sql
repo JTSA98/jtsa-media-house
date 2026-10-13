@@ -214,6 +214,14 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('booking.body', 'Festive demand is high, so creator combo slots are capped per zone to prevent audience saturation. Secure your slot now.', 'general', 'Booking intro', '', 32),
   ('booking.sla', 'Quality assurance SLA', 'general', 'SLA label', '', 33),
 
+  -- floating whatsapp button ------------------------------------------------
+  -- The number itself comes from site.phone_digits above; these control the
+  -- button's label, the message pre-filled into the chat, and whether it shows.
+  ('wa.enabled', 'true', 'contact', 'Show the floating WhatsApp button', 'false hides it site-wide. The staff and client areas never show it either way.', 2),
+  ('wa.label', 'Chat with us', 'contact', 'WhatsApp button label', '', 3),
+  ('wa.sublabel', '', 'contact', 'WhatsApp button sub-label', 'Leave empty for a single-line button.', 4),
+  ('wa.prefill', 'Hi JTSA Media House, I''d like to know more about your campaign packages.', 'contact', 'Prefilled WhatsApp message', 'Sent as the first line of the chat so they know what you are asking about.', 5),
+
   -- lead notifications ---------------------------------------------------
   -- Where campaign bookings and other lead emails are delivered. Overrides
   -- ADMIN_NOTIFY_EMAIL / BREVO_SENDER_EMAIL in .env.local, so the owner can

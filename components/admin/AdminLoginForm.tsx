@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useActionState, useState } from "react";
 import { AlertCircle, Eye, EyeOff, Loader2, ShieldCheck } from "lucide-react";
 
-import { adminSignIn, type AdminLoginState } from "@/app/staff-login/actions";
+import { adminSignIn, type AdminLoginState } from "@/app/admin/login/actions";
 
 const initial: AdminLoginState = { error: null };
 
@@ -13,23 +13,23 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="card-white relative p-7 shadow-[0_22px_56px_rgba(2,6,12,0.55)] md:p-10">
+    <div className="glass-card relative p-7 md:p-10">
       
-
-      <div className="mb-4 flex size-14 items-center justify-center rounded-sm border border-red/35 bg-red/12 text-red">
+      <div className="mb-4 flex size-14 items-center justify-center rounded-xl bg-indigo-500/15 text-indigo-300">
         <ShieldCheck size={26} strokeWidth={2.5} />
       </div>
 
-      <h1 className="display text-[clamp(22px,3vw,30px)]">Staff sign in</h1>
+      <h1 className="text-[clamp(22px,3vw,30px)] font-extrabold tracking-[-0.03em] text-white">
+        Staff sign in
+      </h1>
       <p className="mt-2.5 text-[14px] leading-[1.75] text-ink-2">
-        Restricted to owner accounts. Client logins are refused here even if they
-        know this page exists.
+        Restricted to owner accounts. Anyone not on the allow-list is refused here.
       </p>
 
       {allowListCount === 0 ? (
-        <p className="mt-5 border-[2.5px] border-red bg-red/10 px-3.5 py-3 text-[13px] leading-[1.7]">
-          <b>No admin allow-list configured.</b> Add your email to{" "}
-          <code className="font-mono">ADMIN_EMAILS</code> in <code className="font-mono">.env.local</code>{" "}
+        <p className="mt-5 rounded-xl border border-red/40 bg-red/10 px-3.5 py-3 text-[13px] leading-[1.7] text-ink-2">
+          <b className="text-red">No admin allow-list configured.</b> Add your email to{" "}
+          <code className="font-mono text-ink-2">ADMIN_EMAILS</code> in <code className="font-mono text-ink-2">.env.local</code>{" "}
           and restart the server.
         </p>
       ) : null}
@@ -74,7 +74,7 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
               type="button"
               onClick={() => setShow((v) => !v)}
               aria-label={show ? "Hide password" : "Show password"}
-              className="absolute top-1/2 right-3 -translate-y-1/2 border-2 border-ink bg-white p-1.5 text-ink transition hover:bg-sticky"
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-lg bg-white/10 p-1.5 text-ink-2 transition hover:bg-white/20 hover:text-white"
             >
               {show ? <EyeOff size={15} /> : <Eye size={15} />}
             </button>
@@ -83,15 +83,15 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
 
         {state.error ? (
           <p
-            className={`flex items-start gap-2 border-[2.5px] px-3.5 py-3 text-[13px] text-ink ${
+            className={`flex items-start gap-2 rounded-xl px-3.5 py-3 text-[13px] text-ink-2 ${
               state.notAllowed
-                ? "border-ink bg-sticky"
-                : "border-red bg-red/10"
+                ? "border border-white/10 bg-white/5"
+                : "border border-red/40 bg-red/10"
             }`}
           >
             <AlertCircle
               size={16}
-              className={`mt-0.5 shrink-0 ${state.notAllowed ? "text-ink" : "text-red"}`}
+              className={`mt-0.5 shrink-0 ${state.notAllowed ? "text-amber-400" : "text-red"}`}
             />
             {state.error}
           </p>
@@ -100,11 +100,11 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
         <button
           type="submit"
           disabled={pending || allowListCount === 0}
-          className="btn btn-green w-full !py-[17px] disabled:opacity-50"
+          className="flex w-full items-center justify-center rounded-xl bg-festive-gradient !py-[17px] text-xs font-black tracking-wider text-white uppercase transition hover:opacity-95 disabled:opacity-50"
         >
           {pending ? (
             <>
-              <Loader2 size={17} className="mr-2 animate-spin" /> Checking‚
+              <Loader2 size={17} className="mr-2 animate-spin" /> Checking…
             </>
           ) : (
             <>
@@ -114,17 +114,11 @@ export function AdminLoginForm({ allowListCount }: { allowListCount: number }) {
         </button>
       </form>
 
-      <div className="mt-7 space-y-2 border-t-2 border-dashed border-ink/25 pt-5 text-center text-[12.5px]">
-        <p className="text-ink-2">
-          Are you a client?{" "}
-          <Link href="/login" className="font-bold text-green underline">
-            Sign in here instead
-          </Link>
-        </p>
-        <Link href="/" className="block font-bold text-ink-2 underline hover:text-green">
+      <p className="mt-7 border-t border-white/10 pt-5 text-center text-[12.5px] text-ink-3">
+        <Link href="/" className="font-bold text-ink-2 underline hover:text-white">
           ← Back to the website
         </Link>
-      </div>
+      </p>
     </div>
   );
 }

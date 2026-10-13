@@ -3,8 +3,10 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 
 import "./globals.css";
 import { site } from "@/lib/site-config";
+import { fetchSettings, settingBool, setting } from "@/lib/settings";
 import { AmbientBackdrop } from "@/components/AmbientBackdrop";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 /* Brand & Design Kit type stack (per the layout reference):
    Montserrat — headings, uppercase, wide tracking
@@ -70,9 +72,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const s = await fetchSettings();
+
   return (
     <html
       lang="en"
@@ -84,6 +88,19 @@ export default function RootLayout({
             EVERY route (portal cards included) resolve instead of hiding. */}
         <RevealOnScroll />
         {children}
+
+        {settingBool(s, "wa.enabled", true) ? (
+          <FloatingWhatsApp
+            digits={setting(s, "site.phone_digits", "")}
+            label={setting(s, "wa.label", "Chat with us")}
+            sublabel={setting(s, "wa.sublabel", "")}
+            message={setting(
+              s,
+              "wa.prefill",
+              `Hi ${site.name}, I'd like to know more about your campaign packages.`,
+            )}
+          />
+        ) : null}
       </body>
     </html>
   );

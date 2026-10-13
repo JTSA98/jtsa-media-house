@@ -85,7 +85,7 @@ export function NavBar({ site }: { site: SiteView }) {
               </a>
               <a
                 href="#booking"
-                className="glow-effect inline-flex items-center justify-center rounded-xl bg-festive-gradient px-5 py-2.5 text-xs font-bold tracking-wider text-white uppercase shadow-lg transition-transform hover:scale-105"
+                className="glow-effect inline-flex shrink-0 items-center justify-center rounded-xl bg-festive-gradient px-5 py-2.5 text-xs font-bold tracking-wider whitespace-nowrap text-white uppercase shadow-lg transition-transform hover:scale-105"
               >
                 Book a Slot
               </a>

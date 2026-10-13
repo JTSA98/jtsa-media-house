@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { normBand } from "@/lib/utils";
@@ -58,7 +60,7 @@ export type SettingsMap = Record<string, string>;
 const EMPTY: SettingsMap = {};
 
 /** Every setting, as key → value. Empty when unavailable. */
-export async function fetchSettings(): Promise<SettingsMap> {
+export const fetchSettings: () => Promise<SettingsMap> = cache(async (): Promise<SettingsMap> => {
   if (!isSupabaseConfigured) return EMPTY;
 
   try {
@@ -79,7 +81,7 @@ export async function fetchSettings(): Promise<SettingsMap> {
   } catch {
     return EMPTY;
   }
-}
+});
 
 /** Settings rows with their metadata, for rendering the admin form. */
 export async function fetchSettingRows(): Promise<SettingRow[]> {
