@@ -40,6 +40,7 @@ export type SettingGroup =
   | "sectors"
   | "festive"
   | "calculator"
+  | "notify"
   | "general";
 
 export interface SettingRow {
@@ -167,6 +168,7 @@ export const groupLabels: Record<SettingGroup, string> = {
   sectors: "Sector playbooks",
   festive: "Festive campaign",
   calculator: "ROI calculator",
+  notify: "Lead notifications",
   general: "Other",
 };
 
@@ -187,6 +189,7 @@ export const groupOrder: SettingGroup[] = [
   "sectors",
   "festive",
   "calculator",
+  "notify",
   "general",
 ];
 

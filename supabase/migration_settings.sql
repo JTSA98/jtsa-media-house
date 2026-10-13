@@ -214,6 +214,13 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('booking.body', 'Festive demand is high, so creator combo slots are capped per zone to prevent audience saturation. Secure your slot now.', 'general', 'Booking intro', '', 32),
   ('booking.sla', 'Quality assurance SLA', 'general', 'SLA label', '', 33),
 
+  -- lead notifications ---------------------------------------------------
+  -- Where campaign bookings and other lead emails are delivered. Overrides
+  -- ADMIN_NOTIFY_EMAIL / BREVO_SENDER_EMAIL in .env.local, so the owner can
+  -- change the receiving inbox from /admin/settings without a redeploy.
+  ('notify.admin_email', 'jtsaofficial@gmail.com', 'notify', 'Send new leads to', 'Every booking from the homepage form is emailed here as well as saved to the enquiries table.', 1),
+  ('notify.new_enquiry', 'true', 'notify', 'Email me on new bookings', 'false still saves the lead to the admin panel, it just does not email you.', 2),
+
   -- creator combo tiers + standalone pass + offline rate card ----------
   -- Keyed on plan.<id>.* where id is stable (silver/gold/platinum/vip),
   -- so renaming a tier in the admin panel never orphans its price row.

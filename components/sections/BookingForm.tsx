@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2, Send, ShieldCheck } from "lucide-react";
 
-import { createClient } from "@/lib/supabase/client";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
 import type { SiteView } from "@/lib/settings";
 
 type State = "idle" | "sending" | "sent" | "error";
@@ -32,51 +30,55 @@ export function BookingForm({
       string
     >;
 
-    const digits = data.phone.replace(/\D/g, "");
-    const wa = digits.length >= 10 ? digits.slice(-10) : "";
+    // The dropdown is built from settings, so resolve the id back to its human
+    // label here rather than re-implementing the plan resolution on the server.
+    const label =
+      form.querySelector<HTMLSelectElement>('select[name="package"]')?.selectedOptions[0]
+        ?.textContent ?? data.package;
 
-    if (!isSupabaseConfigured) {
-      const text = [
-        "Campaign booking — JTSA Media House",
-        "",
-        `Business: ${data.business}`,
-        `Phone: ${data.phone}`,
-        `Sector: ${data.sector}`,
-        `Package: ${data.package}`,
-        data.requirements ? `Notes: ${data.requirements}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n");
-      window.open(
-        `https://wa.me/${site.phoneDigits}?text=${encodeURIComponent(text)}`,
-        "_blank",
-      );
-      form.reset();
-      setState("sent");
+    let res: Response;
+    try {
+      res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, packageLabel: label.trim() }),
+      });
+    } catch {
+      setError("Network problem — please try again or call us directly");
+      setState("error");
       return;
     }
 
-    const supabase = createClient();
+    if (!res.ok) {
+      const body = (await res.json().catch(() => null)) as
+        | { error?: string; skipped?: boolean }
+        | null;
 
-    const { error: insertError } = await supabase
-      .from("enquiries")
-      .insert({
-        name: data.business,
-        phone: data.phone,
-        email: data.email || null,
-        client_type: "other",
-        service: data.package,
-        event_note: `${data.sector} — campaign booking`,
-        message: [
+      // 503 means the server has no database configured. Fall back to WhatsApp
+      // so the lead is not silently lost.
+      if (res.status === 503) {
+        const digits = data.phone.replace(/\D/g, "");
+        const text = [
+          "Campaign booking — JTSA Media House",
+          "",
+          `Business: ${data.business}`,
+          `Phone: ${data.phone}`,
+          `Sector: ${data.sector}`,
+          `Package: ${label.trim()}`,
           data.requirements ? `Notes: ${data.requirements}` : "",
-          wa ? `WhatsApp: https://wa.me/${wa}` : "",
         ]
           .filter(Boolean)
-          .join("\n") || null,
-      });
+          .join("\n");
+        window.open(
+          `https://wa.me/${site.phoneDigits}?text=${encodeURIComponent(text)}`,
+          "_blank",
+        );
+        form.reset();
+        setState("sent");
+        return;
+      }
 
-    if (insertError) {
-      setError(insertError.message);
+      setError(body?.error ?? "Could not save that just now");
       setState("error");
       return;
     }
