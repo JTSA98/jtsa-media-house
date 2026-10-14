@@ -5,10 +5,10 @@ import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { normBand } from "@/lib/utils";
+import { PLAN_REGISTRY_KEY } from "@/lib/plan-keys";
 import {
   budgetBands,
   budgetMids,
-  calcBases,
   comparisonCards,
   festivePhases,
   intensityLevels,
@@ -75,7 +75,13 @@ export const fetchSettings: () => Promise<SettingsMap> = cache(async (): Promise
 
     const map: SettingsMap = {};
     for (const row of data as { key: string; value: string | null }[]) {
-      if (row.value !== null && row.value !== "") map[row.key] = row.value;
+      if (row.value === null) continue;
+      /* Empty values are dropped so `setting()` falls through to its code
+         default. The package registry is the exception: an empty value there
+         means "no packages exist", which is a real state the admin can reach
+         by deleting the last one. Dropping it would silently bring all six
+         default tiers back. */
+      if (row.value !== "" || row.key === PLAN_REGISTRY_KEY) map[row.key] = row.value;
     }
     return map;
   } catch {

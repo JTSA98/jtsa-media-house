@@ -11,9 +11,9 @@ import {
 } from "@/lib/settings";
 import {
   oneTimeWork,
-  plans as defaultPlans,
   services as defaultServices,
 } from "@/lib/site-config";
+import { plansView } from "@/lib/plans";
 
 /* ======================================================================
    Online payments (Razorpay) — server-only.
@@ -48,13 +48,16 @@ export function parsePaise(display: string): number | null {
 export function payablesFromSettings(s: SettingsMap): Payable[] {
   const items: Payable[] = [];
 
-  for (const p of defaultPlans) {
-    const paise = parsePaise(setting(s, `plan.${p.id}.price`, p.price));
+  /* Tiers come from the registry, so a package added or removed in
+     /admin/settings is immediately buyable — or no longer offered. A tier
+     with no price is skipped rather than sold at zero. */
+  for (const p of plansView(s)) {
+    const paise = parsePaise(p.price);
     if (paise === null) continue;
     items.push({
       kind: "plan",
-      key: `plan.${p.id}`,
-      title: `${setting(s, `plan.${p.id}.name`, p.name)} — ${p.period}`,
+      key: p.payKey,
+      title: `${p.name} — ${p.period}`,
       subtitle: "Confirmed on WhatsApp before creator slots are booked.",
       amountPaise: paise,
     });

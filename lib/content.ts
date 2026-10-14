@@ -1,7 +1,6 @@
 import "server-only";
 
 import {
-  calcBases,
   comparisonCards,
   festivePhases,
   intensityLevels,
@@ -29,7 +28,6 @@ export type PillarView = (typeof pillars)[number];
 export type SectorView = (typeof sectors)[number];
 export type PhaseView = (typeof festivePhases)[number];
 export type PerkView = (typeof launchPerks)[number];
-export type CalcBaseView = (typeof calcBases)[number];
 
 export function comparisonCardsView(s: SettingsMap): CmpCardView[] {
   return comparisonCards.map((c) => ({
@@ -119,20 +117,11 @@ function num(s: SettingsMap, key: string, fallback: number): number {
   return Number.isFinite(v) && v >= 0 ? v : fallback;
 }
 
-export function calcBasesView(s: SettingsMap): CalcBaseView[] {
-  return calcBases.map((b) => ({
-    ...b,
-    label: setting(s, `calc.${b.id}.label`, b.label),
-    views: num(s, `calc.${b.id}.views`, b.views),
-    flyers: num(s, `calc.${b.id}.flyers`, b.flyers),
-    creators: setting(s, `calc.${b.id}.creators`, b.creators),
-    leadsLow: num(s, `calc.${b.id}.leads_low`, b.leadsLow),
-    leadsHigh: num(s, `calc.${b.id}.leads_high`, b.leadsHigh),
-    score: num(s, `calc.${b.id}.score`, b.score),
-    viewRate: num(s, `calc.${b.id}.view_rate`, b.viewRate) || 1,
-    scoreStep: num(s, `calc.${b.id}.score_step`, b.scoreStep),
-  }));
-}
+/* calcBasesView moved to lib/plans.ts — the calculator's tier list now comes
+   from plans.registry, so a package added in /admin/settings gets a
+   calculator entry automatically. Re-exported here so existing imports of
+   "@/lib/content" keep working. */
+export { calcBasesView, type CalcBaseView } from "@/lib/plans";
 
 export function intensityView(s: SettingsMap): string[] {
   const list = settingList(s["calc.intensity_labels"]);

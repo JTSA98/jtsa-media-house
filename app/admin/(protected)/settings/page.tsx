@@ -2,18 +2,22 @@ import Link from "next/link";
 import { ArrowLeft, Database, TriangleAlert } from "lucide-react";
 
 import { SettingsForm, SecretStatus } from "@/components/admin/SettingsForm";
+import { PlanManager } from "@/components/admin/PlanManager";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import {
   fetchSettingRows,
+  fetchSettings,
   groupLabels,
   groupOrder,
 } from "@/lib/settings";
+import { calcBasesView, plansView } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const rows = await fetchSettingRows();
   const ready = isSupabaseConfigured && rows.length > 0;
+  const settings = await fetchSettings();
 
   const razorpayKey = process.env.RAZORPAY_KEY_ID ?? "";
   const razorpaySecret = process.env.RAZORPAY_KEY_SECRET ?? "";
@@ -54,6 +58,21 @@ export default async function SettingsPage() {
         </div>
       ) : (
         <>
+          {/* packages: add / edit / remove / reorder */}
+          <section>
+            <h2 className="mb-3 flex items-center gap-2.5 text-[13px] font-extrabold tracking-[0.2em] text-ink-3 uppercase">
+              <span className="inline-block h-[2.5px] w-8 bg-red" />
+              Packages
+            </h2>
+            <PlanManager plans={plansView(settings)} calcBases={calcBasesView(settings)} />
+            <p className="mt-2.5 text-[12.5px] leading-[1.7] text-ink-3">
+              Adding or removing a package here changes the pricing grid, the
+              booking dropdown, the ROI calculator and the online payment
+              options. Past orders and bookings keep their own copy, so nothing
+              already sold is affected.
+            </p>
+          </section>
+
           {/* ── secret status ── */}
           <section>
             <h2 className="mb-3 flex items-center gap-2.5 text-[13px] font-extrabold tracking-[0.2em] text-ink-3 uppercase">

@@ -240,9 +240,16 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('notify.new_enquiry', 'true', 'notify', 'Email me on new bookings', 'false still saves the lead to the admin panel, it just does not email you.', 2),
 
   -- creator combo tiers + standalone pass + offline rate card ----------
-  -- Keyed on plan.<id>.* where id is stable (nano/micro/silver/gold/
-  -- platinum/vip), so renaming a tier in the admin panel never orphans its
-  -- price row. nano and micro are the digital-only entry tiers.
+  -- Which tiers exist and in what order. This row is the single source of
+  -- truth for the pricing grid, the booking dropdown, the ROI calculator and
+  -- the payment line items — add or remove a package in /admin/settings and
+  -- this list is rewritten. Pipe-separated, matching the list convention.
+  -- Until this row exists the site falls back to the ids in lib/site-config.ts,
+  -- so running the migration is optional for correctness.
+  ('plans.registry', 'nano|micro|silver|gold|platinum|vip', 'plans', 'Active packages, in display order', 'Pipe-separated. Managed by the package manager on this page.', 0),
+
+  -- Keyed on plan.<id>.* where id is stable, so renaming a tier in the admin
+  -- panel never orphans its price row.
   ('plan.nano.name',     '2-Influencer Nano Starter Combo', 'plans', U&'Nano \2014 name', '', 1),
   ('plan.nano.price',    '4,999',   'plans', U&'Nano \2014 price', 'Digits only.', 2),
   ('plan.nano.tagline',  'Cafes, small boutiques, new coaching batches', 'plans', U&'Nano \2014 audience', '', 3),
@@ -263,6 +270,7 @@ insert into public.site_settings (key, value, group_name, label, hint, sort_orde
   ('plan.gold.features', U&'5 mid-tier local creators (10K\201350K)|5 cinematic reels + co-authoring|10 stories with direct link tags|~80,000 estimated local reach', 'plans', '', 'One per line.', 9),
   ('plan.gold.physical', '1,000 leaflets|2 premium standees', 'plans', '', 'One per line.', 10),
   ('plan.gold.badge',    'Most Popular', 'plans', U&'Gold \2014 badge', 'Leave blank for none.', 11),
+  ('plan.gold.highlight', 'true', 'plans', U&'Gold \2014 highlighted card', 'The emphasised card. Keep this on for exactly one package.', 12),
 
   ('plan.platinum.name',     '10-Influencer Platinum Swarm', 'plans', U&'Platinum \2014 name', '', 12),
   ('plan.platinum.price',    '49,999',   'plans', U&'Platinum \2014 price', 'Digits only.', 13),

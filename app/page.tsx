@@ -9,7 +9,6 @@ import { Booking } from "@/components/sections/Booking";
 import { Pricing } from "@/components/sections/Content";
 import { getSiteView, setting, settingList } from "@/lib/settings";
 import {
-  calcBasesView,
   comparisonCardsView,
   festivePhasesView,
   intensityView,
@@ -18,11 +17,11 @@ import {
   recallPrincipleView,
   sectorsView,
 } from "@/lib/content";
+import { calcBasesView, plansView } from "@/lib/plans";
 import {
   faqs,
   offlineAddOns,
   oneTimeWork,
-  plans as defaultPlans,
   sectors,
   site as siteDefaults,
 } from "@/lib/site-config";
@@ -45,25 +44,11 @@ export default async function HomePage() {
     { price: setting(site.raw, "price.shoot", oneTimeWork[3].price), label: setting(site.raw, "price.shoot_note", oneTimeWork[3].label), payKey: "job.shoot", payLabel: `Pay ${setting(site.raw, "price.shoot", oneTimeWork[3].price)} online` },
   ];
 
-  const plans = defaultPlans.map((p) => {
-    const features = settingList(site.raw[`plan.${p.id}.features`]);
-    const physical = settingList(site.raw[`plan.${p.id}.physical`]);
-    const price = setting(site.raw, `plan.${p.id}.price`, p.price);
-    return {
-      id: p.id,
-      name: setting(site.raw, `plan.${p.id}.name`, p.name),
-      tagline: setting(site.raw, `plan.${p.id}.tagline`, p.tagline),
-      price,
-      features: features.length ? features : p.features,
-      physical: physical.length ? physical : p.physical,
-      badge: setting(site.raw, `plan.${p.id}.badge`, p.badge ?? "") || undefined,
-      cta: p.cta,
-      highlight: p.highlight,
-      period: p.period,
-      payKey: `plan.${p.id}`,
-      payLabel: `Pay ₹${price} online`,
-    };
-  });
+  /* Tiers resolve from plans.registry, so adding or removing a package in
+     /admin/settings changes this list without a code edit. payKey/payLabel
+     ride along so the Pay buttons charge exactly what is shown — the API
+     re-resolves the amount server-side from the same keys. */
+  const plans = plansView(site.raw);
 
   /* Structured data for search: what we are + the questions we answer.
      No invented ratings, reviews or phone numbers — only claims already
