@@ -6,6 +6,7 @@ import { SectorPlaybooks } from "@/components/sections/SectorPlaybooks";
 import { RoiCalculator } from "@/components/sections/RoiCalculator";
 import { Festive } from "@/components/sections/Festive";
 import { Booking } from "@/components/sections/Booking";
+import { FestiveScene } from "@/components/sections/FestiveScene";
 import { Pricing } from "@/components/sections/Content";
 import { getSiteView, setting, settingList } from "@/lib/settings";
 import {
@@ -116,8 +117,19 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <NavBar site={site} />
+
+      {/* Fixed festive backdrop. Sits behind everything so the hero art
+          stays put while the content scrolls over it. */}
+      <FestiveScene />
+
       <main>
         <Hero site={site} view={heroView} />
+
+        {/* Opaque ground for everything below the hero. Most of these
+            sections have no background of their own, so without this the
+            fixed artwork would show through them and take the text with it.
+            bg-kraft is the same colour as the body, so it is invisible. */}
+        <div className="relative z-10 bg-kraft">
 
         <WhyCombo
           cards={comparisonCardsView(s)}
@@ -209,6 +221,7 @@ export default async function HomePage() {
           )}
           capNote={setting(s, "booking.sla", "Quality assurance SLA")}
         />
+        </div>
       </main>
       <SiteFooter site={site} />
     </>

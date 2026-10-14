@@ -52,3 +52,8 @@ public/brand/*
 # Brand kit source PDF — reference material, not something the app serves
 /*Brand*Design*Kit.pdf
 
+
+# Generated hero artwork - the source PNG is 2.5MB and must stay out of
+# history. Only the WebP derivatives under public/hero/ are committed;
+# re-run scripts/convert-hero.mjs to regenerate them from the local PNG.
+Diwali Night_ Lights, Likes, and Celebration.png

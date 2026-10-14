@@ -1,6 +1,5 @@
 import { ArrowRight, Calculator } from "lucide-react";
 
-import { FestiveScene } from "@/components/sections/FestiveScene";
 import type { SiteView } from "@/lib/settings";
 
 export type HeroStat = { value: string; label: string };
@@ -36,10 +35,6 @@ export function Hero({ site, view }: { site: SiteView; view: HeroView }) {
       id="top"
       className="relative flex min-h-[90vh] items-center justify-center overflow-hidden pt-28 pb-20"
     >
-      {/* Festive split scene: creators left, pandal and market right. The
-          headline sits over the seam, so the scene carries its own scrim. */}
-      <FestiveScene />
-
       <div className="wrap relative z-10 text-center">
         {/* festive badge */}
         <div className="glass-card mb-8 inline-flex animate-pulse items-center gap-2 rounded-full border border-amber-500/30 px-4 py-2">
