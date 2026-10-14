@@ -27,7 +27,11 @@ export function RoiCalculator({
   body: string;
   note: string;
 }) {
-  const [pkg, setPkg] = useState(bases[1]?.id ?? bases[0]?.id ?? "gold");
+  /* Default to Gold explicitly rather than by index — a positional default
+     silently changed tier whenever a cheaper one was added to the list. */
+  const [pkg, setPkg] = useState(
+    bases.find((b) => b.id === "gold")?.id ?? bases[1]?.id ?? bases[0]?.id ?? "gold",
+  );
   const [intensity, setIntensity] = useState(2);
 
   const base = bases.find((b) => b.id === pkg) ?? bases[0];

@@ -189,6 +189,7 @@ export function Pricing({
     physical: string[];
     badge?: string;
     highlight?: boolean;
+    cta?: string;
     period: string;
     payKey: string;
     payLabel: string;
@@ -211,8 +212,9 @@ export function Pricing({
           body="Every tier bundles a digital creator swarm with physical ground execution. One price, one team."
         />
 
-        {/* ── combo tiers ── */}
-        <div className="grid items-start gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {/* ── combo tiers ── six across, so 3 columns for two even rows
+            rather than a 4 + 2 orphan row ── */}
+        <div className="grid items-start gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {plans.map((p, i) => (
             <div
               key={p.id}
@@ -265,17 +267,23 @@ export function Pricing({
                 ))}
               </ul>
 
-              <p className="mt-5 mb-2 font-brand text-[10px] font-bold tracking-widest text-yellow uppercase">
-                Physical ground
-              </p>
-              <ul className="flex flex-col gap-2">
-                {p.physical.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-[13px] leading-snug text-ink-2">
-                    <Check size={14} className="mt-0.5 shrink-0 text-yellow" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
+              {/* The two entry tiers are digital only, so an empty column header
+                  would just advertise a missing feature. */}
+              {p.physical.length ? (
+                <>
+                  <p className="mt-5 mb-2 font-brand text-[10px] font-bold tracking-widest text-yellow uppercase">
+                    Physical ground
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {p.physical.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-[13px] leading-snug text-ink-2">
+                        <Check size={14} className="mt-0.5 shrink-0 text-yellow" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
 
               <a
                 href="#enquire"
@@ -284,7 +292,7 @@ export function Pricing({
                 }`}
                 style={{ marginTop: "1.75rem" }}
               >
-                Book {p.name.split(" ").slice(-1)[0]}
+                Book {p.cta ?? p.name.split(" ").slice(-1)[0]}
               </a>
               <PayButton
                 kind="plan"

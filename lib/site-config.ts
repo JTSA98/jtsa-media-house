@@ -195,11 +195,46 @@ export type Plan = {
   physical: string[];
   badge?: string;
   highlight?: boolean;
+  /** Button wording. Defaults to the last word of the name, which collides
+   *  once several tiers end in the same word. */
+  cta?: string;
   /** billing period shown after the price */
   period: string;
 };
 
 export const plans: Plan[] = [
+  {
+    id: "nano",
+    name: "2-Influencer Nano Starter Combo",
+    cta: "Starter",
+    price: "4,999",
+    tagline: "Cafes, small boutiques, new coaching batches",
+    features: [
+      "2 local micro-creators (5K–15K)",
+      "2 high-quality Instagram reels",
+      "4 promotional stories with tags",
+      "~15,000 estimated local reach",
+    ],
+    /* Entry tier is digital only in the source rate card — no ground add-on,
+       so the card omits the physical column rather than showing it empty. */
+    physical: [],
+    period: "per campaign",
+  },
+  {
+    id: "micro",
+    name: "3-Influencer Micro Growth Combo",
+    cta: "Growth",
+    price: "9,999",
+    tagline: "Growing retail shops, popular coaching hubs",
+    features: [
+      "3 local creators (10K–25K)",
+      "3 dedicated reels + co-authoring",
+      "6 stories with direct WhatsApp link",
+      "~30,000 estimated local reach",
+    ],
+    physical: [],
+    period: "per campaign",
+  },
   {
     id: "silver",
     name: "4-Influencer Silver Combo",
@@ -618,6 +653,30 @@ export interface CalcBase {
 }
 
 export const calcBases: CalcBase[] = [
+  {
+    id: "nano",
+    label: "2-Influencer Nano Starter Combo",
+    views: 15000,
+    flyers: 0,
+    creators: "2 Creators",
+    leadsLow: 15,
+    leadsHigh: 35,
+    score: 4.2,
+    viewRate: 1.3,
+    scoreStep: 0.5,
+  },
+  {
+    id: "micro",
+    label: "3-Influencer Micro Growth Combo",
+    views: 30000,
+    flyers: 0,
+    creators: "3 Creators",
+    leadsLow: 25,
+    leadsHigh: 60,
+    score: 5.4,
+    viewRate: 1.15,
+    scoreStep: 0.5,
+  },
   {
     id: "silver",
     label: "4-Influencer Silver Combo",

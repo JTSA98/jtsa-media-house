@@ -57,6 +57,7 @@ export default async function HomePage() {
       features: features.length ? features : p.features,
       physical: physical.length ? physical : p.physical,
       badge: setting(site.raw, `plan.${p.id}.badge`, p.badge ?? "") || undefined,
+      cta: p.cta,
       highlight: p.highlight,
       period: p.period,
       payKey: `plan.${p.id}`,
