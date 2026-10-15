@@ -23,7 +23,7 @@ export const site = {
      for tel: and on-screen display. */
   whatsappDigits: "919304336590",
   upiId: "jtsamedia@upi",
-  mainSite: "https://jtsa.in",
+  mainSite: "https://jtsamediahouse.in",
 } as const;
 
 export const social = [

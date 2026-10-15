@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   const base =
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-    "https://jtsa-media-house.vercel.app";
+    "https://jtsamediahouse.in";
 
   return {
     rules: [
@@ -11,7 +11,13 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: ["/", "/register", "/login"],
         // Client and staff areas are private — keep them out of search results.
-        disallow: ["/portal", "/admin", "/staff-login", "/api/"],
+        // /admin/login moved out of /staff-login, so it needs naming here too.
+        disallow: [
+          "/portal",
+          "/admin",
+          "/staff-login",
+          "/api/",
+        ],
       },
     ],
     sitemap: `${base}/sitemap.xml`,

@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
 
+/* NEXT_PUBLIC_SITE_URL should be set in Vercel. The fallback is the real
+   domain rather than the vercel.app address, so an unset variable never
+   publishes canonical URLs to a deployment URL. */
 const base =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://jtsa-media-house.vercel.app";
+  "https://jtsamediahouse.in";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -26,11 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
-    {
-      url: `${base}/staff-login`,
-      lastModified: now,
-      changeFrequency: "yearly",
-      priority: 0.1,
-    },
+    // /staff-login used to be listed here. It now only redirects to
+    // /admin/login, which must never be indexed.
   ];
 }
