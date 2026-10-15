@@ -32,6 +32,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.mainSite),
+  /* metadataBase only resolves relative URLs — Next.js does not emit a
+     <link rel="canonical"> unless one is declared. Without it the site had
+     no canonical tag at all, which matters now that the domain is live and
+     both apex and www resolve. */
+  alternates: { canonical: "/" },
   title: {
     default: `${site.name} — Commercial Advertising, Hoardings & 4K Reels in Dhanbad`,
     template: `%s · ${site.name}`,
@@ -49,6 +54,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
+    url: site.mainSite,
     title: `${site.name} — ${site.tagline}`,
     description:
       "Posters, reels, social campaigns and website listings for schools and local businesses in Dhanbad.",
